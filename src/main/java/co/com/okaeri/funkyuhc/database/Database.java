@@ -17,7 +17,7 @@ public abstract class Database {
     FunkyUHC plugin;
     Connection connection;
     // The name of the table we created back in SQLite class.
-    public String table = "table_name";
+    public String table = "players";
     public int tokens = 0;
     public Database(FunkyUHC instance){
         plugin = instance;
