@@ -111,3 +111,14 @@ buildNumber.properties
 
 # Common working directory
 run/
+/Server/bundler/
+/Server/logs/
+/Server/plugins/
+/Server/world/
+/Server/banned-ips.json
+/Server/banned-players.json
+/Server/bukkit.yml
+/Server/commands.yml
+/Server/help.yml
+/Server/world_nether/
+/Server/world_the_end/
