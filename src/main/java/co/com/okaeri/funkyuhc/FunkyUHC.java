@@ -1,11 +1,11 @@
 package co.com.okaeri.funkyuhc;
 
+import co.com.okaeri.funkyuhc.commands.mapSize;
 import co.com.okaeri.funkyuhc.database.Database;
 import co.com.okaeri.funkyuhc.database.SQLite;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,7 +18,9 @@ public final class FunkyUHC extends JavaPlugin {
     public String apiVersion = descriptionFile.getAPIVersion();
     public String creatorWebsite = descriptionFile.getWebsite();
     public String apiDesc = descriptionFile.getDescription();
-    private Database db;
+    public SQLite db;
+    public int maxSize = 1500;
+    public int size = maxSize;
 
     @Override
     public void onEnable() {
@@ -39,6 +41,9 @@ public final class FunkyUHC extends JavaPlugin {
         // Inicializar base de datos y cargar
         this.db = new SQLite(this);
         this.db.load();
+
+        // Registrar comandos
+        RegistrarComandos();
     }
 
     @Override
@@ -48,7 +53,7 @@ public final class FunkyUHC extends JavaPlugin {
         print(Color.GREEN + "<------------------------------------------>");
     }
 
-    private void print(String data){
+    public void print(String data){
         Bukkit.getConsoleSender().sendMessage(data);
     }
 
@@ -58,5 +63,17 @@ public final class FunkyUHC extends JavaPlugin {
 
     public Database getRDatabase(){
         return this.db;
+    }
+
+    public void changeMaxSize(int size){
+        maxSize = size;
+    }
+
+    public void changeSize(int size){
+        this.size = size;
+    }
+
+    public void RegistrarComandos(){
+        this.getCommand("mapSize").setExecutor(new mapSize(this));
     }
 }
