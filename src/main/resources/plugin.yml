@@ -1,0 +1,7 @@
+name: FunkyUHC
+version: '${project.version}'
+main: co.com.okaeri.funkyuhc.FunkyUHC
+api-version: 1.18
+authors: [ FunkyoAlejandra, Eltiodunsparce ]
+description: Plugin para el evento UHC de funkyo
+website: https://linktr.ee/FunkyoEnma
