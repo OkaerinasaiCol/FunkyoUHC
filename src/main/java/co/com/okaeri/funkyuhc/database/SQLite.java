@@ -27,6 +27,32 @@ public class SQLite extends Database{
             ");"; // we can search by player, and get kills and total. If you some how were searching kills it would provide total and player.
 
 
+    public String CreateEquips = "CREATE TABLE IF NOT EXISTS equips (" +
+            "'id' INTEGER NOT NULL UNIQUE," +
+            "'name' TEXT NOT NULL UNIQUE," +
+            "'color' TEXT NOT NULL UNIQUE," +
+            "'capitan' TEXT NOT NULL UNIQUE," +
+            "'players' TEXT NOT NULL UNIQUE," +
+            "PRIMARY KEY('id')" +
+            ");";
+
+    public String CreateMapSizes = "CREATE TABLE IF NOT EXISTS mapSizes(" +
+            "'id' TEXT NOT NULL UNIQUE," +
+            "'size' INTEGER NOT NULL," +
+            "PRIMARY KEY('id'));";
+
+    public void updateSize(int size){
+        try {
+            Statement s = connection.createStatement();
+            String sql = "UPDATE 'main'.'mapSizes' SET 'size'="+ size + " WHERE id = 'size'";
+            s.executeUpdate(sql);
+            s.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     // SQL creation stuff, You can leave the blow stuff untouched.
     public Connection getSQLConnection() {
         File dataFolder = new File(plugin.getDataFolder(), dbname+".db");
@@ -60,6 +86,8 @@ public class SQLite extends Database{
         try {
             Statement s = connection.createStatement();
             s.executeUpdate(SQLiteCreateTokensTable);
+            s.executeUpdate(CreateEquips);
+            s.executeUpdate(CreateMapSizes);
             s.close();
         } catch (SQLException e) {
             e.printStackTrace();
