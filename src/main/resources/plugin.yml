@@ -5,3 +5,8 @@ api-version: 1.18
 authors: [ FunkyoAlejandra, Eltiodunsparce ]
 description: Plugin para el evento UHC de funkyo
 website: https://linktr.ee/FunkyoEnma
+
+commands:
+  mapSize:
+    description: Cambiar el tamaño del mapa
+    usage: mapSize <value>
