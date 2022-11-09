@@ -12,3 +12,5 @@ commands:
     usage: mapSize <value>
   timeBar:
     description: Comandos con la barra de boss
+  teams:
+    description: Comandos referentes a los teams
