@@ -1,12 +1,19 @@
 package co.com.okaeri.funkyuhc;
 
 import co.com.okaeri.funkyuhc.commands.mapSize;
+import co.com.okaeri.funkyuhc.commands.roundTimeBar;
 import co.com.okaeri.funkyuhc.database.Database;
 import co.com.okaeri.funkyuhc.database.SQLite;
+import co.com.okaeri.funkyuhc.player.DeathListener;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
+import org.bukkit.WorldBorder;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class FunkyUHC extends JavaPlugin {
@@ -23,6 +30,7 @@ public final class FunkyUHC extends JavaPlugin {
     public WorldBorder wb;
     public int maxSize = 1500;
     public int size = maxSize;
+    private PluginManager pm = this.getServer().getPluginManager();
 
     @Override
     public void onEnable() {
@@ -46,6 +54,20 @@ public final class FunkyUHC extends JavaPlugin {
 
         // Registrar comandos
         RegistrarComandos();
+
+        // Set inicial world border
+        //noinspection ConstantConditions
+        this.wb = Bukkit.getWorld("world").getWorldBorder();
+        wb.setCenter(0,0);
+        wb.setSize(maxSize * 2);
+
+        // inicailizar lo que se ejecuta al morir
+        new DeathListener(this);
+
+        // agregar registro de muertes
+        this.pm.registerEvents(new DeathListener(this), this);
+        this.timeBar = Bukkit.createBossBar("Tiempo hasta la ronda #", BarColor.BLUE, BarStyle.SEGMENTED_12);
+
     }
 
     @Override
@@ -68,13 +90,16 @@ public final class FunkyUHC extends JavaPlugin {
     }
 
     public void changeMaxSize(int size){
-        maxSize = size;
+        maxSize = size * 2;
+        wb.setSize(size * 2);
     }
 
     public void changeSize(int size){
-        this.size = size;
+        this.size = size * 2;
+        wb.setSize(size * 2);
     }
 
+    @SuppressWarnings("ConstantConditions")
     public void RegistrarComandos(){
         this.getCommand("mapSize").setExecutor(new mapSize(this));
         this.getCommand("timeBar").setExecutor(new roundTimeBar(this, timeBar));
