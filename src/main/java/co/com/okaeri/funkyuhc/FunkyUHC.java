@@ -1,5 +1,6 @@
 package co.com.okaeri.funkyuhc;
 
+import co.com.okaeri.funkyuhc.commands.Teams;
 import co.com.okaeri.funkyuhc.commands.mapSize;
 import co.com.okaeri.funkyuhc.commands.roundTimeBar;
 import co.com.okaeri.funkyuhc.database.Database;
@@ -16,6 +17,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
+
 public final class FunkyUHC extends JavaPlugin {
     
     PluginDescriptionFile descriptionFile = getDescription();
@@ -30,6 +33,7 @@ public final class FunkyUHC extends JavaPlugin {
     public WorldBorder wb;
     public int maxSize = 1500;
     public int size = maxSize;
+    public List<List<String>> teams;
     private PluginManager pm = this.getServer().getPluginManager();
 
     @Override
@@ -68,6 +72,9 @@ public final class FunkyUHC extends JavaPlugin {
         this.pm.registerEvents(new DeathListener(this), this);
         this.timeBar = Bukkit.createBossBar("Tiempo hasta la ronda #", BarColor.BLUE, BarStyle.SEGMENTED_12);
 
+        // Cargar teams almacenados en la base de datos
+        this.teams = db.getTeams();
+
     }
 
     @Override
@@ -103,5 +110,6 @@ public final class FunkyUHC extends JavaPlugin {
     public void RegistrarComandos(){
         this.getCommand("mapSize").setExecutor(new mapSize(this));
         this.getCommand("timeBar").setExecutor(new roundTimeBar(this, timeBar));
+        this.getCommand("teams").setExecutor(new Teams(this));
     }
 }
