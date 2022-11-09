@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import co.com.okaeri.funkyuhc.database.Database; // import the database class.
 import co.com.okaeri.funkyuhc.FunkyUHC; // import your main class
 
 
@@ -95,6 +94,7 @@ public class SQLite extends Database{
         initialize();
     }
 
+    @SuppressWarnings("unused")
     public Statement statement(){
 
         try {

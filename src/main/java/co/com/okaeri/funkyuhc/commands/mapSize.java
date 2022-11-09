@@ -8,12 +8,14 @@ import org.bukkit.entity.Player;
 
 public class mapSize implements CommandExecutor{
 
+    @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
     public mapSize(FunkyUHC main){
         this.plugin = main;
     }
 
+    @SuppressWarnings("NullableProblems")
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(!(sender instanceof Player)) {
@@ -72,6 +74,7 @@ public class mapSize implements CommandExecutor{
         plugin.print("Tamaño del mapa cambiado a: " + value);
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     private int size(){
         plugin.print(String.valueOf(plugin.size));
         return plugin.size;

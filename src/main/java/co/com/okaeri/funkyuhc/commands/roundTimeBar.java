@@ -1,22 +1,14 @@
 package co.com.okaeri.funkyuhc.commands;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
-import org.bukkit.Bukkit;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
-import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 
-
+@SuppressWarnings("FieldMayBeFinal")
 public class roundTimeBar implements CommandExecutor {
 
     private FunkyUHC plugin;
@@ -27,6 +19,7 @@ public class roundTimeBar implements CommandExecutor {
         this.bossBar = bossBar;
     }
 
+    @SuppressWarnings("NullableProblems")
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
         // players = plugin.getServer().getOnlinePlayers();
 

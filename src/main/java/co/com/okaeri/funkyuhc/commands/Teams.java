@@ -1,15 +1,14 @@
 package co.com.okaeri.funkyuhc.commands;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
-import org.bukkit.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 
 
+@SuppressWarnings("FieldMayBeFinal")
 public class Teams implements CommandExecutor {
 
     private FunkyUHC plugin;
@@ -21,6 +20,7 @@ public class Teams implements CommandExecutor {
     }
 
 
+    @SuppressWarnings("NullableProblems")
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
         // TODO: mejorar el manejo de argumentos
         switch (args[0].toLowerCase()) {

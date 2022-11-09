@@ -1,21 +1,20 @@
 package co.com.okaeri.funkyuhc.database;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
-import org.bukkit.Color;
-import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class Teams {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
     public Teams(FunkyUHC plugin){
         this.plugin = plugin;
     }
 
-    public void Create(String name, String capitan, String color) throws SQLException {
+    public void Create(String name, @SuppressWarnings("unused") String capitan, String color) throws SQLException {
         List<List<String>> teams = plugin.teams;
         int row = 1;
 

@@ -1,5 +1,6 @@
 package co.com.okaeri.funkyuhc.database;
 
+@SuppressWarnings("unused")
 public class Errors {
     public static String sqlConnectionExecute(){
         return "Couldn't execute MySQL statement: ";
