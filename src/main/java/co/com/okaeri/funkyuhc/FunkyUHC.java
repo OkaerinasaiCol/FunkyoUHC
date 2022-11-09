@@ -19,6 +19,8 @@ public final class FunkyUHC extends JavaPlugin {
     public String creatorWebsite = descriptionFile.getWebsite();
     public String apiDesc = descriptionFile.getDescription();
     public SQLite db;
+    public BossBar timeBar;
+    public WorldBorder wb;
     public int maxSize = 1500;
     public int size = maxSize;
 
@@ -75,5 +77,6 @@ public final class FunkyUHC extends JavaPlugin {
 
     public void RegistrarComandos(){
         this.getCommand("mapSize").setExecutor(new mapSize(this));
+        this.getCommand("timeBar").setExecutor(new roundTimeBar(this, timeBar));
     }
 }
