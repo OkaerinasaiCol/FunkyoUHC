@@ -1,11 +1,13 @@
 package co.com.okaeri.funkyuhc;
 
+import co.com.okaeri.funkyuhc.commands.TabCompleter.teamsTab;
 import co.com.okaeri.funkyuhc.commands.Teams;
 import co.com.okaeri.funkyuhc.commands.mapSize;
 import co.com.okaeri.funkyuhc.commands.roundTimeBar;
 import co.com.okaeri.funkyuhc.database.Database;
 import co.com.okaeri.funkyuhc.database.SQLite;
 import co.com.okaeri.funkyuhc.player.DeathListener;
+import co.com.okaeri.funkyuhc.commands.TabCompleter.mapSizeTab;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -34,6 +36,7 @@ public final class FunkyUHC extends JavaPlugin {
     public int maxSize = 1500;
     public int size = maxSize;
     public List<List<String>> teams;
+    @SuppressWarnings("FieldMayBeFinal")
     private PluginManager pm = this.getServer().getPluginManager();
 
     @Override
@@ -92,6 +95,7 @@ public final class FunkyUHC extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Color.GREEN + "[" + pluginName + "]" + Color.WHITE + data);
     }
 
+    @SuppressWarnings("unused")
     public Database getRDatabase(){
         return this.db;
     }
@@ -109,7 +113,11 @@ public final class FunkyUHC extends JavaPlugin {
     @SuppressWarnings("ConstantConditions")
     public void RegistrarComandos(){
         this.getCommand("mapSize").setExecutor(new mapSize(this));
+        this.getCommand("mapSize").setTabCompleter(new mapSizeTab(this));
+
         this.getCommand("timeBar").setExecutor(new roundTimeBar(this, timeBar));
+
         this.getCommand("teams").setExecutor(new Teams(this));
+        this.getCommand("teams").setTabCompleter(new teamsTab(this));
     }
 }
