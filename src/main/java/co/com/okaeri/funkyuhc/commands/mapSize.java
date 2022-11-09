@@ -66,6 +66,7 @@ public class mapSize implements CommandExecutor{
     }
 
     public void setSize(int value){
+        // Todo: hacer que se vaya achicando poco a poco
         plugin.changeSize(value);
         plugin.db.updateSize(value);
         plugin.print("Tamaño del mapa cambiado a: " + value);
