@@ -36,6 +36,26 @@ public class mapSize implements CommandExecutor{
                 return false;
             }
         }else {
+            if (sender.isOp()){
+                if (args.length == 0) {
+                    size();
+                    return true;
+                } else if (args.length == 2) { // Todo: verificar que el argumento [1] sea un entero
+                    switch (args[0].toLowerCase()) {
+                        case "setmax":
+                            setMax(Integer.parseInt(args[1]));
+                            return true;
+                        case "set":
+                            setSize(Integer.parseInt(args[1]));
+                            return true;
+                        default:
+                            return false;
+                    }
+
+                } else {
+                    return false;
+                }
+            }
             return false;
         }
     }
