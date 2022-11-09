@@ -2,10 +2,9 @@ package co.com.okaeri.funkyuhc.database;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 import co.com.okaeri.funkyuhc.database.Database; // import the database class.
@@ -20,9 +19,9 @@ public class SQLite extends Database{
     }
 
     public String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS players (" + // make sure to put your table name in here too.
-            "`player` varchar(32) NOT NULL," + // This creates the different colums you will save data too. varchar(32) Is a string, int = integer
-            "`kills` int(11) NOT NULL," +
-            "`total` int(11) NOT NULL," +
+            "`player` TEXT NOT NULL," + // This creates the different colums you will save data too. varchar(32) Is a string, int = integer
+            "`name` TEXT NOT NULL," +
+            "`total` INTEGER NOT NULL," +
             "PRIMARY KEY (`player`)" +  // This is creating 3 colums Player, Kills, Total. Primary key is what you are going to use as your indexer. Here we want to use player so
             ");"; // we can search by player, and get kills and total. If you some how were searching kills it would provide total and player.
 
@@ -32,7 +31,7 @@ public class SQLite extends Database{
             "'name' TEXT NOT NULL UNIQUE," +
             "'color' TEXT NOT NULL UNIQUE," +
             "'capitan' TEXT NOT NULL UNIQUE," +
-            "'players' TEXT NOT NULL UNIQUE," +
+            "'players' TEXT UNIQUE," +
             "PRIMARY KEY('id')" +
             ");";
 
@@ -88,6 +87,7 @@ public class SQLite extends Database{
             s.executeUpdate(SQLiteCreateTokensTable);
             s.executeUpdate(CreateEquips);
             s.executeUpdate(CreateMapSizes);
+            s.executeUpdate("insert or ignore into mapSizes values('size'," + plugin.size + ");");
             s.close();
         } catch (SQLException e) {
             e.printStackTrace();
