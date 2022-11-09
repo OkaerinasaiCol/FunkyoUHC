@@ -94,4 +94,57 @@ public class SQLite extends Database{
         }
         initialize();
     }
+
+    public Statement statement(){
+
+        try {
+            connection = getSQLConnection();
+            return connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<List<String>> getTeams(){
+        connection = getSQLConnection();
+        List<List<String>> teams = new ArrayList<>();
+        List<String> busy = new ArrayList<>();
+
+        try {
+            Statement s = connection.createStatement();
+
+            ResultSet len = s.executeQuery("SELECT COUNT(*) AS total FROM \"main\".\"equips\"");
+            len.next();
+            if (len.getInt("total") == 0){
+                return null;
+            }
+
+            ResultSet r = s.executeQuery("SELECT * FROM \"main\".\"equips\"");
+            while (r.next()){
+                List<String> team = new ArrayList<>();
+
+                team.add(r.getString("id"));
+                busy.add(r.getString("id"));
+
+                team.add(r.getString("name"));
+
+                team.add(r.getString("color"));
+
+                team.add(r.getString("capitan"));
+
+                team.add(r.getString("players"));
+
+                teams.add(team);
+            }
+
+            teams.add(busy);
+
+            return teams;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
