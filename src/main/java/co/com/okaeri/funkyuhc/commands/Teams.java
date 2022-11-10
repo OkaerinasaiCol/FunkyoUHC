@@ -16,7 +16,7 @@ public class Teams implements CommandExecutor {
 
     public Teams(FunkyUHC plugin){
         this.plugin = plugin;
-        db = new co.com.okaeri.funkyuhc.database.Teams(plugin);
+        db = plugin.TeamDB;
     }
 
 
@@ -26,12 +26,8 @@ public class Teams implements CommandExecutor {
         switch (args[0].toLowerCase()) {
             case "create":
                 if (args.length == 4) {
-                    try {
-                        db.Create(args[1], args[2], args[3]);
-                        return true;
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                    db.Create(args[1], args[2], args[3]);
+                    return true;
                 }
                 return false;
             case "delete":
