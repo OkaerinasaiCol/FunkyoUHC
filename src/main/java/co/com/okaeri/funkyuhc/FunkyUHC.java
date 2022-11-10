@@ -6,6 +6,7 @@ import co.com.okaeri.funkyuhc.commands.mapSize;
 import co.com.okaeri.funkyuhc.commands.roundTimeBar;
 import co.com.okaeri.funkyuhc.database.Database;
 import co.com.okaeri.funkyuhc.database.SQLite;
+import co.com.okaeri.funkyuhc.player.BlockPlaceListener;
 import co.com.okaeri.funkyuhc.player.DeathListener;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.mapSizeTab;
 import org.apache.commons.lang.StringUtils;
@@ -31,7 +32,7 @@ public final class FunkyUHC extends JavaPlugin {
     public String creatorWebsite = descriptionFile.getWebsite();
     public String apiDesc = descriptionFile.getDescription();
     public SQLite db;
-    public BossBar timeBar;
+    public BossBar timeBar = Bukkit.createBossBar("Tiempo hasta la ronda #", BarColor.BLUE, BarStyle.SEGMENTED_12);;
     public WorldBorder wb;
     public int maxSize = 1500;
     public int size = maxSize;
@@ -71,9 +72,11 @@ public final class FunkyUHC extends JavaPlugin {
         // inicailizar lo que se ejecuta al morir
         new DeathListener(this);
 
+        // inicializar placeblock listener
+        new BlockPlaceListener(this);
+
         // agregar registro de muertes
         this.pm.registerEvents(new DeathListener(this), this);
-        this.timeBar = Bukkit.createBossBar("Tiempo hasta la ronda #", BarColor.BLUE, BarStyle.SEGMENTED_12);
 
         // Cargar teams almacenados en la base de datos
         this.teams = db.getTeams();
