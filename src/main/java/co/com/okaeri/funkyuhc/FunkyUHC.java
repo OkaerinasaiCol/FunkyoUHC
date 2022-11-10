@@ -5,6 +5,7 @@ import co.com.okaeri.funkyuhc.commands.Teams;
 import co.com.okaeri.funkyuhc.commands.mapSize;
 import co.com.okaeri.funkyuhc.commands.roundTimeBar;
 import co.com.okaeri.funkyuhc.database.Database;
+import co.com.okaeri.funkyuhc.database.Heads;
 import co.com.okaeri.funkyuhc.database.SQLite;
 import co.com.okaeri.funkyuhc.player.BlockPlaceListener;
 import co.com.okaeri.funkyuhc.player.DeathListener;
@@ -37,6 +38,8 @@ public final class FunkyUHC extends JavaPlugin {
     public int maxSize = 1500;
     public int size = maxSize;
     public List<List<String>> teams;
+    public Heads heads = new Heads(this);;
+    public co.com.okaeri.funkyuhc.database.Teams TeamDB = new co.com.okaeri.funkyuhc.database.Teams(this);
     @SuppressWarnings("FieldMayBeFinal")
     private PluginManager pm = this.getServer().getPluginManager();
 
@@ -82,6 +85,18 @@ public final class FunkyUHC extends JavaPlugin {
         this.teams = db.getTeams();
 
     }
+
+    /*
+    * Color format message
+    *
+    private String formatMessage(String message) {
+        message = this.color ? "§e[§2SkinsRestorer§e] §r" + message : message;
+        message = message + "§r";
+        message = ANSIConverter.convertToAnsi(message);
+        return message;
+    }
+    *
+    * */
 
     @Override
     public void onDisable() {
