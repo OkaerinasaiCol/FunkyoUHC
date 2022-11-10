@@ -30,14 +30,23 @@ public class SQLite extends Database{
             "'name' TEXT NOT NULL UNIQUE," +
             "'color' TEXT NOT NULL UNIQUE," +
             "'capitan' TEXT NOT NULL UNIQUE," +
-            "'players' TEXT UNIQUE," +
+            "'players' TEXT," +
             "PRIMARY KEY('id')" +
             ");";
 
     public String CreateMapSizes = "CREATE TABLE IF NOT EXISTS mapSizes(" +
             "'id' TEXT NOT NULL UNIQUE," +
-            "'size' INTEGER NOT NULL," +
+            "'size' INTEGER NOT NULL," + // FIXME: A la hora de hacer la consulta no lo toma por size; cambiar nombre
             "PRIMARY KEY('id'));";
+
+    public String CreateHeads = "CREATE TABLE IF NOT EXISTS heads(" +
+            "'owner' TEXT NOT NULL UNIQUE," +
+            "'uuid' TEXT NOT NULL UNIQUE," +
+            "'world' TEXT NOT NULL," +
+            "'coords' TEXT NOT NULL," +
+            "'placer' TEXT NOT NULL," +
+            " 'lore' TEXT NOT NULL UNIQUE," +
+            "PRIMARY KEY('owner'));";
 
     public void updateSize(int size){
         try {
@@ -86,6 +95,7 @@ public class SQLite extends Database{
             s.executeUpdate(SQLiteCreateTokensTable);
             s.executeUpdate(CreateEquips);
             s.executeUpdate(CreateMapSizes);
+            s.executeUpdate(CreateHeads);
             s.executeUpdate("insert or ignore into mapSizes values('size'," + plugin.size + ");");
             s.close();
         } catch (SQLException e) {
