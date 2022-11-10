@@ -19,7 +19,6 @@ public class roundTimeBar implements CommandExecutor {
         this.bossBar = bossBar;
     }
 
-    @SuppressWarnings("NullableProblems")
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
         // players = plugin.getServer().getOnlinePlayers();
 
