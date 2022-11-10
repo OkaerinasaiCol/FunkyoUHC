@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class BlockPlaceListener implements Listener {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
     public BlockPlaceListener(FunkyUHC plugin){
@@ -27,8 +28,10 @@ public class BlockPlaceListener implements Listener {
 
         if (item.getType() == Material.PLAYER_HEAD){
             //set metadata
+            //noinspection unused
             ItemMeta itemmeta = event.getItemInHand().getItemMeta();
             // TODO: guardar lore en la base de datos y borrar en caso de que se quite
+            plugin.heads.setHead(item, player, block);
         }
     }
 }
