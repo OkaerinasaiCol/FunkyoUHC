@@ -1,8 +1,10 @@
 package co.com.okaeri.funkyuhc.database;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
+import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class Teams {
@@ -14,7 +16,9 @@ public class Teams {
         this.plugin = plugin;
     }
 
-    public void Create(String name, @SuppressWarnings("unused") String capitan, String color) throws SQLException {
+    public boolean Create(String name, String capitan, String color) {
+
+        // Obtener lista de equipos existentes
         List<List<String>> teams = plugin.teams;
         int row = 1;
 
@@ -23,20 +27,45 @@ public class Teams {
                 break;
             } else {
                 List<String> team = teams.get(teams.size() - 1);
-                plugin.print("ids ocupados: " + team);
+                plugin.print("Rows used " + team);
                 if (!team.contains(Integer.toString(x))){
-                    plugin.print("El número " + x + " ya está ocupado " + !team.contains(Integer.toString(x)));
                     row = x;
                     break;
                     }
                 }
-
             }
 
-        plugin.print("Creating row: " + row +
-                "\nName: " + name +
-                "\nCapitan: " + name +
-                "\nColor: " + color);
+        if (teams != null) {
+            for (List<String> team : teams){
+                if (team.contains(name)){
+                    plugin.print("El equipo " + name + " ya existe");
+                    return false;
+                }
+
+                if (team.contains(capitan)){
+                    plugin.print("Solo se puede ser capitán de un equipo a la vez");
+                    return false;
+                }
+            }
+        }
+
+        try {
+            Statement statment = plugin.db.statement();
+
+            statment.executeUpdate("INSERT INTO 'main'.'equips'(" +
+                    "'id','name','color','capitan','players') VALUES " +
+                    "(" + row + ",'" + name + "','" + color + "','" + capitan +
+                    "','');");
+
+            //regenerar la lista de equipos
+            plugin.teams = plugin.db.getTeams();
+
+            return true;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
 
         }
 
