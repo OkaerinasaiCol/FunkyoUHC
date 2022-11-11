@@ -33,7 +33,8 @@ public class Teams implements CommandExecutor {
                 return false;
             case "delete":
                 plugin.print("delete");
-                return false;
+                db.Delete(args[1]);
+                return true;
             default:
                 return false;
 
