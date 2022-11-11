@@ -1,16 +1,13 @@
 package co.com.okaeri.funkyuhc.database;
 
+import co.com.okaeri.funkyuhc.FunkyUHC;
+import org.bukkit.entity.Player;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
-
-import org.bukkit.entity.Player;
-
-import co.com.okaeri.funkyuhc.database.Error; // YOU MUST IMPORT THE CLASS ERROR, AND ERRORS!!!
-import co.com.okaeri.funkyuhc.database.Errors;
-import co.com.okaeri.funkyuhc.FunkyUHC; // Import main class!
 
 
 public abstract class Database {
@@ -18,7 +15,6 @@ public abstract class Database {
     Connection connection;
     // The name of the table we created back in SQLite class.
     public String table = "players";
-    public int tokens = 0;
     public Database(FunkyUHC instance){
         plugin = instance;
     }
@@ -41,10 +37,11 @@ public abstract class Database {
 
     // These are the methods you can use to get things out of your database. You of course can make new ones to return different things in the database.
     // This returns the number of people the player killed.
+    @SuppressWarnings("unused")
     public Integer getTokens(String string) {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
+        ResultSet rs;
         try {
             conn = getSQLConnection();
             ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '"+string+"';");
@@ -70,10 +67,11 @@ public abstract class Database {
         return 0;
     }
     // Exact same method here, Except as mentioned above i am looking for total!
+    @SuppressWarnings("unused")
     public Integer getTotal(String string) {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
+        ResultSet rs;
         try {
             conn = getSQLConnection();
             ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '"+string+"';");
@@ -100,6 +98,7 @@ public abstract class Database {
     }
 
     // Now we need methods to save things to the database
+    @SuppressWarnings("unused")
     public void setTokens(Player player, Integer tokens, Integer total) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -118,7 +117,6 @@ public abstract class Database {
             // Tokens from another plugin :/
             ps.setInt(3, total);
             ps.executeUpdate();
-            return;
         } catch (SQLException ex) {
             plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
         } finally {
@@ -131,7 +129,6 @@ public abstract class Database {
                 plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionClose(), ex);
             }
         }
-        return;
     }
 
 

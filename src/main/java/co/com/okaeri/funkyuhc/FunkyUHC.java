@@ -1,9 +1,15 @@
 package co.com.okaeri.funkyuhc;
 
+import co.com.okaeri.funkyuhc.commands.TabCompleter.mapSizeTab;
+import co.com.okaeri.funkyuhc.commands.TabCompleter.teamsTab;
+import co.com.okaeri.funkyuhc.commands.Teams;
 import co.com.okaeri.funkyuhc.commands.mapSize;
 import co.com.okaeri.funkyuhc.commands.roundTimeBar;
 import co.com.okaeri.funkyuhc.database.Database;
+import co.com.okaeri.funkyuhc.database.Heads;
 import co.com.okaeri.funkyuhc.database.SQLite;
+import co.com.okaeri.funkyuhc.player.BlockDestroyListener;
+import co.com.okaeri.funkyuhc.player.BlockPlaceListener;
 import co.com.okaeri.funkyuhc.player.DeathListener;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -16,6 +22,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
+
 public final class FunkyUHC extends JavaPlugin {
     
     PluginDescriptionFile descriptionFile = getDescription();
@@ -26,10 +34,14 @@ public final class FunkyUHC extends JavaPlugin {
     public String creatorWebsite = descriptionFile.getWebsite();
     public String apiDesc = descriptionFile.getDescription();
     public SQLite db;
-    public BossBar timeBar;
+    public BossBar timeBar = Bukkit.createBossBar("Tiempo hasta la ronda #", BarColor.BLUE, BarStyle.SEGMENTED_12);
     public WorldBorder wb;
     public int maxSize = 1500;
     public int size = maxSize;
+    public List<List<String>> teams;
+    public Heads heads = new Heads(this);
+    public co.com.okaeri.funkyuhc.database.Teams TeamDB = new co.com.okaeri.funkyuhc.database.Teams(this);
+    @SuppressWarnings("FieldMayBeFinal")
     private PluginManager pm = this.getServer().getPluginManager();
 
     @Override
@@ -61,14 +73,31 @@ public final class FunkyUHC extends JavaPlugin {
         wb.setCenter(0,0);
         wb.setSize(maxSize * 2);
 
-        // inicailizar lo que se ejecuta al morir
-        new DeathListener(this);
-
         // agregar registro de muertes
         this.pm.registerEvents(new DeathListener(this), this);
-        this.timeBar = Bukkit.createBossBar("Tiempo hasta la ronda #", BarColor.BLUE, BarStyle.SEGMENTED_12);
+
+        // agregar registro de colacion de bloques
+        this.pm.registerEvents(new BlockPlaceListener(this), this);
+
+        // agregar registro de destrucción de bloques
+        this.pm.registerEvents(new BlockDestroyListener(this), this);
+
+        // Cargar teams almacenados en la base de datos
+        this.teams = db.getTeams();
 
     }
+
+    /*
+    * Color format message
+    *
+    private String formatMessage(String message) {
+        message = this.color ? "§e[§2SkinsRestorer§e] §r" + message : message;
+        message = message + "§r";
+        message = ANSIConverter.convertToAnsi(message);
+        return message;
+    }
+    *
+    * */
 
     @Override
     public void onDisable() {
@@ -85,6 +114,7 @@ public final class FunkyUHC extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Color.GREEN + "[" + pluginName + "]" + Color.WHITE + data);
     }
 
+    @SuppressWarnings("unused")
     public Database getRDatabase(){
         return this.db;
     }
@@ -102,6 +132,11 @@ public final class FunkyUHC extends JavaPlugin {
     @SuppressWarnings("ConstantConditions")
     public void RegistrarComandos(){
         this.getCommand("mapSize").setExecutor(new mapSize(this));
+        this.getCommand("mapSize").setTabCompleter(new mapSizeTab(this));
+
         this.getCommand("timeBar").setExecutor(new roundTimeBar(this, timeBar));
+
+        this.getCommand("teams").setExecutor(new Teams(this));
+        this.getCommand("teams").setTabCompleter(new teamsTab(this));
     }
 }
