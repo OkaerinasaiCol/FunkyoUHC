@@ -61,8 +61,8 @@ public class Heads {
             String owner = data.getString("owner");
             plugin.print(uuid);
 
-            //FIXME: error al boorar
-            statment.executeUpdate("DELETE * FROM heads WHERE owner = \"" + owner + "\";");
+            //FIXME: error al boorar // DELETE FROM "main"."heads" WHERE owner IN ('adasda');
+            statment.executeUpdate("DELETE FROM 'main'.'heads' WHERE owner IN ('" + owner + "');");
 
             List<String> player = new ArrayList<>();
             player.add(uuid);
