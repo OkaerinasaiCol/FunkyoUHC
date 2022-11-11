@@ -32,6 +32,7 @@ public class Teams implements CommandExecutor {
                 }
                 return false;
             case "delete":
+                // TODO: verificador de que se tenga un argumento y que el argumento este en la lista de equipos de la base de datos
                 plugin.print("delete");
                 db.Delete(args[1]);
                 return true;
