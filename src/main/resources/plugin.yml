@@ -19,3 +19,6 @@ commands:
 
   regeneration:
     description: Comandos referentes a la regeneración
+
+  uhc:
+    description: Comando principal del uhc
