@@ -14,6 +14,7 @@ import java.util.List;
 
 public class Heads {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
     public Heads(FunkyUHC plugin){
