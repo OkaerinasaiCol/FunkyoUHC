@@ -43,4 +43,24 @@ public class Head {
         return item;
     }
 
+    public ItemStack getPlayerHead(PlayerProfile profile){
+        ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
+
+        // TODO: colocar la skin desde el skin restorer si es posible
+
+        SkullMeta meta = (SkullMeta) item.getItemMeta();
+
+        //noinspection ConstantConditions
+        meta.setOwnerProfile(profile);
+        meta.setDisplayName("Cabeza de " + profile.getName());
+
+        List<String> lore = Arrays.asList("Cabeza de: " + profile.getName(), "uuid: " + profile.getUniqueId());
+
+        meta.setLore(lore);
+
+        item.setItemMeta(meta);
+
+        return item;
+    }
+
 }
