@@ -15,6 +15,9 @@ public class Teams {
         this.plugin = plugin;
     }
 
+    //TODO: agregar funciones para editar nombre, cambiar color, creacion y modificacion compañeros de equipo
+
+    @SuppressWarnings("UnusedReturnValue")
     public boolean Create(String name, String capitan, String color) {
 
         // Obtener lista de equipos existentes
