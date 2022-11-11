@@ -28,6 +28,9 @@ public class DeathListener implements Listener{
 
         plugin.print(e.getEntity() + " death " + e.getEntity().getLastDamageCause() + e.getEntity().getKiller());
         plugin.print("death id" + e.getEntity().getUniqueId());
+
+        // TODO: Poner al jugador en modo espectador
+
     }
 
 
