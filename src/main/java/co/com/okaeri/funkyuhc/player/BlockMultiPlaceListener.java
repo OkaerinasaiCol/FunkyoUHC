@@ -4,13 +4,13 @@ import co.com.okaeri.funkyuhc.FunkyUHC;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 public class BlockMultiPlaceListener implements Listener {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
     public BlockMultiPlaceListener(FunkyUHC plugin){

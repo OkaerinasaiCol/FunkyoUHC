@@ -1,13 +1,13 @@
 package co.com.okaeri.funkyuhc.database;
 
+import co.com.okaeri.funkyuhc.FunkyUHC;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-
-import co.com.okaeri.funkyuhc.FunkyUHC; // import your main class
 
 
 public class SQLite extends Database{

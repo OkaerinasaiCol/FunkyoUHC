@@ -1,6 +1,5 @@
 package co.com.okaeri.funkyuhc.util;
 
-import com.google.gson.JsonParser;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -8,24 +7,20 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 public class Head {
 
     public ItemStack getPlayerHead(Player p){
         ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
 
+        //noinspection unused
         PlayerProfile profile = p.getPlayerProfile();
         // TODO: colocar la skin desde el skin restorer si es posible
 
         PlayerProfile p_profile = p.getPlayerProfile();
+        //noinspection unused
         PlayerTextures p_textures = p_profile.getTextures();
 
         SkullMeta meta = (SkullMeta) item.getItemMeta();

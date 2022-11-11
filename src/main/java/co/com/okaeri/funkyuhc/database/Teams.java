@@ -1,7 +1,6 @@
 package co.com.okaeri.funkyuhc.database;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
-import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -67,6 +66,6 @@ public class Teams {
             return false;
         }
 
-        }
+    }
 
 }

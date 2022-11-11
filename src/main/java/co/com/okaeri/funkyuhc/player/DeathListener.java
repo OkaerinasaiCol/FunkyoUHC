@@ -1,12 +1,12 @@
 package co.com.okaeri.funkyuhc.player;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
+import co.com.okaeri.funkyuhc.util.Head;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import co.com.okaeri.funkyuhc.util.Head;
 
 public class DeathListener implements Listener{
 

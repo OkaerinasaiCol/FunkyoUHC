@@ -1,14 +1,13 @@
 package co.com.okaeri.funkyuhc.database;
 
+import co.com.okaeri.funkyuhc.FunkyUHC;
+import org.bukkit.entity.Player;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
-
-import org.bukkit.entity.Player;
-
-import co.com.okaeri.funkyuhc.FunkyUHC; // Import main class!
 
 
 public abstract class Database {

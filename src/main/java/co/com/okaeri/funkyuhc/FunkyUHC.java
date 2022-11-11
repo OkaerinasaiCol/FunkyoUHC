@@ -1,5 +1,6 @@
 package co.com.okaeri.funkyuhc;
 
+import co.com.okaeri.funkyuhc.commands.TabCompleter.mapSizeTab;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.teamsTab;
 import co.com.okaeri.funkyuhc.commands.Teams;
 import co.com.okaeri.funkyuhc.commands.mapSize;
@@ -8,10 +9,8 @@ import co.com.okaeri.funkyuhc.database.Database;
 import co.com.okaeri.funkyuhc.database.Heads;
 import co.com.okaeri.funkyuhc.database.SQLite;
 import co.com.okaeri.funkyuhc.player.BlockDestroyListener;
-import co.com.okaeri.funkyuhc.player.BlockMultiPlaceListener;
 import co.com.okaeri.funkyuhc.player.BlockPlaceListener;
 import co.com.okaeri.funkyuhc.player.DeathListener;
-import co.com.okaeri.funkyuhc.commands.TabCompleter.mapSizeTab;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -35,12 +34,12 @@ public final class FunkyUHC extends JavaPlugin {
     public String creatorWebsite = descriptionFile.getWebsite();
     public String apiDesc = descriptionFile.getDescription();
     public SQLite db;
-    public BossBar timeBar = Bukkit.createBossBar("Tiempo hasta la ronda #", BarColor.BLUE, BarStyle.SEGMENTED_12);;
+    public BossBar timeBar = Bukkit.createBossBar("Tiempo hasta la ronda #", BarColor.BLUE, BarStyle.SEGMENTED_12);
     public WorldBorder wb;
     public int maxSize = 1500;
     public int size = maxSize;
     public List<List<String>> teams;
-    public Heads heads = new Heads(this);;
+    public Heads heads = new Heads(this);
     public co.com.okaeri.funkyuhc.database.Teams TeamDB = new co.com.okaeri.funkyuhc.database.Teams(this);
     @SuppressWarnings("FieldMayBeFinal")
     private PluginManager pm = this.getServer().getPluginManager();
