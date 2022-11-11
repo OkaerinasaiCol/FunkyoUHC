@@ -7,6 +7,8 @@ import co.com.okaeri.funkyuhc.commands.roundTimeBar;
 import co.com.okaeri.funkyuhc.database.Database;
 import co.com.okaeri.funkyuhc.database.Heads;
 import co.com.okaeri.funkyuhc.database.SQLite;
+import co.com.okaeri.funkyuhc.player.BlockDestroyListener;
+import co.com.okaeri.funkyuhc.player.BlockMultiPlaceListener;
 import co.com.okaeri.funkyuhc.player.BlockPlaceListener;
 import co.com.okaeri.funkyuhc.player.DeathListener;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.mapSizeTab;
@@ -72,14 +74,14 @@ public final class FunkyUHC extends JavaPlugin {
         wb.setCenter(0,0);
         wb.setSize(maxSize * 2);
 
-        // inicailizar lo que se ejecuta al morir
-        new DeathListener(this);
-
-        // inicializar placeblock listener
-        new BlockPlaceListener(this);
-
         // agregar registro de muertes
         this.pm.registerEvents(new DeathListener(this), this);
+
+        // agregar registro de colacion de bloques
+        this.pm.registerEvents(new BlockPlaceListener(this), this);
+
+        // agregar registro de destrucción de bloques
+        this.pm.registerEvents(new BlockDestroyListener(this), this);
 
         // Cargar teams almacenados en la base de datos
         this.teams = db.getTeams();
