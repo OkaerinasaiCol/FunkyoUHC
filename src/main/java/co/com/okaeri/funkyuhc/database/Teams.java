@@ -71,4 +71,35 @@ public class Teams {
 
     }
 
+    @SuppressWarnings("UnusedReturnValue")
+    public boolean Delete(String name) {
+
+        // Obtener lista de equipos existentes
+        List<List<String>> teams = plugin.teams;
+
+        if (teams != null) {
+            for (List<String> team : teams) {
+                if (team.contains(name)) {
+                    try {
+                        plugin.print("Borrando el equipo: " + name);
+
+                        Statement statment = plugin.db.statement();
+
+                        statment.executeUpdate("DELETE FROM 'main'.'equips' WHERE name IN ('" + name + "');");
+
+                        plugin.print("Equipo borrado con exito" + name);
+
+                        //regenerar la lista de equipos
+                        plugin.teams = plugin.db.getTeams();
+
+                        return true;
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        return false;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
