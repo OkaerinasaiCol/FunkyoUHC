@@ -94,6 +94,14 @@ public final class FunkyUHC extends JavaPlugin {
         // Cargar teams almacenados en la base de datos
         this.teams = db.getTeams();
 
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            public void run() {
+                if (UhcTimerStarted) {
+                    UhcTimerDuration = Duration.between(startTime, LocalDateTime.now());
+                }
+            }
+        }, 10, 20L);
+
     }
 
     /*
