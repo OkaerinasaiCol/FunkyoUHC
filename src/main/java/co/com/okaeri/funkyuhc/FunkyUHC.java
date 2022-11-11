@@ -1,5 +1,6 @@
 package co.com.okaeri.funkyuhc;
 
+import co.com.okaeri.funkyuhc.commands.Regeneration;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.mapSizeTab;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.teamsTab;
 import co.com.okaeri.funkyuhc.commands.Teams;
@@ -138,5 +139,7 @@ public final class FunkyUHC extends JavaPlugin {
 
         this.getCommand("teams").setExecutor(new Teams(this));
         this.getCommand("teams").setTabCompleter(new teamsTab(this));
+
+        this.getCommand("regeneration").setExecutor(new Regeneration(this));
     }
 }
