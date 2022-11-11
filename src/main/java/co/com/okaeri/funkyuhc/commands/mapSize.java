@@ -8,12 +8,14 @@ import org.bukkit.entity.Player;
 
 public class mapSize implements CommandExecutor{
 
+    @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
     public mapSize(FunkyUHC main){
         this.plugin = main;
     }
 
+    @SuppressWarnings("NullableProblems")
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(!(sender instanceof Player)) {
@@ -36,6 +38,26 @@ public class mapSize implements CommandExecutor{
                 return false;
             }
         }else {
+            if (sender.isOp()){
+                if (args.length == 0) {
+                    size();
+                    return true;
+                } else if (args.length == 2) { // Todo: verificar que el argumento [1] sea un entero
+                    switch (args[0].toLowerCase()) {
+                        case "setmax":
+                            setMax(Integer.parseInt(args[1]));
+                            return true;
+                        case "set":
+                            setSize(Integer.parseInt(args[1]));
+                            return true;
+                        default:
+                            return false;
+                    }
+
+                } else {
+                    return false;
+                }
+            }
             return false;
         }
     }
@@ -46,11 +68,13 @@ public class mapSize implements CommandExecutor{
     }
 
     public void setSize(int value){
+        // Todo: hacer que se vaya achicando poco a poco
         plugin.changeSize(value);
         plugin.db.updateSize(value);
         plugin.print("Tamaño del mapa cambiado a: " + value);
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     private int size(){
         plugin.print(String.valueOf(plugin.size));
         return plugin.size;
