@@ -1,11 +1,9 @@
 package co.com.okaeri.funkyuhc;
 
-import co.com.okaeri.funkyuhc.commands.Regeneration;
+import co.com.okaeri.funkyuhc.commands.*;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.mapSizeTab;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.teamsTab;
-import co.com.okaeri.funkyuhc.commands.Teams;
-import co.com.okaeri.funkyuhc.commands.mapSize;
-import co.com.okaeri.funkyuhc.commands.roundTimeBar;
+import co.com.okaeri.funkyuhc.controller.GetTime;
 import co.com.okaeri.funkyuhc.database.Database;
 import co.com.okaeri.funkyuhc.database.Heads;
 import co.com.okaeri.funkyuhc.database.SQLite;
@@ -22,7 +20,10 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public final class FunkyUHC extends JavaPlugin {
@@ -68,6 +69,7 @@ public final class FunkyUHC extends JavaPlugin {
         print("Creator Website: " + creatorWebsite);
         print(Color.GREEN + "<------------------------------------------>");
         consoleInfo("Plugin inicializado con exito");
+        startTime = LocalDateTime.now();
 
         // Inicializar base de datos y cargar
         this.db = new SQLite(this);
@@ -121,6 +123,7 @@ public final class FunkyUHC extends JavaPlugin {
         print(Color.GREEN + "<------------------------------------------>");
         consoleInfo("Plugin deshabilitado");
         print(Color.GREEN + "<------------------------------------------>");
+        // TODO: agregar StopUHC aqui para que cuando se deshabilite el plugin
     }
 
     public void print(String data){
@@ -160,4 +163,5 @@ public final class FunkyUHC extends JavaPlugin {
 
         this.getCommand("uhc").setExecutor(new UhcController(this));
     }
+
 }
