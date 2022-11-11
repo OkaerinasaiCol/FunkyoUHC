@@ -6,8 +6,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Heads {
@@ -45,8 +48,33 @@ public class Heads {
         } catch (SQLException e){
             e.printStackTrace();
         }
-        // Todo: hacer el metodo para consultar en la base de datos por los datos de la cabeza
-        // SELECT * FROM mapSizes WHERE id = "size_";
+    }
+
+    public List<String> getHead(Block block){
+        try {
+            Statement statment = plugin.db.statement();
+
+            ResultSet data = statment.executeQuery("SELECT * FROM heads WHERE coords =\"" +
+                    block.getLocation() + "\";");
+
+            String uuid = data.getString("uuid");
+            String owner = data.getString("owner");
+            plugin.print(uuid);
+
+            //FIXME: error al boorar
+            statment.executeUpdate("DELETE * FROM heads WHERE owner = \"" + owner + "\";");
+
+            List<String> player = new ArrayList<>();
+            player.add(uuid);
+            player.add(owner);
+
+            return player;
+
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
