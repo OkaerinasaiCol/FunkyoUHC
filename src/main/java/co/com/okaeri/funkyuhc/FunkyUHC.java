@@ -44,6 +44,14 @@ public final class FunkyUHC extends JavaPlugin {
     public co.com.okaeri.funkyuhc.database.Teams TeamDB = new co.com.okaeri.funkyuhc.database.Teams(this);
     @SuppressWarnings("FieldMayBeFinal")
     private PluginManager pm = this.getServer().getPluginManager();
+    public boolean UhcTimerStarted;
+    public boolean UhcTimerPaused;
+    public boolean UhcStarted;
+    public Duration UhcTimerDuration;
+
+    public GetTime timer = new GetTime();
+
+    LocalDateTime startTime;
 
     @Override
     public void onEnable() {
@@ -141,5 +149,7 @@ public final class FunkyUHC extends JavaPlugin {
         this.getCommand("teams").setTabCompleter(new teamsTab(this));
 
         this.getCommand("regeneration").setExecutor(new Regeneration(this));
+
+        this.getCommand("uhc").setExecutor(new UhcController(this));
     }
 }
