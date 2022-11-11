@@ -22,7 +22,10 @@ public class Teams implements CommandExecutor {
 
     @SuppressWarnings("NullableProblems")
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
+
         // TODO: mejorar el manejo de argumentos
+        // FIXME: arreglar el que no se puedan colocar nombres de equipo con espacios
+
         switch (args[0].toLowerCase()) {
             case "create":
                 if (args.length == 4) {
