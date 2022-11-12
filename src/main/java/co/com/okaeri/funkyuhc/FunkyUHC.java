@@ -10,6 +10,7 @@ import co.com.okaeri.funkyuhc.database.SQLite;
 import co.com.okaeri.funkyuhc.player.BlockDestroyListener;
 import co.com.okaeri.funkyuhc.player.BlockPlaceListener;
 import co.com.okaeri.funkyuhc.player.DeathListener;
+import fr.mrmicky.fastboard.FastBoard;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -17,14 +18,16 @@ import org.bukkit.WorldBorder;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class FunkyUHC extends JavaPlugin {
     
@@ -49,6 +52,7 @@ public final class FunkyUHC extends JavaPlugin {
     public boolean UhcTimerPaused;
     public boolean UhcStarted;
     public Duration UhcTimerDuration;
+    public Map<Player, FastBoard> boards = new HashMap<>();
 
     public GetTime timer = new GetTime();
 
@@ -70,6 +74,7 @@ public final class FunkyUHC extends JavaPlugin {
         print(Color.GREEN + "<------------------------------------------>");
         consoleInfo("Plugin inicializado con exito");
         startTime = LocalDateTime.now();
+
 
         // Inicializar base de datos y cargar
         this.db = new SQLite(this);
@@ -120,6 +125,7 @@ public final class FunkyUHC extends JavaPlugin {
 
     @Override
     public void onDisable() {
+
         print(Color.GREEN + "<------------------------------------------>");
         consoleInfo("Plugin deshabilitado");
         print(Color.GREEN + "<------------------------------------------>");
@@ -162,6 +168,8 @@ public final class FunkyUHC extends JavaPlugin {
         this.getCommand("regeneration").setExecutor(new Regeneration(this));
 
         this.getCommand("uhc").setExecutor(new UhcController(this));
+
+        this.getCommand("score").setExecutor(new ScoreBoard(this));
     }
 
 }
