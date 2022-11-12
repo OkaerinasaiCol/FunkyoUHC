@@ -22,3 +22,6 @@ commands:
 
   uhc:
     description: Comando principal del uhc
+
+  score:
+    description: Comando de scoreboard
