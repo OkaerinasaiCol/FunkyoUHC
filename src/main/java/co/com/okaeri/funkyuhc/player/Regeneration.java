@@ -12,6 +12,7 @@ public class Regeneration {
     public Regeneration(FunkyUHC plugin){
         this.plugin = plugin;
         isEnabled = true; // TODO: configurar para obtener de si el uhc está en curso o no
+                            // FIXME: sigue dejando que se cure con comida
     }
 
     public void enableRegeneration(){
