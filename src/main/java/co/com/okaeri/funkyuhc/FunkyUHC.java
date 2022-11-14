@@ -10,6 +10,8 @@ import co.com.okaeri.funkyuhc.database.SQLite;
 import co.com.okaeri.funkyuhc.player.BlockDestroyListener;
 import co.com.okaeri.funkyuhc.player.BlockPlaceListener;
 import co.com.okaeri.funkyuhc.player.DeathListener;
+import co.com.okaeri.funkyuhc.player.ScoreManager;
+import co.com.okaeri.funkyuhc.util.Colors;
 import fr.mrmicky.fastboard.FastBoard;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -49,20 +51,23 @@ public final class FunkyUHC extends JavaPlugin {
     @SuppressWarnings("FieldMayBeFinal")
     private PluginManager pm = this.getServer().getPluginManager();
     public boolean UhcTimerStarted;
+    @SuppressWarnings("unused")
     public boolean UhcTimerPaused;
     public boolean UhcStarted;
     public Duration UhcTimerDuration;
     public Map<Player, FastBoard> boards = new HashMap<>();
+    public Colors colors = new Colors();
+    public ScoreManager manager;
 
     public GetTime timer = new GetTime();
 
-    LocalDateTime startTime;
+    public LocalDateTime startTime;
 
     @Override
     public void onEnable() {
 
         // Imprimir informacion del plugin al inicar el servidor
-        print(Color.GREEN + "<------------------------------------------>");
+        print(colors.green + "<------------------------------------------>");
         print(StringUtils.center(pluginName, 44));
         print("");
         print("Version: " + pluginVersion);
@@ -71,9 +76,8 @@ public final class FunkyUHC extends JavaPlugin {
         print(apiDesc);
         print("");
         print("Creator Website: " + creatorWebsite);
-        print(Color.GREEN + "<------------------------------------------>");
+        print(colors.green + "<------------------------------------------>");
         consoleInfo("Plugin inicializado con exito");
-        startTime = LocalDateTime.now();
 
 
         // Inicializar base de datos y cargar
@@ -101,10 +105,15 @@ public final class FunkyUHC extends JavaPlugin {
         // Cargar teams almacenados en la base de datos
         this.teams = db.getTeams();
 
+        // Cargar manager de scoreboards
+        this.manager = new ScoreManager(this);
+
+        //noinspection Convert2Lambda
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             public void run() {
                 if (UhcTimerStarted) {
                     UhcTimerDuration = Duration.between(startTime, LocalDateTime.now());
+                    manager.UpdateBoard();
                 }
             }
         }, 10, 20L);
