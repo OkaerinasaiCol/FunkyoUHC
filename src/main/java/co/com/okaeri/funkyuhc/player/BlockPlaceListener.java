@@ -31,7 +31,6 @@ public class BlockPlaceListener implements Listener {
         Player player = event.getPlayer();
         ItemStack item = event.getItemInHand();
         Block block = event.getBlockPlaced();
-        // plugin.print("Placed: " + item.getType());
 
         if (item.getType() == Material.PLAYER_HEAD){
 
@@ -73,33 +72,23 @@ public class BlockPlaceListener implements Listener {
 
         Block c_block = block.getRelative(2, 0, 0);
 
-        plugin.print("" + c_block.getType());
-
         if (c_block.getType().equals(Material.SOUL_FIRE)){
-            structure.add(block.getRelative(2, 1, 0));
-
-            plugin.print("derecha SOUL_FIRE");
+            structure.add(block.getRelative(2, -1, 0));
 
             c_block = block.getRelative(1, 0, 0);
 
             if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
                 structure.add(c_block);
 
-                plugin.print("derecha DIAMOND_BLOCK");
-
                 c_block = block.getRelative(1,1,0);
 
                 if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
                     structure.add(c_block);
 
-                    plugin.print("derecha DIAMOND_BLOCK");
-
                     c_block = block.getRelative(1, 2,0);
 
                     if (c_block.getType().equals(Material.PLAYER_HEAD)){
                         structure.add(c_block);
-
-                        plugin.print("derecha PLAYER_HEAD");
 
                         Heads h = new Heads(plugin);
 
@@ -119,8 +108,6 @@ public class BlockPlaceListener implements Listener {
 
             }
         }
-
-        plugin.print("Revivir derecha");
     }
 
     @SuppressWarnings("ReassignedVariable")
@@ -128,35 +115,25 @@ public class BlockPlaceListener implements Listener {
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
-        Block c_block = block.getRelative(2, 0, 0);
-
-        plugin.print("" + c_block.getType());
+        Block c_block = block.getRelative(-2, 0, 0);
 
         if (c_block.getType().equals(Material.SOUL_FIRE)){
-            structure.add(block.getRelative(2, 1, 0));
+            structure.add(block.getRelative(-2, -1, 0));
 
-            plugin.print("derecha SOUL_FIRE");
-
-            c_block = block.getRelative(1, 0, 0);
+            c_block = block.getRelative(-1, 0, 0);
 
             if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
                 structure.add(c_block);
 
-                plugin.print("derecha DIAMOND_BLOCK");
-
-                c_block = block.getRelative(1,1,0);
+                c_block = block.getRelative(-1,1,0);
 
                 if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
                     structure.add(c_block);
 
-                    plugin.print("derecha DIAMOND_BLOCK");
-
-                    c_block = block.getRelative(1, 2,0);
+                    c_block = block.getRelative(-1, 2,0);
 
                     if (c_block.getType().equals(Material.PLAYER_HEAD)){
                         structure.add(c_block);
-
-                        plugin.print("derecha PLAYER_HEAD");
 
                         Heads h = new Heads(plugin);
 
@@ -176,8 +153,6 @@ public class BlockPlaceListener implements Listener {
 
             }
         }
-
-        plugin.print("Revivir derecha");
     }
 
     @SuppressWarnings("ReassignedVariable")
@@ -185,35 +160,25 @@ public class BlockPlaceListener implements Listener {
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
-        Block c_block = block.getRelative(2, 0, 0);
-
-        plugin.print("" + c_block.getType());
+        Block c_block = block.getRelative(0, 0, -2);
 
         if (c_block.getType().equals(Material.SOUL_FIRE)){
-            structure.add(block.getRelative(2, 1, 0));
+            structure.add(block.getRelative(0, -1, -2));
 
-            plugin.print("derecha SOUL_FIRE");
-
-            c_block = block.getRelative(1, 0, 0);
+            c_block = block.getRelative(0, 0, -1);
 
             if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
                 structure.add(c_block);
 
-                plugin.print("derecha DIAMOND_BLOCK");
-
-                c_block = block.getRelative(1,1,0);
+                c_block = block.getRelative(0,1,-1);
 
                 if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
                     structure.add(c_block);
 
-                    plugin.print("derecha DIAMOND_BLOCK");
-
-                    c_block = block.getRelative(1, 2,0);
+                    c_block = block.getRelative(0, 2,-1);
 
                     if (c_block.getType().equals(Material.PLAYER_HEAD)){
                         structure.add(c_block);
-
-                        plugin.print("derecha PLAYER_HEAD");
 
                         Heads h = new Heads(plugin);
 
@@ -233,8 +198,6 @@ public class BlockPlaceListener implements Listener {
 
             }
         }
-
-        plugin.print("Revivir derecha");
     }
 
     @SuppressWarnings("ReassignedVariable")
@@ -242,35 +205,25 @@ public class BlockPlaceListener implements Listener {
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
-        Block c_block = block.getRelative(2, 0, 0);
-
-        plugin.print("" + c_block.getType());
+        Block c_block = block.getRelative(0, 0, 2);
 
         if (c_block.getType().equals(Material.SOUL_FIRE)){
-            structure.add(block.getRelative(2, 1, 0));
+            structure.add(block.getRelative(0, -1, 2));
 
-            plugin.print("derecha SOUL_FIRE");
-
-            c_block = block.getRelative(1, 0, 0);
+            c_block = block.getRelative(0, 0, 1);
 
             if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
                 structure.add(c_block);
 
-                plugin.print("derecha DIAMOND_BLOCK");
-
-                c_block = block.getRelative(1,1,0);
+                c_block = block.getRelative(0,1,1);
 
                 if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
                     structure.add(c_block);
 
-                    plugin.print("derecha DIAMOND_BLOCK");
-
-                    c_block = block.getRelative(1, 2,0);
+                    c_block = block.getRelative(0, 2,1);
 
                     if (c_block.getType().equals(Material.PLAYER_HEAD)){
                         structure.add(c_block);
-
-                        plugin.print("derecha PLAYER_HEAD");
 
                         Heads h = new Heads(plugin);
 
@@ -290,8 +243,6 @@ public class BlockPlaceListener implements Listener {
 
             }
         }
-
-        plugin.print("Revivir derecha");
     }
 
     public void revive(UUID player, Block head, List<Block> structure){
