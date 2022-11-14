@@ -25,3 +25,10 @@ commands:
 
   score:
     description: Comando de scoreboard
+
+  global:
+    description: Enviar un chat a todos los equipos
+    aliases:
+      - g
+      - G
+      - GLOBAL
