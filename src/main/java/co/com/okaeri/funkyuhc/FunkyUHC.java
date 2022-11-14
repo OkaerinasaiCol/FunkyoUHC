@@ -1,16 +1,18 @@
 package co.com.okaeri.funkyuhc;
 
+import co.com.okaeri.funkyuhc.commands.*;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.mapSizeTab;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.teamsTab;
-import co.com.okaeri.funkyuhc.commands.Teams;
-import co.com.okaeri.funkyuhc.commands.mapSize;
-import co.com.okaeri.funkyuhc.commands.roundTimeBar;
+import co.com.okaeri.funkyuhc.controller.GetTime;
 import co.com.okaeri.funkyuhc.database.Database;
 import co.com.okaeri.funkyuhc.database.Heads;
 import co.com.okaeri.funkyuhc.database.SQLite;
 import co.com.okaeri.funkyuhc.player.BlockDestroyListener;
 import co.com.okaeri.funkyuhc.player.BlockPlaceListener;
 import co.com.okaeri.funkyuhc.player.DeathListener;
+import co.com.okaeri.funkyuhc.player.ScoreManager;
+import co.com.okaeri.funkyuhc.util.Colors;
+import fr.mrmicky.fastboard.FastBoard;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -18,11 +20,16 @@ import org.bukkit.WorldBorder;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class FunkyUHC extends JavaPlugin {
     
@@ -43,12 +50,24 @@ public final class FunkyUHC extends JavaPlugin {
     public co.com.okaeri.funkyuhc.database.Teams TeamDB = new co.com.okaeri.funkyuhc.database.Teams(this);
     @SuppressWarnings("FieldMayBeFinal")
     private PluginManager pm = this.getServer().getPluginManager();
+    public boolean UhcTimerStarted;
+    @SuppressWarnings("unused")
+    public boolean UhcTimerPaused;
+    public boolean UhcStarted;
+    public Duration UhcTimerDuration;
+    public Map<Player, FastBoard> boards = new HashMap<>();
+    public Colors colors = new Colors();
+    public ScoreManager manager;
+
+    public GetTime timer = new GetTime();
+
+    public LocalDateTime startTime;
 
     @Override
     public void onEnable() {
 
         // Imprimir informacion del plugin al inicar el servidor
-        print(Color.GREEN + "<------------------------------------------>");
+        print(colors.green + "<------------------------------------------>");
         print(StringUtils.center(pluginName, 44));
         print("");
         print("Version: " + pluginVersion);
@@ -57,8 +76,9 @@ public final class FunkyUHC extends JavaPlugin {
         print(apiDesc);
         print("");
         print("Creator Website: " + creatorWebsite);
-        print(Color.GREEN + "<------------------------------------------>");
+        print(colors.green + "<------------------------------------------>");
         consoleInfo("Plugin inicializado con exito");
+
 
         // Inicializar base de datos y cargar
         this.db = new SQLite(this);
@@ -85,6 +105,19 @@ public final class FunkyUHC extends JavaPlugin {
         // Cargar teams almacenados en la base de datos
         this.teams = db.getTeams();
 
+        // Cargar manager de scoreboards
+        this.manager = new ScoreManager(this);
+
+        //noinspection Convert2Lambda
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            public void run() {
+                if (UhcTimerStarted) {
+                    UhcTimerDuration = Duration.between(startTime, LocalDateTime.now());
+                    manager.UpdateBoard();
+                }
+            }
+        }, 10, 20L);
+
     }
 
     /*
@@ -101,9 +134,11 @@ public final class FunkyUHC extends JavaPlugin {
 
     @Override
     public void onDisable() {
+
         print(Color.GREEN + "<------------------------------------------>");
         consoleInfo("Plugin deshabilitado");
         print(Color.GREEN + "<------------------------------------------>");
+        // TODO: agregar StopUHC aqui para que cuando se deshabilite el plugin
     }
 
     public void print(String data){
@@ -138,5 +173,12 @@ public final class FunkyUHC extends JavaPlugin {
 
         this.getCommand("teams").setExecutor(new Teams(this));
         this.getCommand("teams").setTabCompleter(new teamsTab(this));
+
+        this.getCommand("regeneration").setExecutor(new Regeneration(this));
+
+        this.getCommand("uhc").setExecutor(new UhcController(this));
+
+        this.getCommand("score").setExecutor(new ScoreBoard(this));
     }
+
 }

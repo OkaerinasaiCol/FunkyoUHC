@@ -11,6 +11,16 @@ public class mapSize implements CommandExecutor{
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
+    /**
+     * Funcion para controlar el tamaño del woldborder, para cambiar el comando con el que se ejecuta esta
+     * funcion se debe de cambiar en {@link FunkyUHC} donde se inicializan los comandos y dentro del apartado
+     * comandos del archivo de configuración plugin.yml
+     * <p></p>
+     * Comandos disponibles: <p>
+     * - setMax <p>
+     * - set
+     * @param main la clase principal del plugin
+     */
     public mapSize(FunkyUHC main){
         this.plugin = main;
     }

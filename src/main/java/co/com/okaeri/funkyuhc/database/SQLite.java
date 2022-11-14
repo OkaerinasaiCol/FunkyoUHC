@@ -18,18 +18,21 @@ public class SQLite extends Database{
     }
 
     public String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS players (" + // make sure to put your table name in here too.
-            "`player` TEXT NOT NULL," + // This creates the different colums you will save data too. varchar(32) Is a string, int = integer
-            "`name` TEXT NOT NULL," +
-            "`total` INTEGER NOT NULL," +
+            "`player` TEXT NOT NULL UNIQUE," + // This creates the different colums you will save data too. varchar(32) Is a string, int = integer
+            "`uuid` TEXT NOT NULL UNIQUE," +
+            "`kills` INTEGER NOT NULL," +
+            "`death` INTEGER NOT NULL," +
+            "`team` TEXT," +
             "PRIMARY KEY (`player`)" +  // This is creating 3 colums Player, Kills, Total. Primary key is what you are going to use as your indexer. Here we want to use player so
             ");"; // we can search by player, and get kills and total. If you some how were searching kills it would provide total and player.
 
 
     public String CreateEquips = "CREATE TABLE IF NOT EXISTS equips (" +
-            "'id' INTEGER NOT NULL UNIQUE," +
+            "'id' INTEGER NOT NULL UNIQUE," + //TODO: quitar id por no uso
             "'name' TEXT NOT NULL UNIQUE," +
             "'color' TEXT NOT NULL UNIQUE," +
             "'capitan' TEXT NOT NULL UNIQUE," +
+            "'kills' INTEGER NOT NULL," +
             "'players' TEXT," +
             "PRIMARY KEY('id')" +
             ");";
