@@ -172,6 +172,10 @@ public class BlockPlaceListener implements Listener {
             }
         }
 
+        plugin.print("Revivir derecha");
+    }
+
+    @SuppressWarnings("ReassignedVariable")
     private void backOrient(Block block, List<Block> structure){
         plugin.print("Revivir atras");
     }
