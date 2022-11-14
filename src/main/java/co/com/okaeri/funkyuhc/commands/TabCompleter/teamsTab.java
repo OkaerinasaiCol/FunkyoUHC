@@ -60,9 +60,7 @@ public class teamsTab implements TabCompleter {
         } else if (args.length == 4) {
 
             if (args[0].equals("create")){
-
-                list.add("Red");
-                list.add("Blue");
+                list.addAll(plugin.colors.colors.keySet());
                 // for (Color c: Color.class.getEnumConstants()){
 
                 //    list.add(c.toString());
