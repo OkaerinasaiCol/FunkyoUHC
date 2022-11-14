@@ -24,7 +24,7 @@ public class BlockDestroyListener implements Listener {
 
     @EventHandler
     public void onBlockDestroy(BlockBreakEvent event){
-        plugin.print("Placed: " + event.getBlock().getType());
+        // plugin.print("Placed: " + event.getBlock().getType());
 
         if (event.getBlock().getType() == Material.PLAYER_WALL_HEAD){
             event.setDropItems(false);

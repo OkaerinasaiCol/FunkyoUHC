@@ -24,17 +24,10 @@ public class Heads {
     public void setHead(ItemStack head, Player p, Block block){
         SkullMeta meta = (SkullMeta) head.getItemMeta();
 
-        //noinspection ConstantConditions
-        plugin.print("Cabeza de: " + meta.getOwnerProfile().getName() +
-                "\nUUID: " + meta.getOwnerProfile().getUniqueId().toString() +
-                "\nBlock_word: " + block.getWorld() +
-                "\nBlock_coords: " + block.getLocation() +
-                "\nBlock_placer: " + p.getName() +
-                "\nLore: " + meta.getLore());
-
         try {
             Statement statment = plugin.db.statement();
 
+            //noinspection ConstantConditions
             statment.executeUpdate("INSERT INTO " +
                     "\"main\".\"heads\"(\"owner\",\"uuid\",\"world\",\"coords\",\"placer\",\"lore\")" +
                     " VALUES (" +

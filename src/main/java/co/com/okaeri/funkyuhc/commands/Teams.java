@@ -31,6 +31,12 @@ public class Teams implements CommandExecutor {
                     return true;
                 }
                 return false;
+            case "add_player":
+                if (args.length == 3){
+                    db.addPlayer(args[1], args[2], sender);
+                    return true;
+                }
+                return false;
             case "delete":
                 // TODO: verificador de que se tenga un argumento y que el argumento este en la lista de equipos de la base de datos
                 plugin.print("delete");

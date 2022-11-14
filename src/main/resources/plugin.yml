@@ -10,7 +10,18 @@ commands:
   mapSize:
     description: Cambiar el tamaño del mapa
     usage: mapSize <value>
+
   timeBar:
     description: Comandos con la barra de boss
+
   teams:
     description: Comandos referentes a los teams
+
+  regeneration:
+    description: Comandos referentes a la regeneración
+
+  uhc:
+    description: Comando principal del uhc
+
+  score:
+    description: Comando de scoreboard

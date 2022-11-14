@@ -35,6 +35,7 @@ public class teamsTab implements TabCompleter {
 
     private void completator (String[] args, List<String> list, boolean isplayer){
         if (args.length == 1){
+            list.add("add_player");
             list.add("create");
             list.add("delete");
             list.add("help");
@@ -55,13 +56,11 @@ public class teamsTab implements TabCompleter {
 
                 }
 
-            }
+            } // TODO: agregar que se listen todos los equipos disponibles
         } else if (args.length == 4) {
 
             if (args[0].equals("create")){
-
-                list.add("Red");
-                list.add("Blue");
+                list.addAll(plugin.colors.colors.keySet());
                 // for (Color c: Color.class.getEnumConstants()){
 
                 //    list.add(c.toString());

@@ -20,7 +20,7 @@ public class BlockMultiPlaceListener implements Listener {
     @EventHandler
     public void onFinalBlockPlaced(BlockPlaceEvent event){
 
-        plugin.print("Multi: " + event.getBlockPlaced().getType());
+        // plugin.print("Multi: " + event.getBlockPlaced().getType());
 
         World _world = event.getPlayer().getWorld();
         Location _ball1 = event.getBlock().getLocation();
