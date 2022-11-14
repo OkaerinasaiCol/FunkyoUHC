@@ -120,6 +120,7 @@ public class BlockPlaceListener implements Listener {
         plugin.print("Revivir derecha");
     }
 
+    @SuppressWarnings("ReassignedVariable")
     private void leftOrient(Block block, List<Block> structure){
         plugin.print("Revivir izquierda");
     }
