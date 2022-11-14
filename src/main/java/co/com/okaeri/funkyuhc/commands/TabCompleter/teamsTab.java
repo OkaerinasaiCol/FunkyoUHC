@@ -56,7 +56,7 @@ public class teamsTab implements TabCompleter {
 
                 }
 
-            }
+            } // TODO: agregar que se listen todos los equipos disponibles
         } else if (args.length == 4) {
 
             if (args[0].equals("create")){
