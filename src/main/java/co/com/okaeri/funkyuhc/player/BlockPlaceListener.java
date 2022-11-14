@@ -30,7 +30,7 @@ public class BlockPlaceListener implements Listener {
         Player player = event.getPlayer();
         ItemStack item = event.getItemInHand();
         Block block = event.getBlockPlaced();
-        plugin.print("Placed: " + item.getType());
+        // plugin.print("Placed: " + item.getType());
 
         if (item.getType() == Material.PLAYER_HEAD){
 
