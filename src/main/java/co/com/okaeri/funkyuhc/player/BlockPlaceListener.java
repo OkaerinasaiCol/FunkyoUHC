@@ -2,6 +2,7 @@ package co.com.okaeri.funkyuhc.player;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
 import co.com.okaeri.funkyuhc.database.Heads;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -111,6 +112,8 @@ public class BlockPlaceListener implements Listener {
                         plugin.print("uuid: " + uuid);
                         plugin.print("name: " + name);
 
+                        revive(uuid, c_block, structure);
+
                     }
                 }
 
@@ -165,6 +168,8 @@ public class BlockPlaceListener implements Listener {
 
                         plugin.print("uuid: " + uuid);
                         plugin.print("name: " + name);
+
+                        revive(uuid, c_block, structure);
 
                     }
                 }
@@ -221,6 +226,8 @@ public class BlockPlaceListener implements Listener {
                         plugin.print("uuid: " + uuid);
                         plugin.print("name: " + name);
 
+                        revive(uuid, c_block, structure);
+
                     }
                 }
 
@@ -276,6 +283,8 @@ public class BlockPlaceListener implements Listener {
                         plugin.print("uuid: " + uuid);
                         plugin.print("name: " + name);
 
+                        revive(uuid, c_block, structure);
+
                     }
                 }
 
@@ -283,5 +292,23 @@ public class BlockPlaceListener implements Listener {
         }
 
         plugin.print("Revivir derecha");
+    }
+
+    public void revive(UUID player, Block head, List<Block> structure){
+
+        Player p = plugin.getServer().getPlayer(player);
+
+        // TODO: agregar el que ya no esta vivo en la bd
+
+        assert p != null;
+        p.teleport(head.getLocation());
+        // TODO: generar aviso de que se ha revivido a unjugador a todos los jugadores y animación de revivido
+
+        for (Block block: structure){
+            block.setType(Material.AIR);
+        }
+
+        p.setGameMode(GameMode.SURVIVAL);
+
     }
 }
