@@ -35,6 +35,7 @@ public class teamsTab implements TabCompleter {
 
     private void completator (String[] args, List<String> list, boolean isplayer){
         if (args.length == 1){
+            list.add("add_player");
             list.add("create");
             list.add("delete");
             list.add("help");
