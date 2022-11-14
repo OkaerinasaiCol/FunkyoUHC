@@ -122,8 +122,55 @@ public class BlockPlaceListener implements Listener {
 
     @SuppressWarnings("ReassignedVariable")
     private void leftOrient(Block block, List<Block> structure){
-        plugin.print("Revivir izquierda");
-    }
+
+        // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
+
+        Block c_block = block.getRelative(2, 0, 0);
+
+        plugin.print("" + c_block.getType());
+
+        if (c_block.getType().equals(Material.SOUL_FIRE)){
+            structure.add(block.getRelative(2, 1, 0));
+
+            plugin.print("derecha SOUL_FIRE");
+
+            c_block = block.getRelative(1, 0, 0);
+
+            if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
+                structure.add(c_block);
+
+                plugin.print("derecha DIAMOND_BLOCK");
+
+                c_block = block.getRelative(1,1,0);
+
+                if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
+                    structure.add(c_block);
+
+                    plugin.print("derecha DIAMOND_BLOCK");
+
+                    c_block = block.getRelative(1, 2,0);
+
+                    if (c_block.getType().equals(Material.PLAYER_HEAD)){
+                        structure.add(c_block);
+
+                        plugin.print("derecha PLAYER_HEAD");
+
+                        Heads h = new Heads(plugin);
+
+                        List<String> head =  h.getHead(c_block);
+
+                        UUID uuid = UUID.fromString(head.get(0));
+
+                        String name = head.get(1);
+
+                        plugin.print("uuid: " + uuid);
+                        plugin.print("name: " + name);
+
+                    }
+                }
+
+            }
+        }
 
     private void backOrient(Block block, List<Block> structure){
         plugin.print("Revivir atras");
