@@ -34,6 +34,7 @@ public class BlockPlaceListener implements Listener {
 
         if (item.getType() == Material.PLAYER_HEAD){
 
+            //noinspection unused
             ItemMeta itemmeta = event.getItemInHand().getItemMeta();
             // TODO: guardar lore en la base de datos y borrar en caso de que se quite
             plugin.heads.setHead(item, player, block);
