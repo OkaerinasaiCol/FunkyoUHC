@@ -2,6 +2,7 @@ package co.com.okaeri.funkyuhc.player;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
 import co.com.okaeri.funkyuhc.util.Head;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,7 +35,7 @@ public class DeathListener implements Listener{
             plugin.TeamDB.addKill(e.getEntity().getKiller().getName());
         }
 
-        // TODO: Poner al jugador en modo espectador
+        p.setGameMode(GameMode.SPECTATOR);
 
     }
 
