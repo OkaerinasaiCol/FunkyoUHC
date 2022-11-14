@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
+
 public class DeathListener implements Listener{
 
     @SuppressWarnings("FieldMayBeFinal")
@@ -28,6 +29,10 @@ public class DeathListener implements Listener{
 
         plugin.print(e.getEntity() + " death " + e.getEntity().getLastDamageCause() + e.getEntity().getKiller());
         plugin.print("death id" + e.getEntity().getUniqueId());
+
+        if (e.getEntity().getKiller() != null){
+            plugin.TeamDB.addKill(e.getEntity().getKiller().getName());
+        }
 
         // TODO: Poner al jugador en modo espectador
 
