@@ -15,7 +15,7 @@
 - Se agrega comando para añadir jugadores a los equipos
 >`/teams add_player <Team> <Jugador>`
 - Se configura mecanica de revivido en base a estructura
-  ![image](https://user-images.githubusercontent.com/29431799/201585579-3e97dfaf-6e20-4f55-a0c7-e28cdb2626e0.png)
+> ![image](https://user-images.githubusercontent.com/29431799/201585579-3e97dfaf-6e20-4f55-a0c7-e28cdb2626e0.png)
 
 [0.1.2.1]
 
