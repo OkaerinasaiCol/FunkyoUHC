@@ -8,6 +8,7 @@ import co.com.okaeri.funkyuhc.controller.GetTime;
 import co.com.okaeri.funkyuhc.database.Database;
 import co.com.okaeri.funkyuhc.database.Heads;
 import co.com.okaeri.funkyuhc.database.SQLite;
+import co.com.okaeri.funkyuhc.items.ItemManager;
 import co.com.okaeri.funkyuhc.player.*;
 import co.com.okaeri.funkyuhc.util.Colors;
 import fr.mrmicky.fastboard.FastBoard;
@@ -56,6 +57,7 @@ public final class FunkyUHC extends JavaPlugin {
     public Map<Player, FastBoard> boards = new HashMap<>();
     public Colors colors = new Colors();
     public ScoreManager manager;
+    public ItemManager itemsManager;
 
     public GetTime timer = new GetTime();
 
@@ -108,6 +110,10 @@ public final class FunkyUHC extends JavaPlugin {
 
         // Cargar teams almacenados en la base de datos
         this.teams = db.getTeams();
+
+        // Cargar crafteos custom
+        this.itemsManager = new ItemManager(this);
+        itemsManager.LoadCustomCrafts();
 
         // Cargar manager de scoreboards
         this.manager = new ScoreManager(this);
