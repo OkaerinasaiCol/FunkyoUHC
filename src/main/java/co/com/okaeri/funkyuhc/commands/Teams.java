@@ -4,6 +4,7 @@ import co.com.okaeri.funkyuhc.FunkyUHC;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 @SuppressWarnings("FieldMayBeFinal")
@@ -35,6 +36,30 @@ public class Teams implements CommandExecutor {
                 if (args.length == 3){
                     db.addPlayer(args[1], args[2], sender);
                     return true;
+                }
+                return false;
+            case "remove_player":
+                if ((args.length == 3) && !(sender instanceof Player)){
+                    db.removePlayer(args[1], args[2]);
+                    return true;
+                } else if (args.length == 2){
+                    db.removePlayer(args[1], sender);
+                }
+                return false;
+            case "rename":
+                if ((args.length == 3) && !(sender instanceof Player)){
+                    db.renameTeam(args[1], args[2]);
+                    return true;
+                } else if (args.length == 2){
+                db.renameTeam(args[1], (Player) sender);
+                }
+                return false;
+            case "color":
+                if ((args.length == 3) && !(sender instanceof Player)){
+                    db.changeColor(args[1], args[2]);
+                    return true;
+                } else if (args.length == 2){
+                    db.changeColor(args[1], (Player) sender);
                 }
                 return false;
             case "delete":
