@@ -21,6 +21,14 @@ public class Teams {
 
     //TODO: agregar funciones para editar nombre, cambiar color y modificacion compañeros de equipo
 
+    /**
+     * Crear equipo para el uhc
+     *
+     * @param name: Nombre del equipo a crear, este nombre debe de no existir ya, en caso de que exista la función
+     *            retornará false
+     * @param capitan: El nombre del capitan del equipo
+     * @param color: Color a usar por el equipo, este debe de no estar ya en uso o el equipo no podrá crearse
+     */
     @SuppressWarnings("UnusedReturnValue")
     public boolean Create(String name, String capitan, String color) {
 
