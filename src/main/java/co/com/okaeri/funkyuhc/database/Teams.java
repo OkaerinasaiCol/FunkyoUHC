@@ -332,6 +332,40 @@ public class Teams {
         }
     }
 
+    @SuppressWarnings("unused")
+    public boolean getDeath(String player){
+        try {
+            Statement statment = plugin.db.statement();
+
+            return statment.executeQuery("SELECT * FROM players WHERE player =\"" +
+                    player + "\";").getBoolean("death");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public void setDeath(String player, Boolean death){
+        try {
+            String sql = "UPDATE players SET kills = ? WHERE player = ?";
+            PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
+
+            if (death){
+                pstmt.setInt(1, 0);
+            } else {
+                pstmt.setInt(1, 1);
+            }
+
+            pstmt.setString(2, player);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setTeamKills(int kills, String team){
         try {
             String sql = "UPDATE equips SET kills = ? WHERE name = ?";
