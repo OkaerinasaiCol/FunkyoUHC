@@ -14,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class BlockPlaceListener implements Listener {
@@ -36,7 +37,6 @@ public class BlockPlaceListener implements Listener {
 
             //noinspection unused
             ItemMeta itemmeta = event.getItemInHand().getItemMeta();
-            // TODO: guardar lore en la base de datos y borrar en caso de que se quite
             plugin.heads.setHead(item, player, block);
 
         } else if (item.getType() == Material.FLINT_AND_STEEL || item.getType() == Material.FIRE_CHARGE) {
@@ -50,23 +50,23 @@ public class BlockPlaceListener implements Listener {
 
                     if (start.getRelative(1,-1,0).getType().equals(Material.GOLD_BLOCK)){
                         structure.add(start.getRelative(1,-1,0));
-                        rightOrient(start, structure);
+                        rightOrient(start, structure, player);
                     } else if (start.getRelative(-1, -1,0).getType().equals(Material.GOLD_BLOCK)) {
                         structure.add(start.getRelative(-1, -1,0));
-                        leftOrient(start, structure);
+                        leftOrient(start, structure, player);
                     } else if (start.getRelative(0,-1, 1).getType().equals(Material.GOLD_BLOCK)){
                         structure.add(start.getRelative(0,-1, 1));
-                        frontOrient(start, structure);
+                        frontOrient(start, structure, player);
                     } else if (start.getRelative(0,-1, -1).getType().equals(Material.GOLD_BLOCK)) {
                         structure.add(start.getRelative(0,-1, -1));
-                        backOrient(start, structure);
+                        backOrient(start, structure, player);
                     }
                 }
         }
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void rightOrient(Block block, List<Block> structure){
+    private void rightOrient(Block block, List<Block> structure, Player placer){
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
@@ -101,7 +101,7 @@ public class BlockPlaceListener implements Listener {
                         plugin.print("uuid: " + uuid);
                         plugin.print("name: " + name);
 
-                        revive(uuid, c_block, structure);
+                        revive(uuid, c_block, structure, placer);
 
                     }
                 }
@@ -111,7 +111,7 @@ public class BlockPlaceListener implements Listener {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void leftOrient(Block block, List<Block> structure){
+    private void leftOrient(Block block, List<Block> structure, Player placer){
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
@@ -146,7 +146,7 @@ public class BlockPlaceListener implements Listener {
                         plugin.print("uuid: " + uuid);
                         plugin.print("name: " + name);
 
-                        revive(uuid, c_block, structure);
+                        revive(uuid, c_block, structure, placer);
 
                     }
                 }
@@ -156,7 +156,7 @@ public class BlockPlaceListener implements Listener {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void backOrient(Block block, List<Block> structure){
+    private void backOrient(Block block, List<Block> structure, Player placer){
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
@@ -191,7 +191,7 @@ public class BlockPlaceListener implements Listener {
                         plugin.print("uuid: " + uuid);
                         plugin.print("name: " + name);
 
-                        revive(uuid, c_block, structure);
+                        revive(uuid, c_block, structure, placer);
 
                     }
                 }
@@ -201,7 +201,7 @@ public class BlockPlaceListener implements Listener {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void frontOrient(Block block, List<Block> structure){
+    private void frontOrient(Block block, List<Block> structure, Player placer){
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
@@ -236,7 +236,7 @@ public class BlockPlaceListener implements Listener {
                         plugin.print("uuid: " + uuid);
                         plugin.print("name: " + name);
 
-                        revive(uuid, c_block, structure);
+                        revive(uuid, c_block, structure, placer);
 
                     }
                 }
@@ -245,21 +245,22 @@ public class BlockPlaceListener implements Listener {
         }
     }
 
-    public void revive(UUID player, Block head, List<Block> structure){
+    public void revive(UUID player, Block head, List<Block> structure, Player placer){
 
         Player p = plugin.getServer().getPlayer(player);
 
-        // TODO: agregar el que ya no esta vivo en la bd
-
         assert p != null;
-        p.teleport(head.getLocation());
-        // TODO: generar aviso de que se ha revivido a unjugador a todos los jugadores y animación de revivido
+        if(Objects.equals(plugin.TeamDB.getTeam(p.getName()), plugin.TeamDB.getTeam(placer.getName()))) {
+            plugin.TeamDB.setDeath(p.getName(), false);
+            p.teleport(head.getLocation());
+            // TODO: generar aviso de que se ha revivido a unjugador a todos los jugadores y animación de revivido
 
-        for (Block block: structure){
-            block.setType(Material.AIR);
-        }
+            for (Block block : structure) {
+                block.setType(Material.AIR);
+            }
 
-        p.setGameMode(GameMode.SURVIVAL);
+            p.setGameMode(GameMode.SURVIVAL);
+        } // TODO agregar aviso de que no se puede revivir a alguien de otro equipo
 
     }
 }
