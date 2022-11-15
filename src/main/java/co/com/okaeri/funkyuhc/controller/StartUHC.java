@@ -1,6 +1,7 @@
 package co.com.okaeri.funkyuhc.controller;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
+import org.bukkit.entity.Player;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,17 @@ public class StartUHC {
         // TODO: Inhabilitar los comandos que no se puedan ejecutar dentro del uhc
 
         if (Verify()){
+
+            for (Player p: plugin.getServer().getOnlinePlayers()){
+                try {
+                    if (!plugin.timeBar.getPlayers().contains(p)){
+                        plugin.timeBar.addPlayer(p);
+                    }
+                } catch (Exception e){
+                    plugin.timeBar.addPlayer(p);
+                }
+            }
+
             plugin.startTime = LocalDateTime.now();
             plugin.UhcStarted = true;
             plugin.UhcTimerStarted = true;
