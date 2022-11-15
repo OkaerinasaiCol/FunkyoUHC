@@ -73,13 +73,12 @@ public class mapSize implements CommandExecutor{
     }
 
     private void setMax(int value){
-        plugin.changeMaxSize(value);
+        plugin.changeMaxSize(value, 1);
         plugin.print("Tamaño maximo del mapa cambiado a: " + value);
     }
 
     public void setSize(int value){
-        // Todo: hacer que se vaya achicando poco a poco
-        plugin.changeSize(value);
+        plugin.changeSize(value, 1);
         plugin.db.updateSize(value);
         plugin.print("Tamaño del mapa cambiado a: " + value);
     }
