@@ -53,11 +53,20 @@ public final class FunkyUHC extends JavaPlugin {
     @SuppressWarnings("unused")
     public boolean UhcTimerPaused;
     public boolean UhcStarted;
+    public boolean UhcTimeRestarted;
     public Duration UhcTimerDuration;
     public Map<Player, FastBoard> boards = new HashMap<>();
     public Colors colors = new Colors();
     public ScoreManager manager;
     public ItemManager itemsManager;
+    public int maxRounds = 5;
+    public int timePerRound = 60 * 2; // 60 * 30 = 30 minutos
+    @SuppressWarnings("unused")
+    public int roundTime;
+    public int round = 1;
+    public Map<Integer, Boolean> roundsStarted = new HashMap<>();
+    public Map<Integer, Boolean> worldBorderReduceStart = new HashMap<>();
+    // public Map<Integer, Integer> bordersOrder = new HashMap<>();
 
     public GetTime timer = new GetTime();
 
@@ -82,6 +91,15 @@ public final class FunkyUHC extends JavaPlugin {
             roundsStarted.put(i, false); // TODO: cargar de bd por si se crashea
         }
 
+        for (int i = 1; i <= maxRounds; i++){
+            worldBorderReduceStart.put(i, false); // TODO: cargar de bd por si se crashea
+        }
+
+        /*
+        for (int i = 1; i <maxRounds; i++){
+            worldBorderReduceStart.put(i, false); // Esto despues se podria jalar desde un archivo
+        }
+        */
 
         // Inicializar base de datos y cargar
         this.db = new SQLite(this);
@@ -131,8 +149,181 @@ public final class FunkyUHC extends JavaPlugin {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             public void run() {
                 if (UhcTimerStarted) {
-                    UhcTimerDuration = Duration.between(startTime, LocalDateTime.now());
-                    manager.UpdateBoard();
+                    // TODO: guardar informacion de rondas etc en bd por si se crashea el server
+
+                    if (!(UhcTimeRestarted)) {
+                        UhcTimerDuration = Duration.between(startTime, LocalDateTime.now());
+                        manager.UpdateBoard();
+                    }else {
+                        print("El juego ha sido despausado");
+                        // Funciones para reestablecer variables de tiempo en caso de que se haya pausado
+                        // y reiniciado el evento
+                    }
+
+                    switch (round){
+                        case 1:
+                            long restanteRonda = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
+
+                            if (restanteRonda <= 0){
+                                round += 1;
+                                break;
+                            }
+
+                            if (!roundsStarted.get(round)){
+                                // este codigo Solo se va a ejecutar al inciar la ronda
+                                print("Se inicia ronda 1");
+                                print("Teleportando a los equipos");
+                                print("Equipos teleportados con exito");
+                                // TODO: imprimir en pantalla información de la ronda
+
+                                roundsStarted.put(round, true); // guardar que ya se ejecuto esto
+                            }
+
+                            if ((restanteRonda <= timePerRound / 2.0) &&
+                                    !worldBorderReduceStart.get(round)){
+                                // este codigo se ejecutará una sola vez para iniciar el despl de world border
+                                wb.setSize(1500.0, (long) (((long) timePerRound * round) / 2.0));
+
+                                worldBorderReduceStart.put(round, true);
+                            }
+
+                            timeBar.setProgress((double) restanteRonda / (timePerRound * round));
+                            timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
+                                    " Tiempo restante: " + timer.toString(restanteRonda));
+                            print("round: " + round + ", restante: " + timer.toString(restanteRonda) + " world border" +
+                                    wb.getSize());
+                            break;
+
+                        case 2:
+                            long restanteRonda_2 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
+
+                            if (restanteRonda_2 <= 0){
+                                round += 1;
+                                break;
+                            }
+
+                            if (!roundsStarted.get(round)){
+                                // este codigo Solo se va a ejecutar al inciar la ronda
+                                print("Se inicia ronda 2");
+                                // TODO: imprimir en pantalla información de la ronda
+
+                                roundsStarted.put(round, true); // guardar que ya se ejecuto esto
+                            }
+
+                            if ((restanteRonda_2 <= timePerRound / 2.0) &&
+                                    !worldBorderReduceStart.get(round)){
+                                // este codigo se ejecutará una sola vez para iniciar el despl de world border
+                                wb.setSize(900.0, (long) ((long) timePerRound / 2.0));
+
+                                worldBorderReduceStart.put(round, true);
+                            }
+
+                            timeBar.setProgress((double) restanteRonda_2 / (timePerRound * round));
+                            timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
+                                    " Tiempo restante: " + timer.toString(restanteRonda_2));
+                            print("round: " + round + ", restante: " + timer.toString(restanteRonda_2) +
+                                    " world border" + wb.getSize());
+                            break;
+
+                        case 3:
+                            long restanteRonda_3 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
+
+                            if (restanteRonda_3 <= 0){
+                                round += 1;
+                                break;
+                            }
+
+                            if (!roundsStarted.get(round)){
+                                // este codigo Solo se va a ejecutar al inciar la ronda
+                                print("Se inicia ronda 3");
+                                // TODO: imprimir en pantalla información de la ronda
+                                print("Se habilita el PVP");
+                                // TODO: habilitar el PVP y avisar de esta información
+
+                                roundsStarted.put(round, true); // guardar que ya se ejecuto esto
+                            }
+
+                            if ((restanteRonda_3 <= timePerRound / 2.0) &&
+                                    !worldBorderReduceStart.get(round)){
+                                // este codigo se ejecutará una sola vez para iniciar el despl de world border
+                                wb.setSize(200, (long) ((long) timePerRound / 2.0));
+
+                                worldBorderReduceStart.put(round, true);
+                            }
+
+                            timeBar.setProgress((double) restanteRonda_3 / (timePerRound * round));
+                            timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
+                                    " Tiempo restante: " + timer.toString(restanteRonda_3));
+                            print("round: " + round + ", restante: " + timer.toString(restanteRonda_3) +
+                                    " world border" + wb.getSize());
+                            break;
+
+                        case 4:
+                            long restanteRonda_4 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
+
+                            if (restanteRonda_4 <= 0){
+                                round += 1;
+                                break;
+                            }
+
+                            if (!roundsStarted.get(round)){
+                                // este codigo Solo se va a ejecutar al inciar la ronda
+                                print("Se inicia ronda 4");
+                                // TODO: imprimir en pantalla información de la ronda
+
+                                roundsStarted.put(round, true); // guardar que ya se ejecuto esto
+                            }
+
+                            if ((restanteRonda_4 <= timePerRound / 2.0) &&
+                                    !worldBorderReduceStart.get(round)){
+                                // este codigo se ejecutará una sola vez para iniciar el despl de world border
+                                wb.setSize(100, (long) ((long) timePerRound / 2.0));
+
+                                worldBorderReduceStart.put(round, true);
+                            }
+
+                            timeBar.setProgress((double) restanteRonda_4 / (timePerRound * round));
+                            timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
+                                    " Tiempo restante: " + timer.toString(restanteRonda_4));
+                            print("round: " + round + ", restante: " + timer.toString(restanteRonda_4) +
+                                    " world border" + wb.getSize());
+                            break;
+
+                        case 5:
+                            long restanteRonda_5 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
+
+                            if (restanteRonda_5 <= 0){
+                                // TODO: Verificar que hacer en caso de que a este momento no haya quedado un ganador
+                                print("Rondas acabadas, muerte subita");
+                                round += 1;
+                                break;
+                            }
+
+                            if (!roundsStarted.get(round)){
+                                // este codigo Solo se va a ejecutar al inciar la ronda
+                                print("Se inicia ronda 5");
+                                // TODO: imprimir en pantalla información de la ronda
+                                // Ultima ronda, despues de acabar esta ronda se hara ....
+
+                                roundsStarted.put(round, true); // guardar que ya se ejecuto esto
+                                break;
+                            }
+
+                            if ((restanteRonda_5 <= timePerRound / 2.0) &&
+                                    !worldBorderReduceStart.get(round)){
+                                // este codigo se ejecutará una sola vez para iniciar el despl de world border
+                                wb.setSize(50, (long) ((long) timePerRound / 2.0));
+
+                                worldBorderReduceStart.put(round, true);
+                            }
+
+                            timeBar.setProgress((double) restanteRonda_5 / (timePerRound * round));
+                            timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
+                                    " Tiempo restante: " + timer.toString(restanteRonda_5));
+                            print("round: " + round + ", restante: " + timer.toString(restanteRonda_5) +
+                                    " world border" + wb.getSize());
+                            break;
+                    }
                 }
             }
         }, 10, 20L);
