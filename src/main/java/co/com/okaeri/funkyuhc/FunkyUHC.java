@@ -1,16 +1,15 @@
 package co.com.okaeri.funkyuhc;
 
 import co.com.okaeri.funkyuhc.commands.*;
+import co.com.okaeri.funkyuhc.commands.Regeneration;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.mapSizeTab;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.teamsTab;
 import co.com.okaeri.funkyuhc.controller.GetTime;
 import co.com.okaeri.funkyuhc.database.Database;
 import co.com.okaeri.funkyuhc.database.Heads;
 import co.com.okaeri.funkyuhc.database.SQLite;
-import co.com.okaeri.funkyuhc.player.BlockDestroyListener;
-import co.com.okaeri.funkyuhc.player.BlockPlaceListener;
-import co.com.okaeri.funkyuhc.player.DeathListener;
-import co.com.okaeri.funkyuhc.player.ScoreManager;
+import co.com.okaeri.funkyuhc.items.ItemManager;
+import co.com.okaeri.funkyuhc.player.*;
 import co.com.okaeri.funkyuhc.util.Colors;
 import fr.mrmicky.fastboard.FastBoard;
 import org.apache.commons.lang.StringUtils;
@@ -58,6 +57,7 @@ public final class FunkyUHC extends JavaPlugin {
     public Map<Player, FastBoard> boards = new HashMap<>();
     public Colors colors = new Colors();
     public ScoreManager manager;
+    public ItemManager itemsManager;
 
     public GetTime timer = new GetTime();
 
@@ -102,8 +102,24 @@ public final class FunkyUHC extends JavaPlugin {
         // agregar registro de destrucción de bloques
         this.pm.registerEvents(new BlockDestroyListener(this), this);
 
+        // agregar registro de chat
+        this.pm.registerEvents(new ChatListener(this), this);
+
+        // Cargar manager de muertes de Ghast
+        this.pm.registerEvents(new GhastDrop(this), this);
+
+        // Cargar registro de crafteos
+        // this.pm.registerEvents(new ItemCraftEvent(this), this);
+
+        // Cargar registro de movimientos de jugador
+        this.pm.registerEvents(new PlayerMove(this), this);
+
         // Cargar teams almacenados en la base de datos
         this.teams = db.getTeams();
+
+        // Cargar crafteos custom
+        this.itemsManager = new ItemManager(this);
+        itemsManager.LoadCustomCrafts();
 
         // Cargar manager de scoreboards
         this.manager = new ScoreManager(this);
@@ -179,6 +195,8 @@ public final class FunkyUHC extends JavaPlugin {
         this.getCommand("uhc").setExecutor(new UhcController(this));
 
         this.getCommand("score").setExecutor(new ScoreBoard(this));
+
+        this.getCommand("global").setExecutor(new GlobalMessage(this));
     }
 
 }
