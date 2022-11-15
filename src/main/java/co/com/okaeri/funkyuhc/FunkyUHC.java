@@ -108,6 +108,12 @@ public final class FunkyUHC extends JavaPlugin {
         // Cargar manager de muertes de Ghast
         this.pm.registerEvents(new GhastDrop(this), this);
 
+        // Cargar registro de crafteos
+        // this.pm.registerEvents(new ItemCraftEvent(this), this);
+
+        // Cargar registro de movimientos de jugador
+        this.pm.registerEvents(new PlayerMove(this), this);
+
         // Cargar teams almacenados en la base de datos
         this.teams = db.getTeams();
 
