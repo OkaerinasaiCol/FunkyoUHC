@@ -9,24 +9,26 @@ import org.bukkit.entity.Player;
 
 public class ScoreBoard implements CommandExecutor {
 
+    @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal", "unused"})
     private FunkyUHC plugin;
+    @SuppressWarnings("FieldMayBeFinal")
     private ScoreManager manager;
 
-    public ScoreBoard(FunkyUHC plugin){
+    public ScoreBoard(FunkyUHC plugin) {
         this.plugin = plugin;
         manager = new ScoreManager(plugin);
     }
 
 
     @SuppressWarnings("NullableProblems")
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (args.length == 0){
+        if (args.length == 0) {
             return false;
         }
 
-        if (!(sender instanceof Player)){
-            if (args[0].equals("set")){
+        if (!(sender instanceof Player)) {
+            if (args[0].equals("set")) {
                 manager.SetScoreboard();
             }
         }

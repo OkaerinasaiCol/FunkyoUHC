@@ -20,7 +20,7 @@ public class mapSizeTab implements TabCompleter {
 
     @SuppressWarnings("NullableProblems")
     @Override
-    public List<String> onTabComplete (CommandSender sender, Command cmd, String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 
         List<String> list = new ArrayList<>();
 
@@ -33,8 +33,8 @@ public class mapSizeTab implements TabCompleter {
         return list;
     }
 
-    private void completator (String[] args, List<String> list){
-        if (args.length == 1){
+    private void completator(String[] args, List<String> list) {
+        if (args.length == 1) {
             plugin.print(args[0]);
             list.add("setmax");
             list.add("set");

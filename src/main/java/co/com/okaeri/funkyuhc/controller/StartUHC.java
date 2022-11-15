@@ -7,22 +7,22 @@ import java.time.LocalDateTime;
 
 public class StartUHC {
 
-    @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
+    @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal", "unused"})
     private FunkyUHC plugin;
     // TODO: agregar base de datos para guardar información del uhc en caso de que se cierre
 
-    public StartUHC(FunkyUHC plugin){
+    public StartUHC(FunkyUHC plugin) {
         this.plugin = plugin;
         // TODO: Inhabilitar los comandos que no se puedan ejecutar dentro del uhc
 
-        if (Verify()){
+        if (Verify()) {
 
-            for (Player p: plugin.getServer().getOnlinePlayers()){
+            for (Player p : plugin.getServer().getOnlinePlayers()) {
                 try {
-                    if (!plugin.timeBar.getPlayers().contains(p)){
+                    if (!plugin.timeBar.getPlayers().contains(p)) {
                         plugin.timeBar.addPlayer(p);
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
                     plugin.timeBar.addPlayer(p);
                 }
             }
@@ -34,7 +34,7 @@ public class StartUHC {
         }
     }
 
-    private boolean Verify(){
+    private boolean Verify() {
         // Verificar que todo_ este correcto antes de inicial el uhc
         return true; // cambiar en cuanto se cree la clase
     }

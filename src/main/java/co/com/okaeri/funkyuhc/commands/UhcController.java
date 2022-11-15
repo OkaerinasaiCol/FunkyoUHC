@@ -10,31 +10,34 @@ import org.bukkit.entity.Player;
 
 public class UhcController implements CommandExecutor {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
+    @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal", "unused"})
     private GetTime timer;
 
-    public UhcController(FunkyUHC plugin){
+    public UhcController(FunkyUHC plugin) {
         this.plugin = plugin;
         timer = plugin.timer;
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (args.length == 0){
+        if (args.length == 0) {
             plugin.print("&4[&rUhcfunkyo Plugin&4]&r Version:" + plugin.pluginVersion + " Teams: " +
-                        (plugin.teams.toArray().length - 1));
-        }else if (!(sender instanceof Player)){ // inicializador de clase
+                    (plugin.teams.toArray().length - 1));
+        } else if (!(sender instanceof Player)) { // inicializador de clase
             command(args);
         }
 
         return false;
     }
 
-    private void command(String[] args){
-        if (args[0].equals("start")){
+    private void command(String[] args) {
+        if (args[0].equals("start")) {
             new StartUHC(plugin);
-        } else if ((args[0].equals("time")) && plugin.UhcStarted){
+        } else if ((args[0].equals("time")) && plugin.UhcStarted) {
             plugin.print("Seconds: " + plugin.UhcTimerDuration.getSeconds());
             plugin.print("Tiempo transcurrido: " + plugin.timer.toString(plugin.UhcTimerDuration));
         }

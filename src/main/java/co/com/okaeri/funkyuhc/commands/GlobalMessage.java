@@ -6,12 +6,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class GlobalMessage implements CommandExecutor{
+public class GlobalMessage implements CommandExecutor {
 
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public GlobalMessage(FunkyUHC plugin){
+    public GlobalMessage(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
@@ -19,11 +19,11 @@ public class GlobalMessage implements CommandExecutor{
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (plugin.UhcStarted){
+        if (plugin.UhcStarted) {
 
             String subFix;
 
-            if (sender instanceof Player){
+            if (sender instanceof Player) {
                 String team = plugin.TeamDB.getTeam(sender.getName());
 
                 subFix = plugin.TeamDB.getTeamColor(team) + "<" + sender.getName() + "> [" + team + "]" + plugin.colors.reset;
@@ -34,7 +34,7 @@ public class GlobalMessage implements CommandExecutor{
             //noinspection ReassignedVariable
             String message = "";
 
-            for (String arg: args){
+            for (String arg : args) {
                 message = message.concat(" " + arg);
             }
 

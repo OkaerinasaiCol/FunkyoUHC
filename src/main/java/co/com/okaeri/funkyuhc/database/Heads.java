@@ -17,11 +17,11 @@ public class Heads {
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public Heads(FunkyUHC plugin){
+    public Heads(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
-    public void setHead(ItemStack head, Player p, Block block){
+    public void setHead(ItemStack head, Player p, Block block) {
         SkullMeta meta = (SkullMeta) head.getItemMeta();
 
         try {
@@ -38,12 +38,12 @@ public class Heads {
                     "'" + p.getName() + "'," +
                     "'" + meta.getLore() + "');");
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public List<String> getHead(Block block){
+    public List<String> getHead(Block block) {
         try {
             Statement statment = plugin.db.statement();
 
@@ -64,7 +64,7 @@ public class Heads {
             return player;
 
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }

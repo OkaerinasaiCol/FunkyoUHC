@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.logging.Level;
 
 
-public class SQLite extends Database{
+public class SQLite extends Database {
     String dbname;
-    public SQLite(FunkyUHC main){
+
+    public SQLite(FunkyUHC main) {
         super(main);
         dbname = plugin.getName(); // Set the table name here e.g player_kills
     }
@@ -51,10 +52,10 @@ public class SQLite extends Database{
             " 'lore' TEXT NOT NULL UNIQUE," +
             "PRIMARY KEY('owner'));";
 
-    public void updateSize(int size){
+    public void updateSize(int size) {
         try {
             Statement s = connection.createStatement();
-            String sql = "UPDATE 'main'.'mapSizes' SET 'size'="+ size + " WHERE id = 'size'";
+            String sql = "UPDATE 'main'.'mapSizes' SET 'size'=" + size + " WHERE id = 'size'";
             s.executeUpdate(sql);
             s.close();
         } catch (SQLException e) {
@@ -65,24 +66,24 @@ public class SQLite extends Database{
 
     // SQL creation stuff, You can leave the blow stuff untouched.
     public Connection getSQLConnection() {
-        File dataFolder = new File(plugin.getDataFolder(), dbname+".db");
-        if (!dataFolder.exists()){
+        File dataFolder = new File(plugin.getDataFolder(), dbname + ".db");
+        if (!dataFolder.exists()) {
             try {
                 //noinspection ResultOfMethodCallIgnored
                 dataFolder.createNewFile();
             } catch (IOException e) {
-                plugin.getLogger().log(Level.SEVERE, "File write error: "+dbname+".db");
+                plugin.getLogger().log(Level.SEVERE, "File write error: " + dbname + ".db");
             }
         }
         try {
-            if(connection!=null&&!connection.isClosed()){
+            if (connection != null && !connection.isClosed()) {
                 return connection;
             }
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + dataFolder);
             return connection;
         } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE,"SQLite exception on initialize", ex);
+            plugin.getLogger().log(Level.SEVERE, "SQLite exception on initialize", ex);
             // TODO: Arreglar error de que la subcarpeta FunkyoUHC no existe dentro de la carpeta plugins
 
         } catch (ClassNotFoundException ex) {
@@ -108,7 +109,7 @@ public class SQLite extends Database{
     }
 
     @SuppressWarnings("unused")
-    public Statement statement(){
+    public Statement statement() {
 
         try {
             connection = getSQLConnection();
@@ -120,7 +121,7 @@ public class SQLite extends Database{
         return null;
     }
 
-    public List<List<String>> getTeams(){
+    public List<List<String>> getTeams() {
         connection = getSQLConnection();
         List<List<String>> teams = new ArrayList<>();
         List<String> busy = new ArrayList<>();
@@ -130,12 +131,12 @@ public class SQLite extends Database{
 
             ResultSet len = s.executeQuery("SELECT COUNT(*) AS total FROM \"main\".\"equips\"");
             len.next();
-            if (len.getInt("total") == 0){
+            if (len.getInt("total") == 0) {
                 return null;
             }
 
             ResultSet r = s.executeQuery("SELECT * FROM \"main\".\"equips\"");
-            while (r.next()){
+            while (r.next()) {
                 List<String> team = new ArrayList<>();
 
                 team.add(r.getString("id"));

@@ -1,6 +1,5 @@
 package co.com.okaeri.funkyuhc;
 
-import co.com.okaeri.funkyuhc.commands.*;
 import co.com.okaeri.funkyuhc.commands.Regeneration;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.mapSizeTab;
 import co.com.okaeri.funkyuhc.commands.TabCompleter.teamsTab;
@@ -31,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class FunkyUHC extends JavaPlugin {
-    
+
     PluginDescriptionFile descriptionFile = getDescription();
 
     public String pluginName = descriptionFile.getName();
@@ -87,11 +86,11 @@ public final class FunkyUHC extends JavaPlugin {
         consoleInfo("Creator Website: " + creatorWebsite);
         consoleInfo(colors.green + "<------------------------------------------>");
 
-        for (int i = 1; i <= maxRounds; i++){
+        for (int i = 1; i <= maxRounds; i++) {
             roundsStarted.put(i, false); // TODO: cargar de bd por si se crashea
         }
 
-        for (int i = 1; i <= maxRounds; i++){
+        for (int i = 1; i <= maxRounds; i++) {
             worldBorderReduceStart.put(i, false); // TODO: cargar de bd por si se crashea
         }
 
@@ -111,7 +110,7 @@ public final class FunkyUHC extends JavaPlugin {
         // Set inicial world border
         //noinspection ConstantConditions
         this.wb = Bukkit.getWorld("world").getWorldBorder();
-        wb.setCenter(0,0);
+        wb.setCenter(0, 0);
         wb.setSize(maxSize * 2);
 
         // agregar registro de muertes
@@ -154,22 +153,22 @@ public final class FunkyUHC extends JavaPlugin {
                     if (!(UhcTimeRestarted)) {
                         UhcTimerDuration = Duration.between(startTime, LocalDateTime.now());
                         manager.UpdateBoard();
-                    }else {
+                    } else {
                         print("El juego ha sido despausado");
                         // Funciones para reestablecer variables de tiempo en caso de que se haya pausado
                         // y reiniciado el evento
                     }
 
-                    switch (round){
+                    switch (round) {
                         case 1:
                             long restanteRonda = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
 
-                            if (restanteRonda <= 0){
+                            if (restanteRonda <= 0) {
                                 round += 1;
                                 break;
                             }
 
-                            if (!roundsStarted.get(round)){
+                            if (!roundsStarted.get(round)) {
                                 // este codigo Solo se va a ejecutar al inciar la ronda
                                 print("Se inicia ronda 1");
                                 print("Teleportando a los equipos");
@@ -180,7 +179,7 @@ public final class FunkyUHC extends JavaPlugin {
                             }
 
                             if ((restanteRonda <= timePerRound / 2.0) &&
-                                    !worldBorderReduceStart.get(round)){
+                                    !worldBorderReduceStart.get(round)) {
                                 // este codigo se ejecutará una sola vez para iniciar el despl de world border
                                 wb.setSize(1500.0, (long) (((long) timePerRound * round) / 2.0));
 
@@ -197,12 +196,12 @@ public final class FunkyUHC extends JavaPlugin {
                         case 2:
                             long restanteRonda_2 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
 
-                            if (restanteRonda_2 <= 0){
+                            if (restanteRonda_2 <= 0) {
                                 round += 1;
                                 break;
                             }
 
-                            if (!roundsStarted.get(round)){
+                            if (!roundsStarted.get(round)) {
                                 // este codigo Solo se va a ejecutar al inciar la ronda
                                 print("Se inicia ronda 2");
                                 // TODO: imprimir en pantalla información de la ronda
@@ -211,7 +210,7 @@ public final class FunkyUHC extends JavaPlugin {
                             }
 
                             if ((restanteRonda_2 <= timePerRound / 2.0) &&
-                                    !worldBorderReduceStart.get(round)){
+                                    !worldBorderReduceStart.get(round)) {
                                 // este codigo se ejecutará una sola vez para iniciar el despl de world border
                                 wb.setSize(900.0, (long) ((long) timePerRound / 2.0));
 
@@ -228,12 +227,12 @@ public final class FunkyUHC extends JavaPlugin {
                         case 3:
                             long restanteRonda_3 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
 
-                            if (restanteRonda_3 <= 0){
+                            if (restanteRonda_3 <= 0) {
                                 round += 1;
                                 break;
                             }
 
-                            if (!roundsStarted.get(round)){
+                            if (!roundsStarted.get(round)) {
                                 // este codigo Solo se va a ejecutar al inciar la ronda
                                 print("Se inicia ronda 3");
                                 // TODO: imprimir en pantalla información de la ronda
@@ -244,7 +243,7 @@ public final class FunkyUHC extends JavaPlugin {
                             }
 
                             if ((restanteRonda_3 <= timePerRound / 2.0) &&
-                                    !worldBorderReduceStart.get(round)){
+                                    !worldBorderReduceStart.get(round)) {
                                 // este codigo se ejecutará una sola vez para iniciar el despl de world border
                                 wb.setSize(200, (long) ((long) timePerRound / 2.0));
 
@@ -261,12 +260,12 @@ public final class FunkyUHC extends JavaPlugin {
                         case 4:
                             long restanteRonda_4 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
 
-                            if (restanteRonda_4 <= 0){
+                            if (restanteRonda_4 <= 0) {
                                 round += 1;
                                 break;
                             }
 
-                            if (!roundsStarted.get(round)){
+                            if (!roundsStarted.get(round)) {
                                 // este codigo Solo se va a ejecutar al inciar la ronda
                                 print("Se inicia ronda 4");
                                 // TODO: imprimir en pantalla información de la ronda
@@ -275,7 +274,7 @@ public final class FunkyUHC extends JavaPlugin {
                             }
 
                             if ((restanteRonda_4 <= timePerRound / 2.0) &&
-                                    !worldBorderReduceStart.get(round)){
+                                    !worldBorderReduceStart.get(round)) {
                                 // este codigo se ejecutará una sola vez para iniciar el despl de world border
                                 wb.setSize(100, (long) ((long) timePerRound / 2.0));
 
@@ -292,14 +291,14 @@ public final class FunkyUHC extends JavaPlugin {
                         case 5:
                             long restanteRonda_5 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
 
-                            if (restanteRonda_5 <= 0){
+                            if (restanteRonda_5 <= 0) {
                                 // TODO: Verificar que hacer en caso de que a este momento no haya quedado un ganador
                                 print("Rondas acabadas, muerte subita");
                                 round += 1;
                                 break;
                             }
 
-                            if (!roundsStarted.get(round)){
+                            if (!roundsStarted.get(round)) {
                                 // este codigo Solo se va a ejecutar al inciar la ronda
                                 print("Se inicia ronda 5");
                                 // TODO: imprimir en pantalla información de la ronda
@@ -310,7 +309,7 @@ public final class FunkyUHC extends JavaPlugin {
                             }
 
                             if ((restanteRonda_5 <= timePerRound / 2.0) &&
-                                    !worldBorderReduceStart.get(round)){
+                                    !worldBorderReduceStart.get(round)) {
                                 // este codigo se ejecutará una sola vez para iniciar el despl de world border
                                 wb.setSize(50, (long) ((long) timePerRound / 2.0));
 
@@ -352,20 +351,20 @@ public final class FunkyUHC extends JavaPlugin {
         // TODO: agregar StopUHC aqui para que cuando se deshabilite el plugin
     }
 
-    public void print(String data){
+    public void print(String data) {
         Bukkit.getConsoleSender().sendMessage(data);
     }
 
-    private void consoleInfo(String data){
-        Bukkit.getConsoleSender().sendMessage(colors.green+ "[" + pluginName + "]" + colors.reset + data);
+    private void consoleInfo(String data) {
+        Bukkit.getConsoleSender().sendMessage(colors.green + "[" + pluginName + "]" + colors.reset + data);
     }
 
     @SuppressWarnings("unused")
-    public Database getRDatabase(){
+    public Database getRDatabase() {
         return this.db;
     }
 
-    public void changeMaxSize(int size, long time){
+    public void changeMaxSize(int size, long time) {
         maxSize = size * 2;
         if (time != 1) {
             wb.setSize(size * 2, time);
@@ -374,7 +373,7 @@ public final class FunkyUHC extends JavaPlugin {
         }
     }
 
-    public void changeSize(int size, long time){
+    public void changeSize(int size, long time) {
         this.size = size * 2;
         if (time != 1) {
             wb.setSize(size * 2, time);
@@ -384,7 +383,7 @@ public final class FunkyUHC extends JavaPlugin {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public void RegistrarComandos(){
+    public void RegistrarComandos() {
         this.getCommand("mapSize").setExecutor(new mapSize(this));
         this.getCommand("mapSize").setTabCompleter(new mapSizeTab(this));
 

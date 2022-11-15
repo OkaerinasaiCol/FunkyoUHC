@@ -15,7 +15,8 @@ public abstract class Database {
     Connection connection;
     // The name of the table we created back in SQLite class.
     public String table = "players";
-    public Database(FunkyUHC instance){
+
+    public Database(FunkyUHC instance) {
         plugin = instance;
     }
 
@@ -23,12 +24,12 @@ public abstract class Database {
 
     public abstract void load();
 
-    public void initialize(){
+    public void initialize() {
         connection = getSQLConnection();
-        try{
+        try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + table);
             ResultSet rs = ps.executeQuery();
-            close(ps,rs);
+            close(ps, rs);
 
         } catch (SQLException ex) {
             plugin.getLogger().log(Level.SEVERE, "Unable to retreive connection", ex);
@@ -44,11 +45,11 @@ public abstract class Database {
         ResultSet rs;
         try {
             conn = getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '"+string+"';");
+            ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '" + string + "';");
 
             rs = ps.executeQuery();
-            while(rs.next()){
-                if(rs.getString("player").equalsIgnoreCase(string.toLowerCase())){ // Tell database to search for the player you sent into the method. e.g getTokens(sam) It will look for sam.
+            while (rs.next()) {
+                if (rs.getString("player").equalsIgnoreCase(string.toLowerCase())) { // Tell database to search for the player you sent into the method. e.g getTokens(sam) It will look for sam.
                     return rs.getInt("kills"); // Return the players ammount of kills. If you wanted to get total (just a random number for an example for you guys) You would change this to total!
                 }
             }
@@ -66,6 +67,7 @@ public abstract class Database {
         }
         return 0;
     }
+
     // Exact same method here, Except as mentioned above i am looking for total!
     @SuppressWarnings("unused")
     public Integer getTotal(String string) {
@@ -74,11 +76,11 @@ public abstract class Database {
         ResultSet rs;
         try {
             conn = getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '"+string+"';");
+            ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '" + string + "';");
 
             rs = ps.executeQuery();
-            while(rs.next()){
-                if(rs.getString("player").equalsIgnoreCase(string.toLowerCase())){
+            while (rs.next()) {
+                if (rs.getString("player").equalsIgnoreCase(string.toLowerCase())) {
                     return rs.getInt("total");
                 }
             }
@@ -132,7 +134,7 @@ public abstract class Database {
     }
 
 
-    public void close(PreparedStatement ps,ResultSet rs){
+    public void close(PreparedStatement ps, ResultSet rs) {
         try {
             if (ps != null)
                 ps.close();

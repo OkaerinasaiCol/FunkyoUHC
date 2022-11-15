@@ -17,21 +17,21 @@ public class PlayerMove implements Listener {
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public PlayerMove(FunkyUHC plugin){
+    public PlayerMove(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event){
+    public void onPlayerMove(PlayerMoveEvent event) {
 
         ItemStack main_hand = event.getPlayer().getInventory().getItemInMainHand();
         ItemStack off_hand = event.getPlayer().getInventory().getItemInOffHand();
         Location default_location = new Location(event.getPlayer().getWorld(), 0.0d, 0.0d, 0.0d);
 
-        if(main_hand.getType().equals(Material.COMPASS)){
+        if (main_hand.getType().equals(Material.COMPASS)) {
             try {
                 //noinspection ConstantConditions
-                if (main_hand.getItemMeta().getLore().get(0).equals("Brújula para buscar jugadores cercanos")){
+                if (main_hand.getItemMeta().getLore().get(0).equals("Brújula para buscar jugadores cercanos")) {
                     String team = plugin.TeamDB.getTeam(event.getPlayer().getName());
 
                     List<String> team_players = plugin.TeamDB.getTeamPlayers(team);
@@ -39,7 +39,7 @@ public class PlayerMove implements Listener {
 
                     Map<Double, Player> locations = new HashMap<>();
 
-                    for (Player p: plugin.getServer().getOnlinePlayers()){
+                    for (Player p : plugin.getServer().getOnlinePlayers()) {
 
                         if (!team_players.contains(p.getName()) && !p.isDead() && p.getGameMode().equals(GameMode.SURVIVAL)) {
                             locations.put(p.getLocation().distance(event.getPlayer().getLocation()), p);
@@ -59,7 +59,7 @@ public class PlayerMove implements Listener {
                 } else {
                     event.getPlayer().setCompassTarget(default_location);
                 }
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 event.getPlayer().setCompassTarget(default_location);
             }
 
@@ -67,7 +67,7 @@ public class PlayerMove implements Listener {
 
             try {
                 //noinspection ConstantConditions
-                if (main_hand.getItemMeta().getLore().get(0).equals("Brújula para buscar jugadores cercanos")){
+                if (main_hand.getItemMeta().getLore().get(0).equals("Brújula para buscar jugadores cercanos")) {
                     String team = plugin.TeamDB.getTeam(event.getPlayer().getName());
 
                     List<String> team_players = plugin.TeamDB.getTeamPlayers(team);
@@ -75,7 +75,7 @@ public class PlayerMove implements Listener {
 
                     Map<Double, Player> locations = new HashMap<>();
 
-                    for (Player p: plugin.getServer().getOnlinePlayers()){
+                    for (Player p : plugin.getServer().getOnlinePlayers()) {
 
                         if (!team_players.contains(p.getName()) && !p.isDead() && p.getGameMode().equals(GameMode.SURVIVAL)) {
                             locations.put(p.getLocation().distance(event.getPlayer().getLocation()), p);
@@ -95,7 +95,7 @@ public class PlayerMove implements Listener {
                 } else {
                     event.getPlayer().setCompassTarget(default_location);
                 }
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 event.getPlayer().setCompassTarget(default_location);
             }
 

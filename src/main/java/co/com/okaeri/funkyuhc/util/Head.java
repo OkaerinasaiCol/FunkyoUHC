@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Head {
 
-    public ItemStack getPlayerHead(Player p){
+    public ItemStack getPlayerHead(Player p) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
 
         //noinspection unused
@@ -38,7 +38,7 @@ public class Head {
         return item;
     }
 
-    public ItemStack getPlayerHead(PlayerProfile profile){
+    public ItemStack getPlayerHead(PlayerProfile profile) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
 
         // TODO: colocar la skin desde el skin restorer si es posible

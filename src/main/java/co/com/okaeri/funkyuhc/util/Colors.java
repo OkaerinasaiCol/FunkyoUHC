@@ -30,7 +30,7 @@ public class Colors {
     public String italic = "§o";
     public String reset = "§r";
 
-    public Colors(){
+    public Colors() {
         black = "§0";
         colors.put("black", black);
 

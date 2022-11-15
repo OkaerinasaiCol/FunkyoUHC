@@ -15,7 +15,7 @@ public class Teams {
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public Teams(FunkyUHC plugin){
+    public Teams(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
@@ -24,10 +24,10 @@ public class Teams {
     /**
      * Crear equipo para el uhc
      *
-     * @param name: Nombre del equipo a crear, este nombre debe de no existir ya, en caso de que exista la función
-     *            retornará false
+     * @param name:    Nombre del equipo a crear, este nombre debe de no existir ya, en caso de que exista la función
+     *                 retornará false
      * @param capitan: El nombre del capitan del equipo
-     * @param color: Color a usar por el equipo, este debe de no estar ya en uso o el equipo no podrá crearse
+     * @param color:   Color a usar por el equipo, este debe de no estar ya en uso o el equipo no podrá crearse
      */
     @SuppressWarnings("UnusedReturnValue")
     public boolean Create(String name, String capitan, String color) {
@@ -36,27 +36,27 @@ public class Teams {
         List<List<String>> teams = plugin.teams;
         int row = 1;
 
-        for (int x = 1; x < 100; x++){
-            if (teams == null){
+        for (int x = 1; x < 100; x++) {
+            if (teams == null) {
                 break;
             } else {
                 List<String> team = teams.get(teams.size() - 1);
                 plugin.print("Rows used " + team);
-                if (!team.contains(Integer.toString(x))){
+                if (!team.contains(Integer.toString(x))) {
                     row = x;
                     break;
-                    }
                 }
             }
+        }
 
         if (teams != null) {
-            for (List<String> team : teams){
-                if (team.contains(name)){
+            for (List<String> team : teams) {
+                if (team.contains(name)) {
                     plugin.print("El equipo " + name + " ya existe");
                     return false;
                 }
 
-                if (team.contains(capitan)){
+                if (team.contains(capitan)) {
                     plugin.print("Solo se puede ser capitán de un equipo a la vez");
                     return false;
                 }
@@ -72,13 +72,13 @@ public class Teams {
                     "','');");
 
             /* "CREATE TABLE IF NOT EXIST players(" +
-            *        "'player' TEXT NOT NULL UNIQUE," +
-            *        "'uuid' TEXT NOT NULL UNIQUE," +
-            *        "'kills' INTEGER NOT NULL," +
-            *        "'death' INTEGER NOT NULL," +
-            *        "'team' TEXT NOT NULL," +
-            *        "PRIMARY KEY('player'));"
-            */
+             *        "'player' TEXT NOT NULL UNIQUE," +
+             *        "'uuid' TEXT NOT NULL UNIQUE," +
+             *        "'kills' INTEGER NOT NULL," +
+             *        "'death' INTEGER NOT NULL," +
+             *        "'team' TEXT NOT NULL," +
+             *        "PRIMARY KEY('player'));"
+             */
 
             //noinspection ConstantConditions
             statment.executeUpdate("INSERT INTO 'main'.'players'(" +
@@ -94,7 +94,7 @@ public class Teams {
 
             return true;
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
@@ -134,7 +134,7 @@ public class Teams {
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public boolean addPlayer(String team, String player, CommandSender sender){
+    public boolean addPlayer(String team, String player, CommandSender sender) {
 
         try {
 
@@ -146,9 +146,9 @@ public class Teams {
             try {
                 String player_team = data.getString("team");
 
-                if (!(player_team.equals(""))){
+                if (!(player_team.equals(""))) {
 
-                    if (!(sender instanceof Player)){
+                    if (!(sender instanceof Player)) {
                         plugin.print("Solo se puede pertenecer a un equipo a la vez, " + player + " ya pertenece al " +
                                 "equipo " + player_team);
                     } else {
@@ -159,16 +159,16 @@ public class Teams {
 
                     return false;
                 }
-            } catch (SQLException e){
+            } catch (SQLException e) {
 
                 //noinspection ConstantConditions
                 statment.executeUpdate("INSERT INTO 'main'.'players'(" +
-                    "'player','uuid','kills','death','team') VALUES " +
-                    "('" + player + "','" +
-                    plugin.getServer().getPlayer(player).getUniqueId() + "','" +
-                    0 + "','" +
-                    0 + "','" +
-                    team + "');");
+                        "'player','uuid','kills','death','team') VALUES " +
+                        "('" + player + "','" +
+                        plugin.getServer().getPlayer(player).getUniqueId() + "','" +
+                        0 + "','" +
+                        0 + "','" +
+                        team + "');");
             }
 
             ResultSet equips = statment.executeQuery("SELECT * FROM equips WHERE name =\"" + team + "\";");
@@ -179,17 +179,17 @@ public class Teams {
 
             plugin.print(" " + !(players.equals("")));
 
-            if (!(players.equals(""))){
+            if (!(players.equals(""))) {
                 String[] arr = players.split(",");
 
                 ArrayList<String> team_players = new ArrayList<>(Arrays.asList(arr));
-                if (!(team_players.contains(player))){
+                if (!(team_players.contains(player))) {
                     team_players.add(player);
                 }
 
                 String sql = "UPDATE equips SET players = ? WHERE name = ?";
                 PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
-                pstmt.setString(1, team_players.toString().replace("[", "").replace("]",""));
+                pstmt.setString(1, team_players.toString().replace("[", "").replace("]", ""));
                 pstmt.setString(2, team);
 
                 pstmt.executeUpdate();
@@ -200,7 +200,7 @@ public class Teams {
 
                 String sql = "UPDATE equips SET players = ? WHERE name = ?";
                 PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
-                pstmt.setString(1, players_new.toString().replace("[", "").replace("]",""));
+                pstmt.setString(1, players_new.toString().replace("[", "").replace("]", ""));
                 pstmt.setString(2, team);
 
                 pstmt.executeUpdate();
@@ -209,13 +209,13 @@ public class Teams {
 
 
             return true;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public void removePlayer(String team, String player){
+    public void removePlayer(String team, String player) {
         try {
             Statement statment = plugin.db.statement();
             ResultSet equips = statment.executeQuery("SELECT * FROM equips WHERE name =\"" + team + "\";");
@@ -229,7 +229,7 @@ public class Teams {
 
             String sql = "UPDATE equips SET players = ? WHERE name = ?";
             PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
-            pstmt.setString(1, team_players.toString().replace("[", "").replace("]",""));
+            pstmt.setString(1, team_players.toString().replace("[", "").replace("]", ""));
             pstmt.setString(2, team);
 
             pstmt.executeUpdate();
@@ -242,17 +242,17 @@ public class Teams {
             pstmt.executeUpdate();
 
             pstmt.executeUpdate();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void removePlayer(String player, CommandSender sender){
+    public void removePlayer(String player, CommandSender sender) {
         removePlayer(getTeam(sender.getName()), player);
     }
 
-    public String getTeam(String user){
+    public String getTeam(String user) {
 
         try {
             Statement statment = plugin.db.statement();
@@ -261,14 +261,14 @@ public class Teams {
                     user + "\";");
 
             return data.getString("team");
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public String getTeamColor(String team){
+    public String getTeamColor(String team) {
 
         try {
             Statement statment = plugin.db.statement();
@@ -277,14 +277,14 @@ public class Teams {
                     team + "\";");
 
             return data.getString("color");
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public String getTeamCapitan(String team){
+    public String getTeamCapitan(String team) {
 
         try {
             Statement statment = plugin.db.statement();
@@ -293,14 +293,14 @@ public class Teams {
                     team + "\";");
 
             return data.getString("capitan");
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public ArrayList<String > getTeamPlayers(String team){
+    public ArrayList<String> getTeamPlayers(String team) {
         try {
             Statement statment = plugin.db.statement();
             ResultSet equips = statment.executeQuery("SELECT * FROM equips WHERE name =\"" + team + "\";");
@@ -311,7 +311,7 @@ public class Teams {
 
             return new ArrayList<>(Arrays.asList(arr));
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -319,7 +319,7 @@ public class Teams {
     }
 
     @SuppressWarnings("unused")
-    public ArrayList<String> getCapitans(){
+    public ArrayList<String> getCapitans() {
         // TODO: verificar si funciona, si no se puede copiar de getTeams
         try {
             Statement statment = plugin.db.statement();
@@ -331,14 +331,14 @@ public class Teams {
 
             return arr;
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public int getKills(String player){
+    public int getKills(String player) {
         try {
             Statement statment = plugin.db.statement();
 
@@ -352,19 +352,20 @@ public class Teams {
         return 0;
     }
 
-    public int getTeamKills(String team){
+    public int getTeamKills(String team) {
         try {
             Statement statment = plugin.db.statement();
 
             return statment.executeQuery("SELECT * FROM equips WHERE name =\"" +
                     team + "\";").getInt("kills");
 
-        } catch (SQLException ignored) {}
+        } catch (SQLException ignored) {
+        }
 
         return 0;
     }
 
-    public void setKills(int kills, String player){
+    public void setKills(int kills, String player) {
         try {
             String sql = "UPDATE players SET kills = ? WHERE player = ?";
             PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
@@ -378,7 +379,7 @@ public class Teams {
     }
 
     @SuppressWarnings("unused")
-    public boolean getDeath(String player){
+    public boolean getDeath(String player) {
         try {
             Statement statment = plugin.db.statement();
 
@@ -392,12 +393,12 @@ public class Teams {
         return false;
     }
 
-    public void setDeath(String player, Boolean death){
+    public void setDeath(String player, Boolean death) {
         try {
             String sql = "UPDATE players SET kills = ? WHERE player = ?";
             PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
 
-            if (death){
+            if (death) {
                 pstmt.setInt(1, 0);
             } else {
                 pstmt.setInt(1, 1);
@@ -411,7 +412,7 @@ public class Teams {
         }
     }
 
-    public void setTeamKills(int kills, String team){
+    public void setTeamKills(int kills, String team) {
         try {
             String sql = "UPDATE equips SET kills = ? WHERE name = ?";
             PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
@@ -425,8 +426,8 @@ public class Teams {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    public void addKill(String killer){
-        if (plugin.UhcStarted){
+    public void addKill(String killer) {
+        if (plugin.UhcStarted) {
             //noinspection unused
             Statement statment = plugin.db.statement();
 
@@ -450,41 +451,41 @@ public class Teams {
 
             plugin.manager.UpdateKills(capitan);
 
-            for (String p: teamPlayers){
+            for (String p : teamPlayers) {
                 plugin.manager.UpdateKills(p);
             }
         }
     }
 
-    public List<String> getTeams(){
+    public List<String> getTeams() {
         List<String> teams = new ArrayList<>();
         try {
             String sql = "SELECT name FROM equips";
             ResultSet rs = plugin.db.connection.prepareStatement(sql).executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 teams.add(rs.getString("name"));
             }
             return teams;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             return teams;
         }
     }
 
-    public List<String> getColors(){
+    public List<String> getColors() {
         List<String> color = new ArrayList<>();
         try {
             String sql = "SELECT color FROM equips";
             ResultSet rs = plugin.db.connection.prepareStatement(sql).executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 color.add(rs.getString("color"));
             }
             return color;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             return color;
         }
     }
 
-    public void renameTeam(String old, String new_){
+    public void renameTeam(String old, String new_) {
         try {
             List<String> teams = getTeams();
 
@@ -504,7 +505,7 @@ public class Teams {
         }
     }
 
-    public void renameTeam(String new_, Player sender){
+    public void renameTeam(String new_, Player sender) {
         try {
             List<String> teams = getTeams();
 
@@ -528,7 +529,7 @@ public class Teams {
         }
     }
 
-    public void changeColor(String team, String color){
+    public void changeColor(String team, String color) {
         try {
             List<String> colors = getColors();
 

@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class mapSize implements CommandExecutor{
+public class mapSize implements CommandExecutor {
 
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
@@ -19,16 +19,17 @@ public class mapSize implements CommandExecutor{
      * Comandos disponibles: <p>
      * - setMax <p>
      * - set
+     *
      * @param main la clase principal del plugin
      */
-    public mapSize(FunkyUHC main){
+    public mapSize(FunkyUHC main) {
         this.plugin = main;
     }
 
     @SuppressWarnings("NullableProblems")
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(!(sender instanceof Player)) {
+        if (!(sender instanceof Player)) {
             if (args.length == 0) {
                 size();
                 return true;
@@ -47,8 +48,8 @@ public class mapSize implements CommandExecutor{
             } else {
                 return false;
             }
-        }else {
-            if (sender.isOp()){
+        } else {
+            if (sender.isOp()) {
                 if (args.length == 0) {
                     size();
                     return true;
@@ -72,19 +73,19 @@ public class mapSize implements CommandExecutor{
         }
     }
 
-    private void setMax(int value){
+    private void setMax(int value) {
         plugin.changeMaxSize(value, 1);
         plugin.print("Tamaño maximo del mapa cambiado a: " + value);
     }
 
-    public void setSize(int value){
+    public void setSize(int value) {
         plugin.changeSize(value, 1);
         plugin.db.updateSize(value);
         plugin.print("Tamaño del mapa cambiado a: " + value);
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    private int size(){
+    private int size() {
         plugin.print(String.valueOf(plugin.size));
         return plugin.size;
     }

@@ -6,32 +6,35 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Regeneration implements CommandExecutor{
+public class Regeneration implements CommandExecutor {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
+    @SuppressWarnings("FieldMayBeFinal")
     private co.com.okaeri.funkyuhc.player.Regeneration regeneration;
 
-    public Regeneration(FunkyUHC plugin){
+    public Regeneration(FunkyUHC plugin) {
         this.plugin = plugin;
         regeneration = new co.com.okaeri.funkyuhc.player.Regeneration(plugin);
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(!(sender instanceof Player)){
+        if (!(sender instanceof Player)) {
             return command(args);
         } // TODO: agregar funcion para si se ejecuta desde el juego
 
         return false;
     }
 
-    private boolean command(String[] args){ // boolean para saber si se imprime a juego o no
-        if (args.length == 0){
+    private boolean command(String[] args) { // boolean para saber si se imprime a juego o no
+        if (args.length == 0) {
             get();
             return true;
         } else if (args[0].equals("change")) {
-            if (regeneration.isEnabled){
+            if (regeneration.isEnabled) {
                 regeneration.disableRegeneration();
                 plugin.print("Regeneration change to: " + regeneration.isEnabled);
             } else {
@@ -43,7 +46,7 @@ public class Regeneration implements CommandExecutor{
         return false;
     }
 
-    private void get(){
+    private void get() {
         plugin.print("" + regeneration.isEnabled);
     }
 }
