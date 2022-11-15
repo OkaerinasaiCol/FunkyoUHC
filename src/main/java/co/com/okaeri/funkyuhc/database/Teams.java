@@ -31,7 +31,7 @@ public class Teams {
      */
     @SuppressWarnings("UnusedReturnValue")
     public boolean Create(String name, String capitan, String color) {
-
+        // TODO: verificar que el color no esté en uso ya
         // Obtener lista de equipos existentes
         List<List<String>> teams = plugin.teams;
         int row = 1;
