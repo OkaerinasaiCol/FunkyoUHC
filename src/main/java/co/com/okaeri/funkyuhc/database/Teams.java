@@ -456,6 +456,115 @@ public class Teams {
         }
     }
 
+    public List<String> getTeams(){
+        List<String> teams = new ArrayList<>();
+        try {
+            String sql = "SELECT name FROM equips";
+            ResultSet rs = plugin.db.connection.prepareStatement(sql).executeQuery();
+            while (rs.next()){
+                teams.add(rs.getString("name"));
+            }
+            return teams;
+        } catch (SQLException e){
+            return teams;
+        }
+    }
+
+    public List<String> getColors(){
+        List<String> color = new ArrayList<>();
+        try {
+            String sql = "SELECT color FROM equips";
+            ResultSet rs = plugin.db.connection.prepareStatement(sql).executeQuery();
+            while (rs.next()){
+                color.add(rs.getString("color"));
+            }
+            return color;
+        } catch (SQLException e){
+            return color;
+        }
+    }
+
+    public void renameTeam(String old, String new_){
+        try {
+            List<String> teams = getTeams();
+
+            if (!teams.contains(new_)) {
+                String capitan = getTeamCapitan(old);
+                String sql = "UPDATE equips SET name = ? WHERE capitan = ?";
+                PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
+                pstmt.setString(1, new_);
+                pstmt.setString(2, capitan);
+
+                pstmt.executeUpdate();
+            } else {
+                plugin.print("El nombre del equipo ya existe, por favor intente con otro");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void renameTeam(String new_, Player sender){
+        try {
+            List<String> teams = getTeams();
+
+            if (!teams.contains(new_)) {
+                if (getTeamCapitan(getTeam(sender.getName())).equals(sender.getName())) {
+                    String capitan = getTeamCapitan(getTeam(sender.getName()));
+                    String sql = "UPDATE equips SET name = ? WHERE capitan = ?";
+                    PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
+                    pstmt.setString(1, new_);
+                    pstmt.setString(2, capitan);
+
+                    pstmt.executeUpdate();
+                } else {
+                    sender.sendMessage("Solo");
+                }
+            } else {
+                plugin.print("El nombre del equipo ya existe, por favor intente con otro");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeColor(String team, String color){
+        try {
+            List<String> colors = getColors();
+
+            if (!colors.contains(color)) {
+                String sql = "UPDATE equips SET color = ? WHERE name = ?";
+                PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
+                pstmt.setString(1, color);
+                pstmt.setString(2, team);
+
+                pstmt.executeUpdate();
+            } else {
+                plugin.print("El color seleccionado no está disponible");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeColor(String color, Player sender) {
+        try {
+            List<String> colors = getColors();
+
+            if (!colors.contains(color)) {
+                String sql = "UPDATE equips SET color = ? WHERE name = ?";
+                PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
+                pstmt.setString(1, color);
+                pstmt.setString(2, getTeam(sender.getName()));
+
+                pstmt.executeUpdate();
+            } else {
+                plugin.print("El color seleccionado no está disponible");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     // TODO: agregar función para reiniciar todos los contadores
 
 }
