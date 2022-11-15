@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 
 @SuppressWarnings("FieldMayBeFinal")
@@ -13,14 +14,16 @@ public class Teams implements CommandExecutor {
     private FunkyUHC plugin;
     private co.com.okaeri.funkyuhc.database.Teams db;
 
-    public Teams(FunkyUHC plugin) {
+    public Teams(@NotNull FunkyUHC plugin) {
         this.plugin = plugin;
         db = plugin.TeamDB;
     }
 
 
-    @SuppressWarnings("NullableProblems")
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender,
+                             @NotNull Command command,
+                             @NotNull String label,
+                             String @NotNull [] args) {
 
         // TODO: mejorar el manejo de argumentos
         // FIXME: arreglar el que no se puedan colocar nombres de equipo con espacios

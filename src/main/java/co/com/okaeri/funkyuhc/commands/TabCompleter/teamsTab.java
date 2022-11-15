@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class teamsTab implements TabCompleter {
         return list;
     }
 
-    private void completator(String[] args, List<String> list, boolean isplayer) {
+    private void completator(String @NotNull [] args, List<String> list, boolean isplayer) {
         if (args.length == 1) {
             list.add("add_player");
             list.add("create");

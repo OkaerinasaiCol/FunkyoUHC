@@ -14,16 +14,33 @@ public class ItemManager {
     @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
     private FunkyUHC plugin;
 
+    /**
+     * Clase encargada de manejar los crafteos customizados del plugin
+     * @param plugin: {@link FunkyUHC} Clase principal del plugin
+     */
     public ItemManager(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * Cargar los crafteos custom
+     */
     public void LoadCustomCrafts() {
         ghastTearRecipe();
         enchantedGapple();
         enemyCompass();
     }
 
+    /**
+     * Receta para craftear lágrimas de ghast con el siguiente formato
+     * <p></p>
+     * S = Melon reluciente (Melón rodeado de 8 pepitas de oro)<p>
+     * G = Bloque de oro
+     * <p></p>
+     * - S -<p>
+     * S G S<p>
+     * - S -<p>
+     */
     private void ghastTearRecipe() {
         ShapedRecipe sr = new ShapedRecipe(Material.GHAST_TEAR.getKey(), new ItemStack(Material.GHAST_TEAR));
         sr.shape(" S ",
@@ -34,6 +51,16 @@ public class ItemManager {
         this.plugin.getServer().addRecipe(sr);
     }
 
+    /**
+     * Receta para craftear manzanas doradas encantadas con el siguiente formato
+     * <p></p>
+     * H = Cabeza de jugador<p>
+     * G = Bloque de oro
+     * <p></p>
+     * G G G<p>
+     * G H G<p>
+     * G G G<p>
+     */
     private void enchantedGapple() {
         ShapedRecipe sr = new ShapedRecipe(Material.ENCHANTED_GOLDEN_APPLE.getKey(),
                 new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
@@ -49,6 +76,18 @@ public class ItemManager {
 
     }
 
+    /**
+     * Receta para craftear brujula para buscar enemigos con el siguiente formato
+     * <p></p>
+     * H = Cabeza de jugador<p>
+     * D = Diamante<p>
+     * C = Cabeza de jugador<p>
+     * G = Bloque de oro
+     * <p></p>
+     * - H -<p>
+     * D C D<p>
+     * - G -<p>
+     */
     private void enemyCompass() {
 
         ItemStack item = new ItemStack(Material.COMPASS);

@@ -2,6 +2,7 @@ package co.com.okaeri.funkyuhc.database;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -101,7 +102,7 @@ public abstract class Database {
 
     // Now we need methods to save things to the database
     @SuppressWarnings("unused")
-    public void setTokens(Player player, Integer tokens, Integer total) {
+    public void setTokens(@NotNull Player player, Integer tokens, Integer total) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {

@@ -80,7 +80,6 @@ public class mapSize implements CommandExecutor {
 
     public void setSize(int value) {
         plugin.changeSize(value, 1);
-        plugin.db.updateSize(value);
         plugin.print("Tamaño del mapa cambiado a: " + value);
     }
 

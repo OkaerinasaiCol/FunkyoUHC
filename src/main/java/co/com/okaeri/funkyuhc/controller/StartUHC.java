@@ -11,6 +11,10 @@ public class StartUHC {
     private FunkyUHC plugin;
     // TODO: agregar base de datos para guardar información del uhc en caso de que se cierre
 
+    /**
+     * Funcion encargada de iniciar los parametros necesarios para el UHC
+     * @param plugin: Clase principal del plugin ({@link FunkyUHC})
+     */
     public StartUHC(FunkyUHC plugin) {
         this.plugin = plugin;
         // TODO: Inhabilitar los comandos que no se puedan ejecutar dentro del uhc
@@ -34,6 +38,10 @@ public class StartUHC {
         }
     }
 
+    /**
+     * Funcion encargada de verificar que todos los parametros esten correctos para ejecutar el UHC
+     * @return true: si todo_ se encuentra bien <p>false: si se encuentra algún error
+     */
     private boolean Verify() {
         // Verificar que todo_ este correcto antes de inicial el uhc
         return true; // cambiar en cuanto se cree la clase

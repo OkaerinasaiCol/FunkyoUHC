@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,10 @@ public class mapSizeTab implements TabCompleter {
         return list;
     }
 
-    private void completator(String[] args, List<String> list) {
+    /**
+     * Esta es la función que se encarga de añadir todas las opciones al comando en el primer argumento
+     */
+    private void completator(String @NotNull [] args, List<String> list) {
         if (args.length == 1) {
             plugin.print(args[0]);
             list.add("setmax");

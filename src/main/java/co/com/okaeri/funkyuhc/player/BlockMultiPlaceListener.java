@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class BlockMultiPlaceListener implements Listener {
 
@@ -18,7 +19,7 @@ public class BlockMultiPlaceListener implements Listener {
     }
 
     @EventHandler
-    public void onFinalBlockPlaced(BlockPlaceEvent event) {
+    public void onFinalBlockPlaced(@NotNull BlockPlaceEvent event) {
 
         // plugin.print("Multi: " + event.getBlockPlaced().getType());
 

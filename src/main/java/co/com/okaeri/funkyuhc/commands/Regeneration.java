@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class Regeneration implements CommandExecutor {
 
@@ -29,7 +30,7 @@ public class Regeneration implements CommandExecutor {
         return false;
     }
 
-    private boolean command(String[] args) { // boolean para saber si se imprime a juego o no
+    private boolean command(String @NotNull [] args) { // boolean para saber si se imprime a juego o no
         if (args.length == 0) {
             get();
             return true;

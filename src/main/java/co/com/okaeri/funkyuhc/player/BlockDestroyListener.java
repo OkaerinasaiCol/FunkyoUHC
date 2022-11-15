@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.profile.PlayerProfile;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class BlockDestroyListener implements Listener {
     }
 
     @EventHandler
-    public void onBlockDestroy(BlockBreakEvent event) {
+    public void onBlockDestroy(@NotNull BlockBreakEvent event) {
         // plugin.print("Placed: " + event.getBlock().getType());
 
         if (event.getBlock().getType() == Material.PLAYER_WALL_HEAD) {

@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +22,9 @@ public class Heads {
         this.plugin = plugin;
     }
 
-    public void setHead(ItemStack head, Player p, Block block) {
+    public void setHead(@NotNull ItemStack head,
+                        @NotNull Player p,
+                        @NotNull Block block) {
         SkullMeta meta = (SkullMeta) head.getItemMeta();
 
         try {
@@ -43,7 +46,7 @@ public class Heads {
         }
     }
 
-    public List<String> getHead(Block block) {
+    public List<String> getHead(@NotNull Block block) {
         try {
             Statement statment = plugin.db.statement();
 

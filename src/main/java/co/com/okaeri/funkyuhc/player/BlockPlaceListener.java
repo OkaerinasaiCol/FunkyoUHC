@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class BlockPlaceListener implements Listener {
     }
 
     @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event) {
+    public void onBlockPlace(@NotNull BlockPlaceEvent event) {
 
         Player player = event.getPlayer();
         ItemStack item = event.getItemInHand();
@@ -66,7 +67,7 @@ public class BlockPlaceListener implements Listener {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void rightOrient(Block block, List<Block> structure, Player placer) {
+    private void rightOrient(@NotNull Block block, List<Block> structure, Player placer) {
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
@@ -111,7 +112,7 @@ public class BlockPlaceListener implements Listener {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void leftOrient(Block block, List<Block> structure, Player placer) {
+    private void leftOrient(@NotNull Block block, List<Block> structure, Player placer) {
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
@@ -156,7 +157,7 @@ public class BlockPlaceListener implements Listener {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void backOrient(Block block, List<Block> structure, Player placer) {
+    private void backOrient(@NotNull Block block, List<Block> structure, Player placer) {
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
@@ -201,7 +202,7 @@ public class BlockPlaceListener implements Listener {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void frontOrient(Block block, List<Block> structure, Player placer) {
+    private void frontOrient(@NotNull Block block, List<Block> structure, Player placer) {
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
@@ -245,7 +246,7 @@ public class BlockPlaceListener implements Listener {
         }
     }
 
-    public void revive(UUID player, Block head, List<Block> structure, Player placer) {
+    public void revive(UUID player, Block head, List<Block> structure, @NotNull Player placer) {
 
         Player p = plugin.getServer().getPlayer(player);
 

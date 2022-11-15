@@ -3,6 +3,7 @@ package co.com.okaeri.funkyuhc.database;
 import co.com.okaeri.funkyuhc.FunkyUHC;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,15 +26,14 @@ public class Teams {
     //TODO: agregar funciones para editar nombre, cambiar color y modificacion compañeros de equipo
 
     /**
-     * Crear equipo para el uhc
+     * Crear equipo para el UHc
      *
-     * @param name:    Nombre del equipo a crear, este nombre debe de no existir ya, en caso de que exista la función
+     * @param name: {@link String} Nombre del equipo a crear, este nombre debe de no existir ya, en caso de que exista la función
      *                 retornará false
-     * @param capitan: El nombre del capitan del equipo
-     * @param color:   Color a usar por el equipo, este debe de no estar ya en uso o el equipo no podrá crearse
+     * @param capitan: {@link String} El nombre del capitan del equipo
+     * @param color: {@link String} Color a usar por el equipo, este debe de no estar ya en uso o el equipo no podrá crearse
      */
-    @SuppressWarnings("UnusedReturnValue")
-    public boolean Create(String name, String capitan, String color) {
+    public void Create(String name, String capitan, String color) {
         // TODO: verificar que el color no esté en uso ya
         // Obtener lista de equipos existentes
         List<List<String>> teams = plugin.teams;
@@ -56,12 +56,12 @@ public class Teams {
             for (List<String> team : teams) {
                 if (team.contains(name)) {
                     plugin.print("El equipo " + name + " ya existe");
-                    return false;
+                    return;
                 }
 
                 if (team.contains(capitan)) {
                     plugin.print("Solo se puede ser capitán de un equipo a la vez");
-                    return false;
+                    return;
                 }
             }
         }
@@ -93,19 +93,20 @@ public class Teams {
                     name + "');");
 
             //regenerar la lista de equipos
+            //noinspection deprecation
             plugin.teams = plugin.db.getTeams();
-
-            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
 
     }
 
-    @SuppressWarnings("UnusedReturnValue")
-    public boolean Delete(String name) {
+    /**
+     * Eliminar un equipo del UHC
+     * @param name: {@link String} nombre del equipo a crear
+     */
+    public void Delete(String name) {
 
         // Obtener lista de equipos existentes
         List<List<String>> teams = plugin.teams;
@@ -123,21 +124,26 @@ public class Teams {
                         plugin.print("Equipo borrado con exito" + name);
 
                         //regenerar la lista de equipos
+                        //noinspection deprecation
                         plugin.teams = plugin.db.getTeams();
 
-                        return true;
+                        break;
                     } catch (SQLException e) {
                         e.printStackTrace();
-                        return false;
+                        break;
                     }
                 }
             }
         }
-        return false;
     }
 
-    @SuppressWarnings("UnusedReturnValue")
-    public boolean addPlayer(String team, String player, CommandSender sender) {
+    /**
+     * Añadir un jugador a un equipo
+     * @param team {@link String} Equipo en el cual se desea agregar al jugador
+     * @param player {@link String} Jugador que se desea agregar al equipo, este debe de estar conectado
+     * @param sender {@link CommandSender} Entidad que genera el comando
+     */
+    public void addPlayer(String team, String player, CommandSender sender) {
 
         try {
 
@@ -160,7 +166,7 @@ public class Teams {
                                 "equipo " + player_team);
                     }
 
-                    return false;
+                    return;
                 }
             } catch (SQLException e) {
 
@@ -209,15 +215,17 @@ public class Teams {
                 pstmt.executeUpdate();
                 // statment.executeUpdate("UPDATE 'main'.'equips' SET 'players'='"+ players_new.toString() + "' WHERE name = '" + team + "'");
             }
-
-
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
+    /**
+     * Remover un jugador de un equipo con dos argumentos, este es para cuando se ejecuta desde la consola
+     * TODO: agregar que este se pueda correr por jugador mientras tenga los permisos (Opcional)
+     * @param team {@link String} Equipo del que se quiere substraer al jugador
+     * @param player {@link String} Jugador a eliminar del equipo
+     */
     public void removePlayer(String team, String player) {
         try {
             Statement statment = plugin.db.statement();
@@ -251,10 +259,21 @@ public class Teams {
 
     }
 
-    public void removePlayer(String player, CommandSender sender) {
+    /**
+     * Remover un jugador de un equipo con dos argumentos, este es para cuando se ejecuta desde un comando en
+     * el juego
+     * @param player {@link String} Jugador al que se desea agregar al equipo de la persona que envía el comando
+     * @param sender {@link String} Entidad que ejecuta el comando
+     */
+    public void removePlayer(String player, @NotNull CommandSender sender) {
         removePlayer(getTeam(sender.getName()), player);
     }
 
+    /**
+     * Obtener el equipo del usuario proporcionado como argumento
+     * @param user: {@link String} Nombre del jugador
+     * @return {@link String} Nombre del equipo al que pertenece el jugador
+     */
     public String getTeam(String user) {
 
         try {
@@ -271,6 +290,11 @@ public class Teams {
         return null;
     }
 
+    /**
+     * Obtener color del team del jugador
+     * @param team: {@link String} Nombre del jugador
+     * @return String Color del equipo
+     */
     public String getTeamColor(String team) {
 
         try {
@@ -287,6 +311,11 @@ public class Teams {
         return null;
     }
 
+    /**
+     * Obtener capitan del team del jugador
+     * @param team: {@link String} Nombre del equipo
+     * @return String capitan del equipo del jugador
+     */
     public String getTeamCapitan(String team) {
 
         try {
@@ -303,6 +332,11 @@ public class Teams {
         return null;
     }
 
+    /**
+     * Obtener jugadores del equipo
+     * @param team: {@link String} Nombre del equipo
+     * @return {@link ArrayList}[{@link String}] Arraylist de nombres de los integrantes del equipo
+     */
     public ArrayList<String> getTeamPlayers(String team) {
         try {
             Statement statment = plugin.db.statement();
@@ -321,6 +355,10 @@ public class Teams {
         return null;
     }
 
+    /**
+     * Obtener lista de todos los capitanes de equipos
+     * @return {@link ArrayList}[{@link String}] Arraylist de nombres de los capitanes de equipos
+     */
     @SuppressWarnings("unused")
     public ArrayList<String> getCapitans() {
         // TODO: verificar si funciona, si no se puede copiar de getTeams
@@ -341,6 +379,11 @@ public class Teams {
         return null;
     }
 
+    /**
+     * Obtener cantidad de kills del jugador dado como parametro
+     * @param player: {@link String} Nombre del jugador
+     * @return int Número de kills del jugador
+     */
     public int getKills(String player) {
         try {
             Statement statment = plugin.db.statement();
@@ -355,6 +398,11 @@ public class Teams {
         return 0;
     }
 
+    /**
+     * Obtener cantidad de kills del equipo dado como parametro
+     * @param team: {@link String} Nombre del equipo
+     * @return int Número de kills del equipo
+     */
     public int getTeamKills(String team) {
         try {
             Statement statment = plugin.db.statement();
@@ -368,6 +416,11 @@ public class Teams {
         return 0;
     }
 
+    /**
+     * Establecer cantidad de kills a un jugador
+     * @param kills: int Cantidad de kills a establecer
+     * @param player: {@link String} Jugador al que se debe establecer las kills
+     */
     public void setKills(int kills, String player) {
         try {
             String sql = "UPDATE players SET kills = ? WHERE player = ?";
@@ -381,6 +434,11 @@ public class Teams {
         }
     }
 
+    /**
+     * Obtener de la base de datos si el jugador está muerto o no
+     * @param player: {@link String} Nombre del jugador
+     * @return boolean Estado del jugador
+     */
     @SuppressWarnings("unused")
     public boolean getDeath(String player) {
         try {
@@ -396,7 +454,12 @@ public class Teams {
         return false;
     }
 
-    public void setDeath(String player, Boolean death) {
+    /**
+     * Establecer estado de muerte del jugador
+     * @param player: {@link String} Nombre del jugador
+     * @param death: boolean Estado del jugador
+     */
+    public void setDeath(String player, @NotNull Boolean death) {
         try {
             String sql = "UPDATE players SET kills = ? WHERE player = ?";
             PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
@@ -415,6 +478,11 @@ public class Teams {
         }
     }
 
+    /**
+     * Establecer cantidad de kills a un equipo
+     * @param kills: int Cantidad de kills a establecer
+     * @param team: {@link String} Equipo al que se debe establecer las kills
+     */
     public void setTeamKills(int kills, String team) {
         try {
             String sql = "UPDATE equips SET kills = ? WHERE name = ?";
@@ -428,7 +496,10 @@ public class Teams {
         }
     }
 
-    @SuppressWarnings("ReassignedVariable")
+    /**
+     * Agregar kill al jugador
+     * @param killer: {@link String} Nombre del jugador que hizo la kill
+     */
     public void addKill(String killer) {
         if (plugin.UhcStarted) {
             //noinspection unused
@@ -460,6 +531,10 @@ public class Teams {
         }
     }
 
+    /**
+     * Obtener listado de las kills
+     * @return {@link List}[{@link String}] Listado de nombres de los equipos
+     */
     public List<String> getTeams() {
         List<String> teams = new ArrayList<>();
         try {
@@ -474,6 +549,10 @@ public class Teams {
         }
     }
 
+    /**
+     * Obtener listado de los colores en uso
+     * @return {@link List}[{@link String}] Listado los colores en uso
+     */
     public List<String> getColors() {
         List<String> color = new ArrayList<>();
         try {
@@ -488,6 +567,11 @@ public class Teams {
         }
     }
 
+    /**
+     * Renombrar equipo desde la consola
+     * @param old: {@link String} Nombre del equipo
+     * @param new_: {@link String} Nuevo nombre del equipo
+     */
     public void renameTeam(String old, String new_) {
         try {
             List<String> teams = getTeams();
@@ -508,6 +592,11 @@ public class Teams {
         }
     }
 
+    /**
+     * Renombrar equipo desde comando in-game
+     * @param new_: {@link String} Nombre del equipo
+     * @param sender: {@link Player} Jugador que ejecuta el comando
+     */
     public void renameTeam(String new_, Player sender) {
         try {
             List<String> teams = getTeams();
@@ -532,6 +621,11 @@ public class Teams {
         }
     }
 
+    /**
+     * Cambiar color del equipo desde la consola
+     * @param team: {@link String} Nombre del equipo
+     * @param color: {@link String} Color del equipo que se desea colocar
+     */
     public void changeColor(String team, String color) {
         try {
             List<String> colors = getColors();
@@ -551,6 +645,11 @@ public class Teams {
         }
     }
 
+    /**
+     * Cambiar color del equipo desde comando in-game
+     * @param color: {@link String} Color del equipo que se desea colocar
+     * @param sender: {@link Player} Jugador que ejecuta el comando
+     */
     public void changeColor(String color, Player sender) {
         try {
             List<String> colors = getColors();

@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class ScoreBoard implements CommandExecutor {
 
@@ -21,7 +22,7 @@ public class ScoreBoard implements CommandExecutor {
 
 
     @SuppressWarnings("NullableProblems")
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String @NotNull [] args) {
 
         if (args.length == 0) {
             return false;

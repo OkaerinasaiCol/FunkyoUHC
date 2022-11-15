@@ -8,6 +8,7 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
@@ -21,7 +22,7 @@ public class ItemCraftEvent implements Listener {
     }
 
     @EventHandler
-    public void onItemCraft(PrepareItemCraftEvent event) {
+    public void onItemCraft(@NotNull PrepareItemCraftEvent event) {
         if ((event.getRecipe() instanceof ShapedRecipe) && event.getRecipe().getResult().getType().equals(Material.ENCHANTED_GOLDEN_APPLE)) {
 
             for (ItemStack s : event.getInventory().getMatrix()) {
