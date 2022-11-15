@@ -197,8 +197,6 @@ public final class FunkyUHC extends JavaPlugin {
         this.getCommand("mapSize").setExecutor(new mapSize(this));
         this.getCommand("mapSize").setTabCompleter(new mapSizeTab(this));
 
-        this.getCommand("timeBar").setExecutor(new roundTimeBar(this, timeBar));
-
         this.getCommand("teams").setExecutor(new Teams(this));
         this.getCommand("teams").setTabCompleter(new teamsTab(this));
 
