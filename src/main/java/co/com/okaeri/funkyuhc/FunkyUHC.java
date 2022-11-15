@@ -67,17 +67,20 @@ public final class FunkyUHC extends JavaPlugin {
     public void onEnable() {
 
         // Imprimir informacion del plugin al inicar el servidor
-        print(colors.green + "<------------------------------------------>");
-        print(StringUtils.center(pluginName, 44));
-        print("");
-        print("Version: " + pluginVersion);
-        print("Api version: " + apiVersion);
-        print("");
-        print(apiDesc);
-        print("");
-        print("Creator Website: " + creatorWebsite);
-        print(colors.green + "<------------------------------------------>");
-        consoleInfo("Plugin inicializado con exito");
+        consoleInfo(colors.green + "<------------------------------------------>");
+        consoleInfo(StringUtils.center(pluginName, 44));
+        consoleInfo("");
+        consoleInfo("Version: " + pluginVersion);
+        consoleInfo("Api version: " + apiVersion);
+        consoleInfo("");
+        consoleInfo(apiDesc);
+        consoleInfo("");
+        consoleInfo("Creator Website: " + creatorWebsite);
+        consoleInfo(colors.green + "<------------------------------------------>");
+
+        for (int i = 1; i <= maxRounds; i++){
+            roundsStarted.put(i, false); // TODO: cargar de bd por si se crashea
+        }
 
 
         // Inicializar base de datos y cargar
@@ -134,6 +137,7 @@ public final class FunkyUHC extends JavaPlugin {
             }
         }, 10, 20L);
 
+        consoleInfo(colors.green + "Plugin inicializado con exito");
     }
 
     /*
@@ -162,7 +166,7 @@ public final class FunkyUHC extends JavaPlugin {
     }
 
     private void consoleInfo(String data){
-        Bukkit.getConsoleSender().sendMessage(Color.GREEN + "[" + pluginName + "]" + Color.WHITE + data);
+        Bukkit.getConsoleSender().sendMessage(colors.green+ "[" + pluginName + "]" + colors.reset + data);
     }
 
     @SuppressWarnings("unused")
