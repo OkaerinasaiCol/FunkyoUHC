@@ -6,7 +6,7 @@
 
     <groupId>co.com.okaeri</groupId>
     <artifactId>FunkyUHC</artifactId>
-    <version>0.1.2.2</version>
+    <version>0.1.2.3</version>
     <packaging>jar</packaging>
 
     <name>FunkyUHC</name>

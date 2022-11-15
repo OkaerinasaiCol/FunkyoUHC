@@ -19,7 +19,7 @@ public class Teams {
         this.plugin = plugin;
     }
 
-    //TODO: agregar funciones para editar nombre, cambiar color, creacion y modificacion compañeros de equipo
+    //TODO: agregar funciones para editar nombre, cambiar color y modificacion compañeros de equipo
 
     @SuppressWarnings("UnusedReturnValue")
     public boolean Create(String name, String capitan, String color) {
@@ -50,7 +50,6 @@ public class Teams {
 
                 if (team.contains(capitan)){
                     plugin.print("Solo se puede ser capitán de un equipo a la vez");
-                    // TODO No deja crear mas de un equipo, hacer consulta directamenten en bd
                     return false;
                 }
             }
@@ -324,6 +323,40 @@ public class Teams {
             String sql = "UPDATE players SET kills = ? WHERE player = ?";
             PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
             pstmt.setInt(1, kills);
+            pstmt.setString(2, player);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public boolean getDeath(String player){
+        try {
+            Statement statment = plugin.db.statement();
+
+            return statment.executeQuery("SELECT * FROM players WHERE player =\"" +
+                    player + "\";").getBoolean("death");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public void setDeath(String player, Boolean death){
+        try {
+            String sql = "UPDATE players SET kills = ? WHERE player = ?";
+            PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
+
+            if (death){
+                pstmt.setInt(1, 0);
+            } else {
+                pstmt.setInt(1, 1);
+            }
+
             pstmt.setString(2, player);
 
             pstmt.executeUpdate();

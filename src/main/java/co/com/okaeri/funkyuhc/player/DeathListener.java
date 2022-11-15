@@ -21,24 +21,24 @@ public class DeathListener implements Listener{
 
     @EventHandler
     public void Muertes(PlayerDeathEvent e){
-        Player p = e.getEntity();
+        if (plugin.UhcStarted) {
+            Player p = e.getEntity();
 
-        Head h = new Head();
+            Head h = new Head();
 
-        ItemStack drop = h.getPlayerHead(p);
-        p.getWorld().dropItem(p.getLocation(), drop);
+            ItemStack drop = h.getPlayerHead(p);
+            p.getWorld().dropItem(p.getLocation(), drop);
 
-        plugin.print(e.getEntity() + " death " + e.getEntity().getLastDamageCause() + e.getEntity().getKiller());
-        plugin.print("death id" + e.getEntity().getUniqueId());
+            plugin.print(e.getEntity() + " death " + e.getEntity().getLastDamageCause() + e.getEntity().getKiller());
+            plugin.print("death id" + e.getEntity().getUniqueId());
 
-        if (e.getEntity().getKiller() != null){
-            plugin.TeamDB.addKill(e.getEntity().getKiller().getName());
+            if (e.getEntity().getKiller() != null) {
+                plugin.TeamDB.addKill(e.getEntity().getKiller().getName());
+            }
+
+            plugin.TeamDB.setDeath(p.getName(), true);
+
+            p.setGameMode(GameMode.SPECTATOR);
         }
-
-        p.setGameMode(GameMode.SPECTATOR);
-
     }
-
-
-
 }
