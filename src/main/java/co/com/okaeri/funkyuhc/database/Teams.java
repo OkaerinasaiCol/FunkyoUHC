@@ -283,6 +283,7 @@ public class Teams {
 
     @SuppressWarnings("unused")
     public ArrayList<String> getCapitans(){
+        // TODO: verificar si funciona, si no se puede copiar de getTeams
         try {
             Statement statment = plugin.db.statement();
             ResultSet equips = statment.executeQuery("SELECT capitan FROM equips;");
