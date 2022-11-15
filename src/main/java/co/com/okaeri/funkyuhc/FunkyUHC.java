@@ -174,14 +174,22 @@ public final class FunkyUHC extends JavaPlugin {
         return this.db;
     }
 
-    public void changeMaxSize(int size){
+    public void changeMaxSize(int size, long time){
         maxSize = size * 2;
-        wb.setSize(size * 2);
+        if (time != 1) {
+            wb.setSize(size * 2, time);
+        } else {
+            wb.setSize(size * 2);
+        }
     }
 
-    public void changeSize(int size){
+    public void changeSize(int size, long time){
         this.size = size * 2;
-        wb.setSize(size * 2);
+        if (time != 1) {
+            wb.setSize(size * 2, time);
+        } else {
+            wb.setSize(size * 2);
+        }
     }
 
     @SuppressWarnings("ConstantConditions")
