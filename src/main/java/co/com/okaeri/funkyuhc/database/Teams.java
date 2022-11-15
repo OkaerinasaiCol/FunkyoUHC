@@ -19,7 +19,7 @@ public class Teams {
         this.plugin = plugin;
     }
 
-    //TODO: agregar funciones para editar nombre, cambiar color, creacion y modificacion compañeros de equipo
+    //TODO: agregar funciones para editar nombre, cambiar color y modificacion compañeros de equipo
 
     @SuppressWarnings("UnusedReturnValue")
     public boolean Create(String name, String capitan, String color) {
@@ -50,7 +50,6 @@ public class Teams {
 
                 if (team.contains(capitan)){
                     plugin.print("Solo se puede ser capitán de un equipo a la vez");
-                    // TODO No deja crear mas de un equipo, hacer consulta directamenten en bd
                     return false;
                 }
             }
