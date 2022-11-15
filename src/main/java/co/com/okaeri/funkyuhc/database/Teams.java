@@ -215,6 +215,43 @@ public class Teams {
         return false;
     }
 
+    public void removePlayer(String team, String player){
+        try {
+            Statement statment = plugin.db.statement();
+            ResultSet equips = statment.executeQuery("SELECT * FROM equips WHERE name =\"" + team + "\";");
+
+            String players = equips.getString("players");
+
+            String[] arr = players.split(",");
+
+            ArrayList<String> team_players = new ArrayList<>(Arrays.asList(arr));
+            team_players.remove(player);
+
+            String sql = "UPDATE equips SET players = ? WHERE name = ?";
+            PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
+            pstmt.setString(1, team_players.toString().replace("[", "").replace("]",""));
+            pstmt.setString(2, team);
+
+            pstmt.executeUpdate();
+
+            String sql_player = "UPDATE player SET teams = ? WHERE player = ?";
+            PreparedStatement pstmt_player = plugin.db.connection.prepareStatement(sql_player);
+            pstmt_player.setString(1, player);
+            pstmt_player.setString(2, "");
+
+            pstmt.executeUpdate();
+
+            pstmt.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void removePlayer(String player, CommandSender sender){
+        removePlayer(getTeam(sender.getName()), player);
+    }
+
     public String getTeam(String user){
 
         try {
