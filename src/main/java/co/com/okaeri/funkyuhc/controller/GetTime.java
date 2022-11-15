@@ -5,9 +5,14 @@ import java.time.Duration;
 public class GetTime {
 
     public String toString(Duration duration){
-        String time;
 
         long totalSecs = duration.getSeconds();
+
+        return toString(totalSecs);
+    }
+
+    public String toString(Long totalSecs){
+        String time;
 
         int hours = Math.toIntExact(totalSecs / 3600);
         int minutes = Math.toIntExact((totalSecs % 3600)) / 60;
