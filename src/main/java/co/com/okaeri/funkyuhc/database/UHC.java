@@ -53,6 +53,8 @@ public class UHC {
                         " 'wbBefore' = '" + ( (wbBefore) ? 1 : 0 ) + "' ," +
                         " 'wbStart' = '" + ( (wbStart) ? 1 : 0 ) + "' " +
                         "WHERE 'round' = '" + round_ + "'";
+
+                statment.executeUpdate(sql);
             }
 
         } catch (SQLException e) {
