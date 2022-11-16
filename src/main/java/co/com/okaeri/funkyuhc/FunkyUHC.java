@@ -7,6 +7,7 @@ import co.com.okaeri.funkyuhc.controller.GetTime;
 import co.com.okaeri.funkyuhc.database.Database;
 import co.com.okaeri.funkyuhc.database.Heads;
 import co.com.okaeri.funkyuhc.database.SQLite;
+import co.com.okaeri.funkyuhc.database.UHC;
 import co.com.okaeri.funkyuhc.items.ItemManager;
 import co.com.okaeri.funkyuhc.player.*;
 import co.com.okaeri.funkyuhc.util.Colors;
@@ -57,6 +58,7 @@ public final class FunkyUHC extends JavaPlugin {
     public boolean UhcStarted;
     public boolean UhcTimeRestarted;
     public Duration UhcTimerDuration;
+    public UHC UhcDatabaseManager;
     public Map<Player, FastBoard> boards = new HashMap<>();
     public Colors colors = new Colors();
     public ScoreManager manager;
@@ -269,7 +271,6 @@ public final class FunkyUHC extends JavaPlugin {
                                 // este codigo Solo se va a ejecutar al inciar la ronda
                                 tittle.setTittle(colors.green + "Se inicia ronda 3",
                                         colors.aqua + "Se habilitará el PVP");
-                                // TODO: habilitar el PVP
 
                                 roundsStarted.put(round, true); // guardar que ya se ejecutó esto
                             }
