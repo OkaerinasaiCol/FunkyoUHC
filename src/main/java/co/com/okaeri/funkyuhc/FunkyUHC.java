@@ -11,6 +11,7 @@ import co.com.okaeri.funkyuhc.database.SQLite;
 import co.com.okaeri.funkyuhc.items.ItemManager;
 import co.com.okaeri.funkyuhc.player.*;
 import co.com.okaeri.funkyuhc.util.Colors;
+import co.com.okaeri.funkyuhc.util.Tittle;
 import fr.mrmicky.fastboard.FastBoard;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
