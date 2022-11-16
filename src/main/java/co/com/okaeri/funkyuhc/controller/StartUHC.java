@@ -1,6 +1,8 @@
 package co.com.okaeri.funkyuhc.controller;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
+import org.bukkit.GameRule;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.time.LocalDateTime;
@@ -31,6 +33,10 @@ public class StartUHC {
                 }
             }
 
+            for (World world: plugin.getServer().getWorlds()){
+                world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
+                // TODO: habilitar nuevamente al finalizar el plugin
+            }
             plugin.startTime = LocalDateTime.now();
             plugin.UhcStarted = true;
             plugin.UhcTimerStarted = true;
