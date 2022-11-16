@@ -328,7 +328,6 @@ public final class FunkyUHC extends JavaPlugin {
                                 // este codigo Solo se va a ejecutar al inciar la ronda
                                 print("Se inicia ronda 5");
                                 // TODO: imprimir en pantalla información de la ronda
-                                // Ultima ronda, despues de acabar esta ronda se hara ....
 
                                 roundsStarted.put(round, true); // guardar que ya se ejecuto esto
                                 break;
