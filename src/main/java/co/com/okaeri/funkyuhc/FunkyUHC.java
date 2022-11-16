@@ -47,6 +47,7 @@ public final class FunkyUHC extends JavaPlugin {
     public int size = maxSize;
     public List<List<String>> teams;
     public Heads heads = new Heads(this);
+    public Tittle tittle;
     public co.com.okaeri.funkyuhc.database.Teams TeamDB = new co.com.okaeri.funkyuhc.database.Teams(this);
     @SuppressWarnings("FieldMayBeFinal")
     private PluginManager pm = this.getServer().getPluginManager();
@@ -61,13 +62,13 @@ public final class FunkyUHC extends JavaPlugin {
     public ScoreManager manager;
     public ItemManager itemsManager;
     public int maxRounds = 5;
-    public int timePerRound = 60 * 2; // 60 * 30 = 30 minutos
+    public int timePerRound = 370; // 60 * 30 = 30 minutos
     @SuppressWarnings("unused")
     public int roundTime;
     public int round = 1;
     public Map<Integer, Boolean> roundsStarted = new HashMap<>();
     public Map<Integer, Boolean> worldBorderReduceStart = new HashMap<>();
-    // public Map<Integer, Integer> bordersOrder = new HashMap<>();
+    public Map<Integer, Boolean> worldBorderBefore = new HashMap<>();
 
     public GetTime timer = new GetTime();
 
@@ -94,6 +95,10 @@ public final class FunkyUHC extends JavaPlugin {
 
         for (int i = 1; i <= maxRounds; i++) {
             worldBorderReduceStart.put(i, false); // TODO: cargar de bd por si se crashea
+        }
+
+        for (int i = 1; i <= maxRounds; i++) {
+            worldBorderBefore.put(i, false); // TODO: cargar de bd por si se crashea
         }
 
         /*
