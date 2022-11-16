@@ -238,7 +238,7 @@ public final class FunkyUHC extends JavaPlugin {
                                 worldBorderReduceStart.put(round, true);
                             }
 
-                            timeBar.setProgress((double) restanteRonda_2 / (timePerRound * round));
+                            timeBar.setProgress((double) restanteRonda_2 / timePerRound);
                             timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
                                     " Tiempo restante: " + timer.toString(restanteRonda_2));
                             break;
@@ -274,7 +274,7 @@ public final class FunkyUHC extends JavaPlugin {
                                 worldBorderReduceStart.put(round, true);
                             }
 
-                            timeBar.setProgress((double) restanteRonda_3 / (timePerRound * round));
+                            timeBar.setProgress((double) restanteRonda_3 / timePerRound);
                             timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
                                     " Tiempo restante: " + timer.toString(restanteRonda_3));
                             break;
@@ -309,7 +309,7 @@ public final class FunkyUHC extends JavaPlugin {
                                 worldBorderReduceStart.put(round, true);
                             }
 
-                            timeBar.setProgress((double) restanteRonda_4 / (timePerRound * round));
+                            timeBar.setProgress((double) restanteRonda_4 / timePerRound);
                             timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
                                     " Tiempo restante: " + timer.toString(restanteRonda_4));
                             break;
@@ -347,7 +347,7 @@ public final class FunkyUHC extends JavaPlugin {
                                 worldBorderReduceStart.put(round, true);
                             }
 
-                            timeBar.setProgress((double) restanteRonda_5 / (timePerRound * round));
+                            timeBar.setProgress((double) restanteRonda_5 / timePerRound);
                             timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
                                     " Tiempo restante: " + timer.toString(restanteRonda_5));
                             break;
