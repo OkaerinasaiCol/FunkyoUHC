@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,11 +18,13 @@ public class Heads {
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public Heads(FunkyUHC plugin){
+    public Heads(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
-    public void setHead(ItemStack head, Player p, Block block){
+    public void setHead(@NotNull ItemStack head,
+                        @NotNull Player p,
+                        @NotNull Block block) {
         SkullMeta meta = (SkullMeta) head.getItemMeta();
 
         try {
@@ -38,12 +41,12 @@ public class Heads {
                     "'" + p.getName() + "'," +
                     "'" + meta.getLore() + "');");
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public List<String> getHead(Block block){
+    public List<String> getHead(@NotNull Block block) {
         try {
             Statement statment = plugin.db.statement();
 
@@ -64,7 +67,7 @@ public class Heads {
             return player;
 
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }

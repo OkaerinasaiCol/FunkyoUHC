@@ -7,18 +7,19 @@ import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class BlockMultiPlaceListener implements Listener {
 
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public BlockMultiPlaceListener(FunkyUHC plugin){
+    public BlockMultiPlaceListener(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onFinalBlockPlaced(BlockPlaceEvent event){
+    public void onFinalBlockPlaced(@NotNull BlockPlaceEvent event) {
 
         // plugin.print("Multi: " + event.getBlockPlaced().getType());
 
@@ -31,8 +32,8 @@ public class BlockMultiPlaceListener implements Listener {
         plugin.print("down 1: " + _world.getBlockAt(_ball1));
         plugin.print("down 11: " + _world.getBlockAt(_ball11));
 
-        if(event.getBlockPlaced().getType().equals(Material.FLINT_AND_STEEL) ||
-                event.getBlockPlaced().getType().equals(Material.FIRE_CHARGE)){
+        if (event.getBlockPlaced().getType().equals(Material.FLINT_AND_STEEL) ||
+                event.getBlockPlaced().getType().equals(Material.FIRE_CHARGE)) {
 
             World world = event.getPlayer().getWorld();
 
@@ -60,7 +61,7 @@ public class BlockMultiPlaceListener implements Listener {
 
             // intetar con el bloque de dos a la izquierda
             if (world.getBlockAt(ball1.add(-2.0, 0.0, 0.0)).getType().equals(Material.FIRE) ||
-                    world.getBlockAt(ball1.add(-2.0, 0.0, 0.0)).getType().equals(Material.SOUL_FIRE)){
+                    world.getBlockAt(ball1.add(-2.0, 0.0, 0.0)).getType().equals(Material.SOUL_FIRE)) {
                 plugin.print("izquierda");
             } else if (world.getBlockAt(ball1.add(2.0, 0.0, 0.0)).getType().equals(Material.FIRE) ||
                     world.getBlockAt(ball1.add(2.0, 0.0, 0.0)).getType().equals(Material.SOUL_FIRE)) {
@@ -69,7 +70,7 @@ public class BlockMultiPlaceListener implements Listener {
                     world.getBlockAt(ball1.add(0.0, 0.0, -2.0)).getType().equals(Material.SOUL_FIRE)) {
                 plugin.print("detrás");
             } else if (world.getBlockAt(ball1.add(0.0, 0.0, 2.0)).getType().equals(Material.FIRE) ||
-                    world.getBlockAt(ball1.add(0.0, 0.0, 2.0)).getType().equals(Material.SOUL_FIRE) ) {
+                    world.getBlockAt(ball1.add(0.0, 0.0, 2.0)).getType().equals(Material.SOUL_FIRE)) {
                 plugin.print("delante");
             }
 

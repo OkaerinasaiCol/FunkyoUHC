@@ -12,7 +12,7 @@ public class ChatListener implements Listener {
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public ChatListener(FunkyUHC plugin){
+    public ChatListener(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
@@ -29,17 +29,18 @@ public class ChatListener implements Listener {
 
             try {
 
-                if(!(p.getName().equals(capitan))) {
+                if (!(p.getName().equals(capitan))) {
                     //noinspection ConstantConditions
                     plugin.getServer().getPlayer(capitan).sendMessage("<" + p.getName() + "> " + message);
                 }
 
-            } catch (NullPointerException ignored){}
+            } catch (NullPointerException ignored) {
+            }
 
             //noinspection ConstantConditions
             plugin.print(p.getPlayer().getName() + " m: " + message);
 
-            for (String team_players: plugin.TeamDB.getTeamPlayers(team)){
+            for (String team_players : plugin.TeamDB.getTeamPlayers(team)) {
                 Player team_player = plugin.getServer().getPlayer(team_players);
 
                 try {
@@ -47,7 +48,8 @@ public class ChatListener implements Listener {
                         //noinspection ConstantConditions
                         team_player.sendMessage("<" + p.getName() + "> " + message);
                     }
-                } catch (NullPointerException ignored){}
+                } catch (NullPointerException ignored) {
+                }
 
             }
 

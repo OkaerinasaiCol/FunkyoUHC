@@ -6,13 +6,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Head {
 
-    public ItemStack getPlayerHead(Player p){
+    public ItemStack getPlayerHead(@NotNull Player p) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
 
         //noinspection unused
@@ -38,7 +39,7 @@ public class Head {
         return item;
     }
 
-    public ItemStack getPlayerHead(PlayerProfile profile){
+    public ItemStack getPlayerHead(PlayerProfile profile) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
 
         // TODO: colocar la skin desde el skin restorer si es posible

@@ -10,17 +10,17 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 
-public class DeathListener implements Listener{
+public class DeathListener implements Listener {
 
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public  DeathListener(FunkyUHC plugin){
+    public DeathListener(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void Muertes(PlayerDeathEvent e){
+    public void Muertes(PlayerDeathEvent e) {
         if (plugin.UhcStarted) {
             Player p = e.getEntity();
 
