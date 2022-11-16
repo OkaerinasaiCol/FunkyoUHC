@@ -43,6 +43,7 @@ public final class FunkyUHC extends JavaPlugin {
     public SQLite db;
     public BossBar timeBar = Bukkit.createBossBar("Tiempo hasta la ronda #", BarColor.BLUE, BarStyle.SEGMENTED_12);
     public WorldBorder wb;
+    public WorldBorder wb_n;
     public int maxSize = 1500;
     public int size = maxSize;
     public List<List<String>> teams;
@@ -115,8 +116,15 @@ public final class FunkyUHC extends JavaPlugin {
         // Set inicial world border
         //noinspection ConstantConditions
         this.wb = Bukkit.getWorld("world").getWorldBorder();
+
+        //noinspection ConstantConditions
+        this.wb_n = Bukkit.getWorld("world_nether").getWorldBorder();
+        // TODO hacer que al inicio el world border esté al rededor del spawn y hacer spawn bonito
+
         wb.setCenter(0, 0);
         wb.setSize(maxSize * 2);
+        wb_n.setCenter(0, 0);
+        wb_n.setSize(maxSize * 2);
 
         // agregar registro de muertes
         this.pm.registerEvents(new DeathListener(this), this);
@@ -204,6 +212,7 @@ public final class FunkyUHC extends JavaPlugin {
                                     !worldBorderReduceStart.get(round)) {
                                 // este codigo se ejecutará una sola vez para iniciar el despl de world border
                                 wb.setSize(1500.0, (long) (((long) timePerRound * round) / 2.0));
+                                wb_n.setSize(1500.0, (long) (((long) timePerRound * round) / 2.0));
 
                                 worldBorderReduceStart.put(round, true);
                             }
@@ -238,6 +247,7 @@ public final class FunkyUHC extends JavaPlugin {
                                     !worldBorderReduceStart.get(round)) {
                                 // este codigo se ejecutará una sola vez para iniciar el despl de world border
                                 wb.setSize(900.0, (long) ((long) timePerRound / 2.0));
+                                wb_n.setSize(900.0, (long) ((long) timePerRound / 2.0));
 
                                 worldBorderReduceStart.put(round, true);
                             }
@@ -274,6 +284,7 @@ public final class FunkyUHC extends JavaPlugin {
                                     !worldBorderReduceStart.get(round)) {
                                 // este codigo se ejecutará una sola vez para iniciar el despl de world border
                                 wb.setSize(200, (long) ((long) timePerRound / 2.0));
+                                wb_n.setSize(200, (long) ((long) timePerRound / 2.0));
 
                                 worldBorderReduceStart.put(round, true);
                             }
@@ -309,6 +320,7 @@ public final class FunkyUHC extends JavaPlugin {
                                     !worldBorderReduceStart.get(round)) {
                                 // este codigo se ejecutará una sola vez para iniciar el despl de world border
                                 wb.setSize(100, (long) ((long) timePerRound / 2.0));
+                                wb_n.setSize(100, (long) ((long) timePerRound / 2.0));
 
                                 worldBorderReduceStart.put(round, true);
                             }
@@ -347,6 +359,7 @@ public final class FunkyUHC extends JavaPlugin {
                                     !worldBorderReduceStart.get(round)) {
                                 // este codigo se ejecutará una sola vez para iniciar el despl de world border
                                 wb.setSize(50, (long) ((long) timePerRound / 2.0));
+                                wb_n.setSize(50, (long) ((long) timePerRound / 2.0));
 
                                 worldBorderReduceStart.put(round, true);
                             }
@@ -401,8 +414,10 @@ public final class FunkyUHC extends JavaPlugin {
         maxSize = size * 2;
         if (time != 1) {
             wb.setSize(size * 2, time);
+            wb_n.setSize(size * 2, time);
         } else {
             wb.setSize(size * 2);
+            wb_n.setSize(size * 2);
         }
     }
 
@@ -410,8 +425,10 @@ public final class FunkyUHC extends JavaPlugin {
         this.size = size * 2;
         if (time != 1) {
             wb.setSize(size * 2, time);
+            wb_n.setSize(size * 2, time);
         } else {
             wb.setSize(size * 2);
+            wb_n.setSize(size * 2);
         }
     }
 
