@@ -68,6 +68,20 @@ public class SQLite extends Database {
             "PRIMARY KEY('owner'));";
 
     /**
+     * Sql Query para crear la tabla que almacenará el estado del uhc
+     */
+    public String UhcRoundTry = "CREATE TABLE IF NOT EXISTS uhcRound(" +
+            "'round' INTEGER NOT NULL UNIQUE," +
+            "'rStarted' INTEGER NOT NULL," +
+            "'wbBefore' INTEGER NOT NULL," +
+            "'wbStart' INTEGER NOT NULL," +
+            "'border' REAL NOT NULL," +
+            "'newSize' REAL NOT NULL," +
+            "'rRest' REAL NOT NULL," +
+            "'running' INTEGER NOT NULL," +
+            "PRIMARY KEY('round'));";
+
+    /**
      * Funcion para actualizar el tamaño del mapa en la base de datos con base en el argumento proporcionado
      * @param size: Valor a establecer
      */
@@ -126,6 +140,7 @@ public class SQLite extends Database {
             s.executeUpdate(CreateEquips);
             s.executeUpdate(CreateMapSizes);
             s.executeUpdate(CreateHeads);
+            s.executeUpdate(UhcRoundTry);
             s.executeUpdate("insert or ignore into mapSizes values('size'," + plugin.size + ");");
             s.close();
         } catch (SQLException e) {
