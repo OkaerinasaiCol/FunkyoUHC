@@ -284,10 +284,8 @@ public class Teams {
 
             return data.getString("team");
         } catch (SQLException e) {
-            e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 
     /**
