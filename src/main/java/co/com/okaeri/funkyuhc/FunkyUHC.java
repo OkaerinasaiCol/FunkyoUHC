@@ -424,8 +424,6 @@ public final class FunkyUHC extends JavaPlugin {
         this.getCommand("teams").setExecutor(new Teams(this));
         this.getCommand("teams").setTabCompleter(new teamsTab(this));
 
-        this.getCommand("regeneration").setExecutor(new Regeneration(this));
-
         this.getCommand("uhc").setExecutor(new UhcController(this));
 
         this.getCommand("score").setExecutor(new ScoreBoard(this));
