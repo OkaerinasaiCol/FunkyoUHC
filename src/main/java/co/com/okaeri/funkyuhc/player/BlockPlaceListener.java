@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +23,18 @@ public class BlockPlaceListener implements Listener {
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public BlockPlaceListener(FunkyUHC plugin){
+    public BlockPlaceListener(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event){
+    public void onBlockPlace(@NotNull BlockPlaceEvent event) {
 
         Player player = event.getPlayer();
         ItemStack item = event.getItemInHand();
         Block block = event.getBlockPlaced();
 
-        if (item.getType() == Material.PLAYER_HEAD){
+        if (item.getType() == Material.PLAYER_HEAD) {
 
             //noinspection unused
             ItemMeta itemmeta = event.getItemInHand().getItemMeta();
@@ -41,58 +42,58 @@ public class BlockPlaceListener implements Listener {
 
         } else if (item.getType() == Material.FLINT_AND_STEEL || item.getType() == Material.FIRE_CHARGE) {
 
-                Block start = event.getBlock();
+            Block start = event.getBlock();
 
-                if (start.getRelative(0, -1, 0).getType().equals(Material.SOUL_SAND)){
+            if (start.getRelative(0, -1, 0).getType().equals(Material.SOUL_SAND)) {
 
-                    List<Block> structure = new ArrayList<>();
-                    structure.add(start.getRelative(0, -1, 0));
+                List<Block> structure = new ArrayList<>();
+                structure.add(start.getRelative(0, -1, 0));
 
-                    if (start.getRelative(1,-1,0).getType().equals(Material.GOLD_BLOCK)){
-                        structure.add(start.getRelative(1,-1,0));
-                        rightOrient(start, structure, player);
-                    } else if (start.getRelative(-1, -1,0).getType().equals(Material.GOLD_BLOCK)) {
-                        structure.add(start.getRelative(-1, -1,0));
-                        leftOrient(start, structure, player);
-                    } else if (start.getRelative(0,-1, 1).getType().equals(Material.GOLD_BLOCK)){
-                        structure.add(start.getRelative(0,-1, 1));
-                        frontOrient(start, structure, player);
-                    } else if (start.getRelative(0,-1, -1).getType().equals(Material.GOLD_BLOCK)) {
-                        structure.add(start.getRelative(0,-1, -1));
-                        backOrient(start, structure, player);
-                    }
+                if (start.getRelative(1, -1, 0).getType().equals(Material.GOLD_BLOCK)) {
+                    structure.add(start.getRelative(1, -1, 0));
+                    rightOrient(start, structure, player);
+                } else if (start.getRelative(-1, -1, 0).getType().equals(Material.GOLD_BLOCK)) {
+                    structure.add(start.getRelative(-1, -1, 0));
+                    leftOrient(start, structure, player);
+                } else if (start.getRelative(0, -1, 1).getType().equals(Material.GOLD_BLOCK)) {
+                    structure.add(start.getRelative(0, -1, 1));
+                    frontOrient(start, structure, player);
+                } else if (start.getRelative(0, -1, -1).getType().equals(Material.GOLD_BLOCK)) {
+                    structure.add(start.getRelative(0, -1, -1));
+                    backOrient(start, structure, player);
                 }
+            }
         }
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void rightOrient(Block block, List<Block> structure, Player placer){
+    private void rightOrient(@NotNull Block block, List<Block> structure, Player placer) {
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
         Block c_block = block.getRelative(2, 0, 0);
 
-        if (c_block.getType().equals(Material.SOUL_FIRE)){
+        if (c_block.getType().equals(Material.SOUL_FIRE)) {
             structure.add(block.getRelative(2, -1, 0));
 
             c_block = block.getRelative(1, 0, 0);
 
-            if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
+            if (c_block.getType().equals(Material.DIAMOND_BLOCK)) {
                 structure.add(c_block);
 
-                c_block = block.getRelative(1,1,0);
+                c_block = block.getRelative(1, 1, 0);
 
-                if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
+                if (c_block.getType().equals(Material.DIAMOND_BLOCK)) {
                     structure.add(c_block);
 
-                    c_block = block.getRelative(1, 2,0);
+                    c_block = block.getRelative(1, 2, 0);
 
-                    if (c_block.getType().equals(Material.PLAYER_HEAD)){
+                    if (c_block.getType().equals(Material.PLAYER_HEAD)) {
                         structure.add(c_block);
 
                         Heads h = new Heads(plugin);
 
-                        List<String> head =  h.getHead(c_block);
+                        List<String> head = h.getHead(c_block);
 
                         UUID uuid = UUID.fromString(head.get(0));
 
@@ -111,33 +112,33 @@ public class BlockPlaceListener implements Listener {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void leftOrient(Block block, List<Block> structure, Player placer){
+    private void leftOrient(@NotNull Block block, List<Block> structure, Player placer) {
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
         Block c_block = block.getRelative(-2, 0, 0);
 
-        if (c_block.getType().equals(Material.SOUL_FIRE)){
+        if (c_block.getType().equals(Material.SOUL_FIRE)) {
             structure.add(block.getRelative(-2, -1, 0));
 
             c_block = block.getRelative(-1, 0, 0);
 
-            if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
+            if (c_block.getType().equals(Material.DIAMOND_BLOCK)) {
                 structure.add(c_block);
 
-                c_block = block.getRelative(-1,1,0);
+                c_block = block.getRelative(-1, 1, 0);
 
-                if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
+                if (c_block.getType().equals(Material.DIAMOND_BLOCK)) {
                     structure.add(c_block);
 
-                    c_block = block.getRelative(-1, 2,0);
+                    c_block = block.getRelative(-1, 2, 0);
 
-                    if (c_block.getType().equals(Material.PLAYER_HEAD)){
+                    if (c_block.getType().equals(Material.PLAYER_HEAD)) {
                         structure.add(c_block);
 
                         Heads h = new Heads(plugin);
 
-                        List<String> head =  h.getHead(c_block);
+                        List<String> head = h.getHead(c_block);
 
                         UUID uuid = UUID.fromString(head.get(0));
 
@@ -156,33 +157,33 @@ public class BlockPlaceListener implements Listener {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void backOrient(Block block, List<Block> structure, Player placer){
+    private void backOrient(@NotNull Block block, List<Block> structure, Player placer) {
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
         Block c_block = block.getRelative(0, 0, -2);
 
-        if (c_block.getType().equals(Material.SOUL_FIRE)){
+        if (c_block.getType().equals(Material.SOUL_FIRE)) {
             structure.add(block.getRelative(0, -1, -2));
 
             c_block = block.getRelative(0, 0, -1);
 
-            if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
+            if (c_block.getType().equals(Material.DIAMOND_BLOCK)) {
                 structure.add(c_block);
 
-                c_block = block.getRelative(0,1,-1);
+                c_block = block.getRelative(0, 1, -1);
 
-                if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
+                if (c_block.getType().equals(Material.DIAMOND_BLOCK)) {
                     structure.add(c_block);
 
-                    c_block = block.getRelative(0, 2,-1);
+                    c_block = block.getRelative(0, 2, -1);
 
-                    if (c_block.getType().equals(Material.PLAYER_HEAD)){
+                    if (c_block.getType().equals(Material.PLAYER_HEAD)) {
                         structure.add(c_block);
 
                         Heads h = new Heads(plugin);
 
-                        List<String> head =  h.getHead(c_block);
+                        List<String> head = h.getHead(c_block);
 
                         UUID uuid = UUID.fromString(head.get(0));
 
@@ -201,33 +202,33 @@ public class BlockPlaceListener implements Listener {
     }
 
     @SuppressWarnings("ReassignedVariable")
-    private void frontOrient(Block block, List<Block> structure, Player placer){
+    private void frontOrient(@NotNull Block block, List<Block> structure, Player placer) {
 
         // Verificar primero si del lado opuesto ya hay fuego prendio para evitar procesos innecesarios
 
         Block c_block = block.getRelative(0, 0, 2);
 
-        if (c_block.getType().equals(Material.SOUL_FIRE)){
+        if (c_block.getType().equals(Material.SOUL_FIRE)) {
             structure.add(block.getRelative(0, -1, 2));
 
             c_block = block.getRelative(0, 0, 1);
 
-            if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
+            if (c_block.getType().equals(Material.DIAMOND_BLOCK)) {
                 structure.add(c_block);
 
-                c_block = block.getRelative(0,1,1);
+                c_block = block.getRelative(0, 1, 1);
 
-                if (c_block.getType().equals(Material.DIAMOND_BLOCK)){
+                if (c_block.getType().equals(Material.DIAMOND_BLOCK)) {
                     structure.add(c_block);
 
-                    c_block = block.getRelative(0, 2,1);
+                    c_block = block.getRelative(0, 2, 1);
 
-                    if (c_block.getType().equals(Material.PLAYER_HEAD)){
+                    if (c_block.getType().equals(Material.PLAYER_HEAD)) {
                         structure.add(c_block);
 
                         Heads h = new Heads(plugin);
 
-                        List<String> head =  h.getHead(c_block);
+                        List<String> head = h.getHead(c_block);
 
                         UUID uuid = UUID.fromString(head.get(0));
 
@@ -245,12 +246,12 @@ public class BlockPlaceListener implements Listener {
         }
     }
 
-    public void revive(UUID player, Block head, List<Block> structure, Player placer){
+    public void revive(UUID player, Block head, List<Block> structure, @NotNull Player placer) {
 
         Player p = plugin.getServer().getPlayer(player);
 
         assert p != null;
-        if(Objects.equals(plugin.TeamDB.getTeam(p.getName()), plugin.TeamDB.getTeam(placer.getName()))) {
+        if (Objects.equals(plugin.TeamDB.getTeam(p.getName()), plugin.TeamDB.getTeam(placer.getName()))) {
             plugin.TeamDB.setDeath(p.getName(), false);
             p.teleport(head.getLocation());
             // TODO: generar aviso de que se ha revivido a unjugador a todos los jugadores y animación de revivido

@@ -10,13 +10,21 @@ import java.util.List;
 import java.util.logging.Level;
 
 
-public class SQLite extends Database{
+public class SQLite extends Database {
     String dbname;
-    public SQLite(FunkyUHC main){
+
+    /**
+     * Clase encargada de todo_ el manejo sobre la base de datos Sql
+     * @param main: Clase principal del plugin {@link FunkyUHC}
+     */
+    public SQLite(FunkyUHC main) {
         super(main);
         dbname = plugin.getName(); // Set the table name here e.g player_kills
     }
 
+    /**
+     * Sql query para crear la tabla de jugadores en la base de datos
+     */
     public String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS players (" + // make sure to put your table name in here too.
             "`player` TEXT NOT NULL UNIQUE," + // This creates the different colums you will save data too. varchar(32) Is a string, int = integer
             "`uuid` TEXT NOT NULL UNIQUE," +
@@ -26,9 +34,11 @@ public class SQLite extends Database{
             "PRIMARY KEY (`player`)" +  // This is creating 3 colums Player, Kills, Total. Primary key is what you are going to use as your indexer. Here we want to use player so
             ");"; // we can search by player, and get kills and total. If you some how were searching kills it would provide total and player.
 
-
+    /**
+     * Sql Query para crear la tabla de los equipos
+     */
     public String CreateEquips = "CREATE TABLE IF NOT EXISTS equips (" +
-            "'id' INTEGER NOT NULL UNIQUE," + //TODO: quitar id por no uso
+            "'id' INTEGER NOT NULL UNIQUE," +
             "'name' TEXT NOT NULL UNIQUE," +
             "'color' TEXT NOT NULL UNIQUE," +
             "'capitan' TEXT NOT NULL UNIQUE," +
@@ -37,11 +47,17 @@ public class SQLite extends Database{
             "PRIMARY KEY('id')" +
             ");";
 
+    /**
+     * Sql Query para crear la tabla de los tamaños del mapa
+     */
     public String CreateMapSizes = "CREATE TABLE IF NOT EXISTS mapSizes(" +
             "'id' TEXT NOT NULL UNIQUE," +
-            "'size' INTEGER NOT NULL," + // FIXME: A la hora de hacer la consulta no lo toma por size; cambiar nombre
+            "'size' INTEGER NOT NULL," +
             "PRIMARY KEY('id'));";
 
+    /**
+     * Sql Query para crear la tabla de las cabezas
+     */
     public String CreateHeads = "CREATE TABLE IF NOT EXISTS heads(" +
             "'owner' TEXT NOT NULL UNIQUE," +
             "'uuid' TEXT NOT NULL UNIQUE," +
@@ -51,10 +67,15 @@ public class SQLite extends Database{
             " 'lore' TEXT NOT NULL UNIQUE," +
             "PRIMARY KEY('owner'));";
 
-    public void updateSize(int size){
+    /**
+     * Funcion para actualizar el tamaño del mapa en la base de datos con base en el argumento proporcionado
+     * @param size: Valor a establecer
+     */
+    @SuppressWarnings("unused")
+    public void updateSize(int size) {
         try {
             Statement s = connection.createStatement();
-            String sql = "UPDATE 'main'.'mapSizes' SET 'size'="+ size + " WHERE id = 'size'";
+            String sql = "UPDATE 'main'.'mapSizes' SET 'size'=" + size + " WHERE id = 'size'";
             s.executeUpdate(sql);
             s.close();
         } catch (SQLException e) {
@@ -63,26 +84,29 @@ public class SQLite extends Database{
 
     }
 
-    // SQL creation stuff, You can leave the blow stuff untouched.
+    /**
+     * Función para obtener la conexion a la base de datos
+     * @return Conexión de tipo {@link Connection}
+     */
     public Connection getSQLConnection() {
-        File dataFolder = new File(plugin.getDataFolder(), dbname+".db");
-        if (!dataFolder.exists()){
+        File dataFolder = new File(plugin.getDataFolder(), dbname + ".db");
+        if (!dataFolder.exists()) {
             try {
                 //noinspection ResultOfMethodCallIgnored
                 dataFolder.createNewFile();
             } catch (IOException e) {
-                plugin.getLogger().log(Level.SEVERE, "File write error: "+dbname+".db");
+                plugin.getLogger().log(Level.SEVERE, "File write error: " + dbname + ".db");
             }
         }
         try {
-            if(connection!=null&&!connection.isClosed()){
+            if (connection != null && !connection.isClosed()) {
                 return connection;
             }
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + dataFolder);
             return connection;
         } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE,"SQLite exception on initialize", ex);
+            plugin.getLogger().log(Level.SEVERE, "SQLite exception on initialize", ex);
             // TODO: Arreglar error de que la subcarpeta FunkyoUHC no existe dentro de la carpeta plugins
 
         } catch (ClassNotFoundException ex) {
@@ -91,6 +115,9 @@ public class SQLite extends Database{
         return null;
     }
 
+    /**
+     * Cargar base de datos
+     */
     public void load() {
         connection = getSQLConnection();
         try {
@@ -107,8 +134,12 @@ public class SQLite extends Database{
         initialize();
     }
 
-    @SuppressWarnings("unused")
-    public Statement statement(){
+    /**
+     * Obtener el statment para hacer operaciones sobre la base de datos
+     * @return - {@link Statement} object si la conexión fue un exito <p>
+     *     - {@code null} en caso de que haya algún error
+     */
+    public Statement statement() {
 
         try {
             connection = getSQLConnection();
@@ -120,7 +151,19 @@ public class SQLite extends Database{
         return null;
     }
 
-    public List<List<String>> getTeams(){
+    /**
+     * @deprecated
+     * Obtener una lista de los equipos creados con el siguiente formato:
+     * {@link List} que contiene una {@link List} de {@link String} <p>
+     * List< List < String > >
+     * donde la última lista hace referencia a los ids de equipos ya usados.
+     * <p></p>
+     * Esta función ya está desactualizada y se recomienda el uso de la función getTeams de la clase
+     * {@link Teams} mientras sea posible.
+     * @return {@link List}[{@link List}[{@link String}]]
+     */
+    @SuppressWarnings("DeprecatedIsStillUsed")
+    public List<List<String>> getTeams() {
         connection = getSQLConnection();
         List<List<String>> teams = new ArrayList<>();
         List<String> busy = new ArrayList<>();
@@ -130,12 +173,12 @@ public class SQLite extends Database{
 
             ResultSet len = s.executeQuery("SELECT COUNT(*) AS total FROM \"main\".\"equips\"");
             len.next();
-            if (len.getInt("total") == 0){
+            if (len.getInt("total") == 0) {
                 return null;
             }
 
             ResultSet r = s.executeQuery("SELECT * FROM \"main\".\"equips\"");
-            while (r.next()){
+            while (r.next()) {
                 List<String> team = new ArrayList<>();
 
                 team.add(r.getString("id"));

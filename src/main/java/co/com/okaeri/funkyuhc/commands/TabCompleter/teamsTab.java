@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class teamsTab implements TabCompleter {
 
     @SuppressWarnings("NullableProblems")
     @Override
-    public List<String> onTabComplete (CommandSender sender, Command cmd, String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 
         List<String> list = new ArrayList<>();
 
@@ -33,24 +34,24 @@ public class teamsTab implements TabCompleter {
         return list;
     }
 
-    private void completator (String[] args, List<String> list, boolean isplayer){
-        if (args.length == 1){
+    private void completator(String @NotNull [] args, List<String> list, boolean isplayer) {
+        if (args.length == 1) {
             list.add("add_player");
             list.add("create");
             list.add("delete");
             list.add("help");
         } else if (args.length == 2) {
 
-            if (args[0].equals("create") && isplayer){
+            if (args[0].equals("create") && isplayer) {
 
                 list.add("<Nombre del grupo>");
 
             } // TODO: hacer un else if para  delete que muestre el listado de grupos actuales y el de ayuda
         } else if (args.length == 3) {
 
-            if (args[0].equals("create")){ // TODO: crear verificador que advierta si el grupo ya existe
+            if (args[0].equals("create")) { // TODO: crear verificador que advierta si el grupo ya existe
 
-                for (Player p: plugin.getServer().getOnlinePlayers()){
+                for (Player p : plugin.getServer().getOnlinePlayers()) {
 
                     list.add(p.getName());
 
@@ -59,7 +60,7 @@ public class teamsTab implements TabCompleter {
             } // TODO: agregar que se listen todos los equipos disponibles
         } else if (args.length == 4) {
 
-            if (args[0].equals("create")){
+            if (args[0].equals("create")) {
                 list.addAll(plugin.colors.colors.keySet());
                 // for (Color c: Color.class.getEnumConstants()){
 

@@ -8,6 +8,7 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
@@ -16,16 +17,16 @@ public class ItemCraftEvent implements Listener {
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public ItemCraftEvent(FunkyUHC plugin){
+    public ItemCraftEvent(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onItemCraft(PrepareItemCraftEvent event){
-        if ((event.getRecipe() instanceof ShapedRecipe) && event.getRecipe().getResult().getType().equals(Material.ENCHANTED_GOLDEN_APPLE)){
+    public void onItemCraft(@NotNull PrepareItemCraftEvent event) {
+        if ((event.getRecipe() instanceof ShapedRecipe) && event.getRecipe().getResult().getType().equals(Material.ENCHANTED_GOLDEN_APPLE)) {
 
-            for (ItemStack s: event.getInventory().getMatrix()){
-                if(s.getType().equals(Material.PLAYER_HEAD)){
+            for (ItemStack s : event.getInventory().getMatrix()) {
+                if (s.getType().equals(Material.PLAYER_HEAD)) {
 
                     ItemMeta meta = s.getItemMeta();
                     //noinspection ConstantConditions
