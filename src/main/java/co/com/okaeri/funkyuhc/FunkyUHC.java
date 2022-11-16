@@ -52,7 +52,6 @@ public final class FunkyUHC extends JavaPlugin {
     @SuppressWarnings("FieldMayBeFinal")
     private PluginManager pm = this.getServer().getPluginManager();
     public boolean UhcTimerStarted;
-    @SuppressWarnings("unused")
     public boolean UhcTimerPaused;
     public boolean UhcStarted;
     public boolean UhcTimeRestarted;
@@ -63,7 +62,6 @@ public final class FunkyUHC extends JavaPlugin {
     public ItemManager itemsManager;
     public int maxRounds = 5;
     public int timePerRound = 370; // 60 * 30 = 30 minutos
-    @SuppressWarnings("unused")
     public int roundTime;
     public int round = 1;
     public Map<Integer, Boolean> roundsStarted = new HashMap<>();
