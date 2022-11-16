@@ -141,6 +141,12 @@ public final class FunkyUHC extends JavaPlugin {
         // Cargar registro de movimientos de jugador
         this.pm.registerEvents(new PlayerMove(this), this);
 
+        // Cargar registro de regeneraciones de jugadores
+        this.pm.registerEvents(new RegenEvent(this), this);
+
+        // Cargar registro de perdida de saturacion
+        this.pm.registerEvents(new ExhaustionListener(this), this);
+
         // Cargar teams almacenados en la base de datos
         //noinspection deprecation
         this.teams = db.getTeams();
