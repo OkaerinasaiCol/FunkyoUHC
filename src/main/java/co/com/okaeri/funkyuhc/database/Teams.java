@@ -228,16 +228,23 @@ public class Teams {
      */
     public void removePlayer(String team, String player) {
         try {
+            // Obtener statment para ejecutal query
             Statement statment = plugin.db.statement();
+
+            //obtener el listado de equipos con el nombre dado como parámetro
             ResultSet equips = statment.executeQuery("SELECT * FROM equips WHERE name =\"" + team + "\";");
 
+            // obtener la columba players
             String players = equips.getString("players");
 
+            // separar el listado con base en las comas
             String[] arr = players.split(",");
 
+            // Guardarlas en una lista y remover de la lista el jugador dado como parámetro
             ArrayList<String> team_players = new ArrayList<>(Arrays.asList(arr));
             team_players.remove(player);
 
+            // Se hace ejecución del comando para actualizar los datos en la base de datos en la tabla equips
             String sql = "UPDATE equips SET players = ? WHERE name = ?";
             PreparedStatement pstmt = plugin.db.connection.prepareStatement(sql);
             pstmt.setString(1, team_players.toString().replace("[", "").replace("]", ""));
@@ -245,14 +252,18 @@ public class Teams {
 
             pstmt.executeUpdate();
 
-            String sql_player = "UPDATE player SET teams = ? WHERE player = ?";
+            // Se hace ejecución del comando para actualizar los datos en la base de datos de la tabla player
+            String sql_player = "UPDATE players SET team = ? WHERE player = ?";
             PreparedStatement pstmt_player = plugin.db.connection.prepareStatement(sql_player);
-            pstmt_player.setString(1, player);
-            pstmt_player.setString(2, "");
+            pstmt_player.setString(1, "");
+            pstmt_player.setString(2, player);
+
+            pstmt_player.executeUpdate();
 
             pstmt.executeUpdate();
 
-            pstmt.executeUpdate();
+            plugin.teams = plugin.db.getTeams();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -582,6 +593,16 @@ public class Teams {
                 pstmt.setString(2, capitan);
 
                 pstmt.executeUpdate();
+
+                String sql_player = "UPDATE players SET team = ? WHERE team = ?";
+                PreparedStatement statement = plugin.db.connection.prepareStatement(sql_player);
+                statement.setString(1, new_);
+                statement.setString(2, old);
+
+                statement.executeUpdate();
+
+                plugin.teams = plugin.db.getTeams();
+
             } else {
                 plugin.print("El nombre del equipo ya existe, por favor intente con otro");
             }
@@ -608,6 +629,16 @@ public class Teams {
                     pstmt.setString(2, capitan);
 
                     pstmt.executeUpdate();
+
+                    String sql_player = "UPDATE players SET team = ? WHERE team = ?";
+                    PreparedStatement statement = plugin.db.connection.prepareStatement(sql_player);
+                    statement.setString(1, new_);
+                    statement.setString(2, getTeam(sender.getName()));
+
+                    statement.executeUpdate();
+
+                    plugin.teams = plugin.db.getTeams();
+
                 } else {
                     sender.sendMessage("Solo");
                 }
@@ -659,6 +690,8 @@ public class Teams {
                 pstmt.setString(2, getTeam(sender.getName()));
 
                 pstmt.executeUpdate();
+
+                plugin.teams = plugin.db.getTeams();
             } else {
                 plugin.print("El color seleccionado no está disponible");
             }
