@@ -33,6 +33,7 @@ import java.util.Map;
 
 public final class FunkyUHC extends JavaPlugin {
 
+    //variables
     PluginDescriptionFile descriptionFile = getDescription();
 
     public String pluginName = descriptionFile.getName();
@@ -137,6 +138,7 @@ public final class FunkyUHC extends JavaPlugin {
         this.pm.registerEvents(new PlayerMove(this), this);
 
         // Cargar teams almacenados en la base de datos
+        //noinspection deprecation
         this.teams = db.getTeams();
 
         // Cargar crafteos custom
