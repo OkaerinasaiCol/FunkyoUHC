@@ -23,8 +23,6 @@ public class Teams {
         this.plugin = plugin;
     }
 
-    //TODO: agregar funciones para editar nombre, cambiar color y modificacion compañeros de equipo
-
     /**
      * Crear equipo para el UHc
      *
@@ -181,8 +179,6 @@ public class Teams {
             }
 
             ResultSet equips = statment.executeQuery("SELECT * FROM equips WHERE name =\"" + team + "\";");
-
-            // TODO: agregar verificador para que solo se ejecute en un equipo existente
 
             String players = equips.getString("players");
 
@@ -370,7 +366,6 @@ public class Teams {
      */
     @SuppressWarnings("unused")
     public ArrayList<String> getCapitans() {
-        // TODO: verificar si funciona, si no se puede copiar de getTeams
         try {
             Statement statment = plugin.db.statement();
             ResultSet equips = statment.executeQuery("SELECT capitan FROM equips;");

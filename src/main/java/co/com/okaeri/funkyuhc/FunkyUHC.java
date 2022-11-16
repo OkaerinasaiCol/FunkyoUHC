@@ -305,7 +305,6 @@ public final class FunkyUHC extends JavaPlugin {
                             if (!roundsStarted.get(round)) {
                                 // este codigo Solo se va a ejecutar al inciar la ronda
                                 tittle.setTittle(colors.green + "Se inicia la ronda 4", "");
-                                // TODO: imprimir en pantalla información de la ronda
 
                                 roundsStarted.put(round, true); // guardar que ya se ejecutó esto
                             }
@@ -343,9 +342,8 @@ public final class FunkyUHC extends JavaPlugin {
                             if (!roundsStarted.get(round)) {
                                 // este codigo Solo se va a ejecutar al inciar la ronda
                                 print("Se inicia ronda 5");
-                                // TODO: imprimir en pantalla información de la ronda
 
-                                roundsStarted.put(round, true); // guardar que ya se ejecuto esto
+                                roundsStarted.put(round, true); // guardar que ya se ejecutó esto
                                 break;
                             }
 
