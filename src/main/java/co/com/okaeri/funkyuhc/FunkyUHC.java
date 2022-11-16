@@ -90,6 +90,8 @@ public final class FunkyUHC extends JavaPlugin {
         consoleInfo("Creator Website: " + creatorWebsite);
         consoleInfo(colors.green + "<------------------------------------------>");
 
+        this.UhcDatabaseManager = new UHC(this);
+
         for (int i = 1; i <= maxRounds; i++) {
             roundsStarted.put(i, false); // TODO: cargar de bd por si se crashea
         }
@@ -222,6 +224,16 @@ public final class FunkyUHC extends JavaPlugin {
                             timeBar.setProgress((double) restanteRonda / (timePerRound * round));
                             timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
                                     " Tiempo restante: " + timer.toString(restanteRonda));
+
+                            UhcDatabaseManager.addInfo(round,
+                                    roundsStarted.get(round),
+                                    worldBorderBefore.get(round),
+                                    worldBorderReduceStart.get(round),
+                                    wb.getSize(),
+                                    1500.0,
+                                    UhcTimerDuration.getSeconds(),
+                                    UhcStarted);
+
                             break;
 
                         case 2:
