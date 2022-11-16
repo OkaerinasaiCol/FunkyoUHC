@@ -48,7 +48,7 @@ public class UHC {
                         "','" + running +
                         "');");
             } else {
-                String sql = "UPDATE 'main'.'mapSizes' SET 'border'=" + ( (rStarted) ? 1 : 0 ) + " ," +
+                String sql = "UPDATE 'main'.'uhcRound' SET 'border'=" + ( (rStarted) ? 1 : 0 ) + " ," +
                         " 'rRest' = '" + timerDuration + "' ," +
                         " 'wbBefore' = '" + ( (wbBefore) ? 1 : 0 ) + "' ," +
                         " 'wbStart' = '" + ( (wbStart) ? 1 : 0 ) + "' " +
