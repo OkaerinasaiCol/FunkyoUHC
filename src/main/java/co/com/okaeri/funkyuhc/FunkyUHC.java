@@ -27,6 +27,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalQueries;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +60,9 @@ public final class FunkyUHC extends JavaPlugin {
     public boolean UhcTimerPaused;
     public boolean UhcStarted;
     public boolean UhcTimeRestarted;
-    public Duration UhcTimerDuration;
+    public boolean PostPaused = false;
+    public Long UhcTimerDuration;
+    public Long PostPauseTimer;
     public UHC UhcDatabaseManager;
     public Map<Player, FastBoard> boards = new HashMap<>();
     public Colors colors = new Colors();
@@ -66,7 +71,7 @@ public final class FunkyUHC extends JavaPlugin {
     public int maxRounds = 5;
     public int timePerRound = 370; // 60 * 30 = 30 minutos
     public int roundTime;
-    public int round = 1;
+    public int round;
     public Map<Integer, Boolean> roundsStarted = new HashMap<>();
     public Map<Integer, Boolean> worldBorderReduceStart = new HashMap<>();
     public Map<Integer, Boolean> worldBorderBefore = new HashMap<>();
@@ -90,29 +95,11 @@ public final class FunkyUHC extends JavaPlugin {
         consoleInfo("Creator Website: " + creatorWebsite);
         consoleInfo(colors.green + "<------------------------------------------>");
 
-        this.UhcDatabaseManager = new UHC(this);
-
-        for (int i = 1; i <= maxRounds; i++) {
-            roundsStarted.put(i, false); // TODO: cargar de bd por si se crashea
-        }
-
-        for (int i = 1; i <= maxRounds; i++) {
-            worldBorderReduceStart.put(i, false); // TODO: cargar de bd por si se crashea
-        }
-
-        for (int i = 1; i <= maxRounds; i++) {
-            worldBorderBefore.put(i, false); // TODO: cargar de bd por si se crashea
-        }
-
-        /*
-        for (int i = 1; i <maxRounds; i++){
-            worldBorderReduceStart.put(i, false); // Esto despues se podria jalar desde un archivo
-        }
-        */
-
         // Inicializar base de datos y cargar
         this.db = new SQLite(this);
         this.db.load();
+
+        this.UhcDatabaseManager = new UHC(this);
 
         // Registrar comandos
         RegistrarComandos();
@@ -129,6 +116,27 @@ public final class FunkyUHC extends JavaPlugin {
         wb.setSize(maxSize * 2);
         wb_n.setCenter(0, 0);
         wb_n.setSize(maxSize * 2);
+
+        for (int i = 1; i <= maxRounds; i++) {
+            roundsStarted.put(i, UhcDatabaseManager.getRoundStarted(i)); // TODO: cargar de bd por si se crashea
+        }
+
+        for (int i = 1; i <= maxRounds; i++) {
+            worldBorderReduceStart.put(i, UhcDatabaseManager.getWorldBorderReduceStarted(i)); // TODO: cargar de bd por si se crashea
+        }
+
+        for (int i = 1; i <= maxRounds; i++) {
+            worldBorderBefore.put(i, UhcDatabaseManager.getWorldBorderBeforeStarted(i)); // TODO: cargar de bd por si se crashea
+        }
+
+        UhcTimerPaused = UhcDatabaseManager.getPaused(1);
+
+        round = UhcDatabaseManager.getRound();
+
+        if (UhcTimerPaused){
+            wb.setSize(UhcDatabaseManager.getBorder(round));
+            wb_n.setSize(UhcDatabaseManager.getBorder(round));
+        }
 
         // agregar registro de muertes
         this.pm.registerEvents(new DeathListener(this), this);
@@ -174,21 +182,33 @@ public final class FunkyUHC extends JavaPlugin {
         //noinspection Convert2Lambda
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             public void run() {
-                if (UhcTimerStarted) {
+                if (UhcTimerStarted && !UhcTimerPaused) {
                     // TODO: guardar informacion de rondas etc en bd por si se crashea el server
 
                     if (!(UhcTimeRestarted)) {
-                        UhcTimerDuration = Duration.between(startTime, LocalDateTime.now());
+                        UhcTimerDuration = Duration.between(startTime, LocalDateTime.now()).getSeconds();
                         manager.UpdateBoard();
                     } else {
-                        print("El juego ha sido despausado");
-                        // Funciones para reestablecer variables de tiempo en caso de que se haya pausado
-                        // y reiniciado el evento
+                        if (!PostPaused) {
+                            PostPauseTimer = UhcDatabaseManager.getUhcTimeDuration(round) +
+                                    (LocalDateTime.now().getSecond() - UhcDatabaseManager.getUhcTimeDuration(round));
+                            UhcTimerDuration = PostPauseTimer;
+                            if (worldBorderReduceStart.get(round)) {
+                                wb.setSize(UhcDatabaseManager.getNewSize(round), (((long) timePerRound * round) - UhcTimerDuration));
+                                wb_n.setSize(UhcDatabaseManager.getNewSize(round), (((long) timePerRound * round) - UhcTimerDuration));
+                            }
+                            manager.UpdateBoard();
+                            PostPaused = true;
+                        } else {
+                            PostPauseTimer = PostPauseTimer + (LocalDateTime.now().getSecond() - PostPauseTimer);
+                            UhcTimerDuration = PostPauseTimer;
+                            manager.UpdateBoard();
+                        }
                     }
 
                     switch (round) {
                         case 1:
-                            long restanteRonda = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
+                            long restanteRonda = (((long) timePerRound * round) - UhcTimerDuration);
 
                             if (restanteRonda <= 0) {
                                 round += 1;
@@ -231,13 +251,13 @@ public final class FunkyUHC extends JavaPlugin {
                                     worldBorderReduceStart.get(round),
                                     wb.getSize(),
                                     1500.0,
-                                    UhcTimerDuration.getSeconds(),
+                                    UhcTimerDuration,
                                     UhcStarted);
 
                             break;
 
                         case 2:
-                            long restanteRonda_2 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
+                            long restanteRonda_2 = (((long) timePerRound * round) - UhcTimerDuration);
 
                             if (restanteRonda_2 <= 0) {
                                 round += 1;
@@ -272,7 +292,7 @@ public final class FunkyUHC extends JavaPlugin {
                             break;
 
                         case 3:
-                            long restanteRonda_3 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
+                            long restanteRonda_3 = (((long) timePerRound * round) - UhcTimerDuration);
 
                             if (restanteRonda_3 <= 0) {
                                 round += 1;
@@ -308,7 +328,7 @@ public final class FunkyUHC extends JavaPlugin {
                             break;
 
                         case 4:
-                            long restanteRonda_4 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
+                            long restanteRonda_4 = (((long) timePerRound * round) - UhcTimerDuration);
 
                             if (restanteRonda_4 <= 0) {
                                 round += 1;
@@ -343,7 +363,7 @@ public final class FunkyUHC extends JavaPlugin {
                             break;
 
                         case 5:
-                            long restanteRonda_5 = (((long) timePerRound * round) - (UhcTimerDuration.getSeconds()));
+                            long restanteRonda_5 = (((long) timePerRound * round) - UhcTimerDuration);
 
                             if (restanteRonda_5 <= 0) {
                                 // TODO: Verificar que hacer en caso de que a este momento no haya quedado un ganador

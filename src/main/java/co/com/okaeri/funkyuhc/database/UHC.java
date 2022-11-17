@@ -2,9 +2,12 @@ package co.com.okaeri.funkyuhc.database;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class UHC {
 
@@ -45,18 +48,127 @@ public class UHC {
                         "','" + border +
                         "','" + new_size +
                         "','" + timerDuration +
-                        "','" + running +
+                        "','" + ( (running) ? 1 : 0 ) +
                         "');");
             } else {
-                String sql = "UPDATE 'main'.'mapSizes' SET 'border'=" + ( (rStarted) ? 1 : 0 ) + " ," +
-                        " 'rRest' = '" + timerDuration + "' ," +
-                        " 'wbBefore' = '" + ( (wbBefore) ? 1 : 0 ) + "' ," +
-                        " 'wbStart' = '" + ( (wbStart) ? 1 : 0 ) + "' " +
-                        "WHERE 'round' = '" + round_ + "'";
+                String sql = "UPDATE uhcRound SET border = " + border + " , rRest = " + timerDuration + " ," +
+                        " wbBefore = " + ( (wbBefore) ? 1 : 0 ) + " ," +
+                        " wbStart = " + ( (wbStart) ? 1 : 0 ) + " " +
+                        "WHERE round = " + round_ + "";
+
+                plugin.print(sql);
+
+                statment.executeUpdate(sql);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    public Boolean getRoundStarted(int round){
+        try {
+            Statement statment = plugin.db.statement();
+
+            return statment.executeQuery("SELECT * FROM uhcRound WHERE round =\"" +
+                    round + "\";").getBoolean("rStarted");
+
+        } catch (SQLException ignored) {
+        }
+
+        return false;
+    }
+
+    public Boolean getWorldBorderReduceStarted(int round){
+        try {
+            Statement statment = plugin.db.statement();
+
+            return statment.executeQuery("SELECT * FROM uhcRound WHERE round =\"" +
+                    round + "\";").getBoolean("wbStart");
+
+        } catch (SQLException ignored) {
+        }
+
+        return false;
+    }
+
+    public Boolean getWorldBorderBeforeStarted(int round){
+        try {
+            Statement statment = plugin.db.statement();
+
+            return statment.executeQuery("SELECT * FROM uhcRound WHERE round =\"" +
+                    round + "\";").getBoolean("wbBefore");
+
+        } catch (SQLException ignored) {
+        }
+
+        return false;
+    }
+
+    public Boolean getPaused(int round){
+        try {
+            Statement statment = plugin.db.statement();
+
+            return statment.executeQuery("SELECT * FROM uhcRound WHERE round =\"" +
+                    round + "\";").getBoolean("running");
+
+        } catch (SQLException ignored) {
+        }
+
+        return false;
+    }
+
+    public int getRound(){
+        try {
+            Statement statment = plugin.db.statement();
+
+            ResultSet rs = statment.executeQuery("SELECT * FROM uhcRound");
+            rs.last();
+            return rs.getRow();
+
+        } catch (SQLException ignored) {
+        }
+
+        return 1;
+    }
+
+    public long getUhcTimeDuration(int round){
+        try {
+            Statement statment = plugin.db.statement();
+
+            return statment.executeQuery("SELECT * FROM uhcRound WHERE round =\"" +
+                    round + "\";").getLong("rRest");
+
+        } catch (SQLException ignored) {
+        }
+
+        return Duration.between(plugin.startTime, LocalDateTime.now()).getSeconds();
+    }
+
+    public double getNewSize(int round){
+        try {
+            Statement statment = plugin.db.statement();
+
+            return statment.executeQuery("SELECT * FROM uhcRound WHERE round =\"" +
+                    round + "\";").getDouble("newSize");
+
+        } catch (SQLException ignored) {
+        }
+
+        return 0.0;
+    }
+
+    public double getBorder(int round){
+        try {
+            Statement statment = plugin.db.statement();
+
+            return statment.executeQuery("SELECT * FROM uhcRound WHERE round =\"" +
+                    round + "\";").getDouble("border");
+
+        } catch (SQLException ignored) {
+        }
+
+        return 0.0;
+    }
+
 }
