@@ -19,7 +19,6 @@ public class ScoreManager {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("ReassignedVariable")
     public void SetScoreboard() {
         for (Player p : plugin.getServer().getOnlinePlayers()) {
             setScoreBoardToPlayer(p);

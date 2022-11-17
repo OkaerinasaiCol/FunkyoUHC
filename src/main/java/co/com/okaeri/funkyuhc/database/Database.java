@@ -13,7 +13,7 @@ import java.util.logging.Level;
 
 public abstract class Database {
     FunkyUHC plugin;
-    Connection connection;
+    public Connection connection;
     // The name of the table we created back in SQLite class.
     public String table = "players";
 

@@ -72,4 +72,12 @@ public class Heads {
         }
     }
 
+    public void clearHeads(){
+        try {
+            String sql = "DELETE FROM heads;";
+            plugin.db.statement().executeUpdate(sql);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -27,9 +27,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalQueries;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +67,6 @@ public final class FunkyUHC extends JavaPlugin {
     public ItemManager itemsManager;
     public int maxRounds = 5;
     public int timePerRound = 370; // 60 * 30 = 30 minutos
-    public int roundTime;
     public int round;
     public Map<Integer, Boolean> roundsStarted = new HashMap<>();
     public Map<Integer, Boolean> worldBorderReduceStart = new HashMap<>();
@@ -190,18 +186,27 @@ public final class FunkyUHC extends JavaPlugin {
                         manager.UpdateBoard();
                     } else {
                         if (!PostPaused) {
-                            PostPauseTimer = UhcDatabaseManager.getUhcTimeDuration(round) +
-                                    (LocalDateTime.now().getSecond() - UhcDatabaseManager.getUhcTimeDuration(round));
-                            UhcTimerDuration = PostPauseTimer;
+                            PostPauseTimer = UhcDatabaseManager.getUhcTimeDuration(round);
+                            startTime = LocalDateTime.now();
+                            UhcTimerDuration = PostPauseTimer + Duration.between(startTime, LocalDateTime.now()).getSeconds();
                             if (worldBorderReduceStart.get(round)) {
                                 wb.setSize(UhcDatabaseManager.getNewSize(round), (((long) timePerRound * round) - UhcTimerDuration));
                                 wb_n.setSize(UhcDatabaseManager.getNewSize(round), (((long) timePerRound * round) - UhcTimerDuration));
                             }
+
+
+                            print(colors.red + "Juego reanudado");
+                            print(colors.green + "Tiempo transcurrido: " + colors.reset + UhcTimerDuration);
+                            print(colors.green + "Tiempo restante: " + colors.reset + (((long) timePerRound * round) -
+                                    UhcTimerDuration));
+                            print(colors.green + "Ronda: " + colors.reset + round);
+                            print(colors.green + "Tamaño borde: " + colors.reset + wb.getSize());
+
                             manager.UpdateBoard();
                             PostPaused = true;
                         } else {
-                            PostPauseTimer = PostPauseTimer + (LocalDateTime.now().getSecond() - PostPauseTimer);
-                            UhcTimerDuration = PostPauseTimer;
+                            UhcTimerDuration = PostPauseTimer + Duration.between(startTime,
+                                    LocalDateTime.now()).getSeconds();
                             manager.UpdateBoard();
                         }
                     }
@@ -289,6 +294,16 @@ public final class FunkyUHC extends JavaPlugin {
                             timeBar.setProgress((double) restanteRonda_2 / timePerRound);
                             timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
                                     " Tiempo restante: " + timer.toString(restanteRonda_2));
+
+                            UhcDatabaseManager.addInfo(round,
+                                    roundsStarted.get(round),
+                                    worldBorderBefore.get(round),
+                                    worldBorderReduceStart.get(round),
+                                    wb.getSize(),
+                                    900.0,
+                                    UhcTimerDuration,
+                                    UhcStarted);
+
                             break;
 
                         case 3:
@@ -325,6 +340,16 @@ public final class FunkyUHC extends JavaPlugin {
                             timeBar.setProgress((double) restanteRonda_3 / timePerRound);
                             timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
                                     " Tiempo restante: " + timer.toString(restanteRonda_3));
+
+                            UhcDatabaseManager.addInfo(round,
+                                    roundsStarted.get(round),
+                                    worldBorderBefore.get(round),
+                                    worldBorderReduceStart.get(round),
+                                    wb.getSize(),
+                                    200.0,
+                                    UhcTimerDuration,
+                                    UhcStarted);
+
                             break;
 
                         case 4:
@@ -360,6 +385,16 @@ public final class FunkyUHC extends JavaPlugin {
                             timeBar.setProgress((double) restanteRonda_4 / timePerRound);
                             timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
                                     " Tiempo restante: " + timer.toString(restanteRonda_4));
+
+                            UhcDatabaseManager.addInfo(round,
+                                    roundsStarted.get(round),
+                                    worldBorderBefore.get(round),
+                                    worldBorderReduceStart.get(round),
+                                    wb.getSize(),
+                                    100.0,
+                                    UhcTimerDuration,
+                                    UhcStarted);
+
                             break;
 
                         case 5:
@@ -398,6 +433,16 @@ public final class FunkyUHC extends JavaPlugin {
                             timeBar.setProgress((double) restanteRonda_5 / timePerRound);
                             timeBar.setTitle("Ronda número " + colors.red + colors.bold + round + colors.reset +
                                     " Tiempo restante: " + timer.toString(restanteRonda_5));
+
+                            UhcDatabaseManager.addInfo(round,
+                                    roundsStarted.get(round),
+                                    worldBorderBefore.get(round),
+                                    worldBorderReduceStart.get(round),
+                                    wb.getSize(),
+                                    50.0,
+                                    UhcTimerDuration,
+                                    UhcStarted);
+
                             break;
                     }
                 }

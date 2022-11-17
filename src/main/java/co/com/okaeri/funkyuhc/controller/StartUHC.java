@@ -21,6 +21,21 @@ public class StartUHC {
         this.plugin = plugin;
         // TODO: Inhabilitar los comandos que no se puedan ejecutar dentro del uhc
 
+
+        for (String team: plugin.TeamDB.getTeams()){
+            plugin.TeamDB.setTeamKills(0, team);
+            plugin.TeamDB.setKills(0, plugin.TeamDB.getTeamCapitan(team));
+            plugin.TeamDB.setDeath(plugin.TeamDB.getTeamCapitan(team), false);
+
+            for (String player: plugin.TeamDB.getTeamPlayers(team)){
+                plugin.TeamDB.setKills(0, player);
+                plugin.TeamDB.setDeath(player, false);
+            }
+        }
+
+        plugin.heads.clearHeads();
+        plugin.UhcDatabaseManager.clear();
+
         if (Verify()) {
 
             for (Player p : plugin.getServer().getOnlinePlayers()) {

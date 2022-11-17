@@ -209,6 +209,7 @@ public class Teams {
                 pstmt.setString(2, team);
 
                 pstmt.executeUpdate();
+                statment.close();
                 // statment.executeUpdate("UPDATE 'main'.'equips' SET 'players'='"+ players_new.toString() + "' WHERE name = '" + team + "'");
             }
         } catch (SQLException e) {
@@ -257,7 +258,10 @@ public class Teams {
             pstmt_player.executeUpdate();
 
             pstmt.executeUpdate();
+            pstmt.close();
+            pstmt_player.close();
 
+            //noinspection deprecation
             plugin.teams = plugin.db.getTeams();
 
         } catch (SQLException e) {
@@ -288,6 +292,7 @@ public class Teams {
 
             ResultSet data = statment.executeQuery("SELECT * FROM players WHERE player =\"" +
                     user + "\";");
+            statment.close();
 
             return data.getString("team");
         } catch (SQLException e) {
@@ -392,8 +397,12 @@ public class Teams {
         try {
             Statement statment = plugin.db.statement();
 
-            return statment.executeQuery("SELECT * FROM players WHERE player =\"" +
+            int kills = statment.executeQuery("SELECT * FROM players WHERE player =\"" +
                     player + "\";").getInt("kills");
+
+            statment.close();
+
+            return kills;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -433,6 +442,7 @@ public class Teams {
             pstmt.setString(2, player);
 
             pstmt.executeUpdate();
+            pstmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -443,7 +453,8 @@ public class Teams {
      * @param player: {@link String} Nombre del jugador
      * @return boolean Estado del jugador
      */
-    @SuppressWarnings("unused")
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean getDeath(String player) {
         try {
             Statement statment = plugin.db.statement();
@@ -506,8 +517,6 @@ public class Teams {
      */
     public void addKill(String killer) {
         if (plugin.UhcStarted) {
-            //noinspection unused
-            Statement statment = plugin.db.statement();
 
             int kills = getKills(killer);
 
@@ -595,7 +604,9 @@ public class Teams {
                 statement.setString(2, old);
 
                 statement.executeUpdate();
+                statement.close();
 
+                //noinspection deprecation
                 plugin.teams = plugin.db.getTeams();
 
             } else {
@@ -631,7 +642,9 @@ public class Teams {
                     statement.setString(2, getTeam(sender.getName()));
 
                     statement.executeUpdate();
+                    statement.close();
 
+                    //noinspection deprecation
                     plugin.teams = plugin.db.getTeams();
 
                 } else {
@@ -686,6 +699,7 @@ public class Teams {
 
                 pstmt.executeUpdate();
 
+                //noinspection deprecation
                 plugin.teams = plugin.db.getTeams();
             } else {
                 plugin.print("El color seleccionado no está disponible");

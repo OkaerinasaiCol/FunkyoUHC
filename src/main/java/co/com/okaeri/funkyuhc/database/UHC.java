@@ -2,7 +2,6 @@ package co.com.okaeri.funkyuhc.database;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +10,7 @@ import java.time.LocalDateTime;
 
 public class UHC {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
     public UHC(FunkyUHC plugin){
@@ -56,7 +56,7 @@ public class UHC {
                         " wbStart = " + ( (wbStart) ? 1 : 0 ) + " " +
                         "WHERE round = " + round_ + "";
 
-                plugin.print(sql);
+                //plugin.print(sql);
 
                 statment.executeUpdate(sql);
             }
@@ -169,6 +169,15 @@ public class UHC {
         }
 
         return 0.0;
+    }
+
+    public void clear(){
+        try {
+            String sql = "DELETE FROM uhcRound;";
+            plugin.db.statement().executeUpdate(sql);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
 }
