@@ -301,6 +301,31 @@ public class Teams {
     }
 
     /**
+     * Obtener el equipo del usuario proporcionado como argumento
+     * @param id_: {@link int} Id del equipo
+     * @return {@link String} Nombre del equipo al que pertenece el jugador
+     */
+    public String getTeam(int id_) {
+
+        try {
+            String sql = "SELECT name FROM equips WHERE id=?";
+            PreparedStatement ps = plugin.db.connection.prepareStatement(sql);
+
+            ps.setInt(1, id_);
+
+            ResultSet rs = ps.executeQuery();
+            String name = rs.getString("color");
+
+            ps.close();
+            rs.close();
+            return name;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    /**
      * Obtener color del team del jugador
      * @param team: {@link String} Nombre del jugador
      * @return String Color del equipo
