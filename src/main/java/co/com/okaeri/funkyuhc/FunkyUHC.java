@@ -11,12 +11,12 @@ import co.com.okaeri.funkyuhc.database.UHC;
 import co.com.okaeri.funkyuhc.items.ItemManager;
 import co.com.okaeri.funkyuhc.player.*;
 import co.com.okaeri.funkyuhc.util.Colors;
+import co.com.okaeri.funkyuhc.util.Maths;
 import co.com.okaeri.funkyuhc.util.Tittle;
 import fr.mrmicky.fastboard.FastBoard;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.WorldBorder;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -71,6 +71,7 @@ public final class FunkyUHC extends JavaPlugin {
     public Map<Integer, Boolean> roundsStarted = new HashMap<>();
     public Map<Integer, Boolean> worldBorderReduceStart = new HashMap<>();
     public Map<Integer, Boolean> worldBorderBefore = new HashMap<>();
+    public Maths maths = new Maths();
 
     public GetTime timer = new GetTime();
 
@@ -177,6 +178,7 @@ public final class FunkyUHC extends JavaPlugin {
 
         //noinspection Convert2Lambda
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            @SuppressWarnings("ReassignedVariable")
             public void run() {
                 if (UhcTimerStarted && !UhcTimerPaused) {
                     // TODO: guardar informacion de rondas etc en bd por si se crashea el server
@@ -184,6 +186,7 @@ public final class FunkyUHC extends JavaPlugin {
                     if (!(UhcTimeRestarted)) {
                         UhcTimerDuration = Duration.between(startTime, LocalDateTime.now()).getSeconds();
                         manager.UpdateBoard();
+
                     } else {
                         if (!PostPaused) {
                             PostPauseTimer = UhcDatabaseManager.getUhcTimeDuration(round);
@@ -222,8 +225,47 @@ public final class FunkyUHC extends JavaPlugin {
 
                             if (!roundsStarted.get(round)) {
                                 // este codigo Solo se va a ejecutar al inciar la ronda
+
                                 tittle.setTittle(colors.green + "Iniciando ronda 1" + colors.reset,
                                         colors.aqua + "Teleportando a los equipos");
+
+                                List<String> teams_list = TeamDB.getTeams();
+
+                                List<List<Integer>> coordinates = maths.polygon_coords(teams_list.size(),
+                                        (maxSize * 2) - 100);
+
+                                for (List<Integer> coordinate: coordinates){
+
+                                    //noinspection ConstantConditions
+                                    Block b1 = getServer().getWorld("world").getBlockAt(coordinate.get(0), 64,
+                                            coordinate.get(1));
+
+                                    int summer = 1;
+
+                                    while (!b1.getType().equals(Material.AIR)){
+
+                                        //noinspection ConstantConditions
+                                        b1 = getServer().getWorld("world").getBlockAt(coordinate.get(0),
+                                                64 + summer, coordinate.get(1));
+
+                                        summer++;
+                                    }
+
+                                    for (String player: TeamDB.getTeamPlayers(teams_list.get(coordinates.
+                                            indexOf(coordinate)))){
+
+                                        try {
+                                            //noinspection ConstantConditions
+                                            getServer().getPlayer(player).teleport(b1.getLocation());
+                                        } catch (NullPointerException ignored){}
+                                    }
+                                    try {
+                                        //noinspection ConstantConditions
+                                        getServer().getPlayer(TeamDB.getTeamCapitan(teams_list.
+                                                get(coordinates.indexOf(coordinate)))).teleport(b1.getLocation());
+                                    } catch (NullPointerException ignored){}
+
+                                }
                                 print("Se inicia ronda 1");
                                 print("Teleportando a los equipos");
                                 print("Equipos teleportados con éxito");
