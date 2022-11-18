@@ -111,6 +111,4 @@ public class ScoreManager {
         board.updateLine(12, team_kills_txt + p.getPing());
     }
 
-    // TODO: hacer funcion que borre la scoreboard al salir el jugador y guarde info importante en la bbdd
-
 }

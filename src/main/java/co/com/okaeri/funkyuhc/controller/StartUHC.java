@@ -11,7 +11,6 @@ public class StartUHC {
 
     @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal", "unused"})
     private FunkyUHC plugin;
-    // TODO: agregar base de datos para guardar información del uhc en caso de que se cierre
 
     /**
      * Funcion encargada de iniciar los parametros necesarios para el UHC
@@ -51,7 +50,6 @@ public class StartUHC {
 
             for (World world: plugin.getServer().getWorlds()){
                 world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
-                // TODO: habilitar nuevamente al finalizar el plugin
             }
             plugin.manager.SetScoreboard();
             plugin.startTime = LocalDateTime.now();

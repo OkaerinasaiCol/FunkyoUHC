@@ -115,15 +115,15 @@ public final class FunkyUHC extends JavaPlugin {
         wb_n.setSize(maxSize * 2);
 
         for (int i = 1; i <= maxRounds; i++) {
-            roundsStarted.put(i, UhcDatabaseManager.getRoundStarted(i)); // TODO: cargar de bd por si se crashea
+            roundsStarted.put(i, UhcDatabaseManager.getRoundStarted(i));
         }
 
         for (int i = 1; i <= maxRounds; i++) {
-            worldBorderReduceStart.put(i, UhcDatabaseManager.getWorldBorderReduceStarted(i)); // TODO: cargar de bd por si se crashea
+            worldBorderReduceStart.put(i, UhcDatabaseManager.getWorldBorderReduceStarted(i));
         }
 
         for (int i = 1; i <= maxRounds; i++) {
-            worldBorderBefore.put(i, UhcDatabaseManager.getWorldBorderBeforeStarted(i)); // TODO: cargar de bd por si se crashea
+            worldBorderBefore.put(i, UhcDatabaseManager.getWorldBorderBeforeStarted(i));
         }
 
         UhcTimerPaused = UhcDatabaseManager.getPaused(1);
@@ -181,7 +181,6 @@ public final class FunkyUHC extends JavaPlugin {
             @SuppressWarnings("ReassignedVariable")
             public void run() {
                 if (UhcTimerStarted && !UhcTimerPaused) {
-                    // TODO: guardar informacion de rondas etc en bd por si se crashea el server
 
                     if (!(UhcTimeRestarted)) {
                         UhcTimerDuration = Duration.between(startTime, LocalDateTime.now()).getSeconds();
@@ -512,7 +511,6 @@ public final class FunkyUHC extends JavaPlugin {
         print(Color.GREEN + "<------------------------------------------>");
         consoleInfo("Plugin deshabilitado");
         print(Color.GREEN + "<------------------------------------------>");
-        // TODO: agregar StopUHC aqui para que cuando se deshabilite el plugin
     }
 
     public void print(String data) {

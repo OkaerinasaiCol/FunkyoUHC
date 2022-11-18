@@ -742,6 +742,5 @@ public class Teams {
             e.printStackTrace();
         }
     }
-    // TODO: agregar función para reiniciar todos los contadores
 
 }

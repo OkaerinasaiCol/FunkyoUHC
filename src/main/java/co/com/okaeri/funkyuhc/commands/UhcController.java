@@ -60,7 +60,6 @@ public class UhcController implements CommandExecutor {
 
         } else if (args[0].equals("resume") && plugin.UhcTimerPaused) {
 
-            // TODO: verificador de que se tenga un argumento y que el argumento este en la lista de equipos de la base de datos
             if (!(sender instanceof Player)){
                 resume();
             } else if(sender.isOp()){
