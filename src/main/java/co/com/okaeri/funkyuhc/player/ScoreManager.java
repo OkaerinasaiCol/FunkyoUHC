@@ -26,6 +26,9 @@ public class ScoreManager {
     }
 
     public void setScoreBoardToPlayer(@NotNull Player player){
+
+        plugin.print((plugin.TeamDB.getTeam(player.getName()) != null) + "");
+
         if (plugin.TeamDB.getTeam(player.getName()) != null) {
             Colors colors = plugin.colors;
             String team = plugin.TeamDB.getTeam(player.getName());
@@ -65,7 +68,7 @@ public class ScoreManager {
                     "§n§c Kills:§r " + kills + " §n§cKills Equipo:§r " + teamKills + " §n§cPing:§r " + player.getPing(),
                     "============================", // <- Inmutable durante el tiempo de ejecución
                     "                   §d@FunkyoEnma2022"); // <- Inmutable durante el tiempo de ejecución
-
+            plugin.print(player.getName() + board);
             plugin.boards.put(player, board);
         }
     }
@@ -85,8 +88,14 @@ public class ScoreManager {
 
             }
 
-            board.updateLine(1, "§5§l             " + plugin.timer.toString(plugin.UhcTimerDuration) + "§r          ");
-            board.updateLine(12, team_kills_txt + p.getPing());
+            try {
+                board.updateLine(1, "§5§l             " + plugin.timer.toString(plugin.UhcTimerDuration) + "§r          ");
+                board.updateLine(12, team_kills_txt + p.getPing());
+            } catch (NullPointerException e){
+                setScoreBoardToPlayer(p);
+                board.updateLine(1, "§5§l             " + plugin.timer.toString(plugin.UhcTimerDuration) + "§r          ");
+                board.updateLine(12, team_kills_txt + p.getPing());
+            }
         }
     }
 

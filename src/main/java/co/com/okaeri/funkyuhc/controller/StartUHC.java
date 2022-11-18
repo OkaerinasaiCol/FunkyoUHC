@@ -46,6 +46,7 @@ public class StartUHC {
                 } catch (Exception e) {
                     plugin.timeBar.addPlayer(p);
                 }
+                plugin.manager.setScoreBoardToPlayer(p);
             }
 
             for (World world: plugin.getServer().getWorlds()){
