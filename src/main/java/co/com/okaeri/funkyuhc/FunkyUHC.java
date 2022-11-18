@@ -204,8 +204,8 @@ public final class FunkyUHC extends JavaPlugin {
                                     UhcTimerDuration));
                             print(colors.green + "Ronda: " + colors.reset + round);
                             print(colors.green + "Tamaño borde: " + colors.reset + wb.getSize());
-
                             manager.UpdateBoard();
+
                             PostPaused = true;
                         } else {
                             UhcTimerDuration = PostPauseTimer + Duration.between(startTime,

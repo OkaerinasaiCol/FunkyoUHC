@@ -53,10 +53,10 @@ public class StartUHC {
                 world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
                 // TODO: habilitar nuevamente al finalizar el plugin
             }
+            plugin.manager.SetScoreboard();
             plugin.startTime = LocalDateTime.now();
             plugin.UhcStarted = true;
             plugin.UhcTimerStarted = true;
-            plugin.manager.SetScoreboard();
         }
     }
 

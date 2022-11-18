@@ -27,8 +27,6 @@ public class ScoreManager {
 
     public void setScoreBoardToPlayer(@NotNull Player player){
 
-        plugin.print((plugin.TeamDB.getTeam(player.getName()) != null) + "");
-
         if (plugin.TeamDB.getTeam(player.getName()) != null) {
             Colors colors = plugin.colors;
             String team = plugin.TeamDB.getTeam(player.getName());

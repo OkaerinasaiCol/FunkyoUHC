@@ -90,6 +90,7 @@ public class Teams {
                     0 + "','" +
                     name + "');");
 
+            statment.close();
             //regenerar la lista de equipos
             //noinspection deprecation
             plugin.teams = plugin.db.getTeams();
@@ -120,6 +121,8 @@ public class Teams {
                         statment.executeUpdate("DELETE FROM 'main'.'equips' WHERE name IN ('" + name + "');");
 
                         plugin.print("Equipo borrado con exito" + name);
+
+                        statment.close();
 
                         //regenerar la lista de equipos
                         //noinspection deprecation
@@ -292,9 +295,12 @@ public class Teams {
 
             ResultSet data = statment.executeQuery("SELECT * FROM players WHERE player =\"" +
                     user + "\";");
+
+            String r = data.getString("team");
+
             statment.close();
 
-            return data.getString("team");
+            return r;
         } catch (SQLException e) {
             return null;
         }
@@ -305,6 +311,7 @@ public class Teams {
      * @param id_: {@link int} Id del equipo
      * @return {@link String} Nombre del equipo al que pertenece el jugador
      */
+    @SuppressWarnings("unused")
     public String getTeam(int id_) {
 
         try {
@@ -513,6 +520,7 @@ public class Teams {
             pstmt.setString(2, player);
 
             pstmt.executeUpdate();
+            pstmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -531,6 +539,7 @@ public class Teams {
             pstmt.setString(2, team);
 
             pstmt.executeUpdate();
+            pstmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
