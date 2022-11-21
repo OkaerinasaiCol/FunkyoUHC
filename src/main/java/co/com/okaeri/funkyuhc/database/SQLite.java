@@ -11,18 +11,6 @@ import java.util.logging.Level;
 
 
 public class SQLite extends Database {
-    String dbname;
-
-    /**
-     * Clase encargada de todo_ el manejo sobre la base de datos Sql
-     *
-     * @param main: Clase principal del plugin {@link FunkyUHC}
-     */
-    public SQLite(FunkyUHC main) {
-        super(main);
-        dbname = plugin.getName(); // Set the table name here e.g player_kills
-    }
-
     /**
      * Sql query para crear la tabla de jugadores en la base de datos
      */
@@ -34,7 +22,6 @@ public class SQLite extends Database {
             "`team` TEXT," +
             "PRIMARY KEY (`player`)" +  // This is creating 3 colums Player, Kills, Total. Primary key is what you are going to use as your indexer. Here we want to use player so
             ");"; // we can search by player, and get kills and total. If you some how were searching kills it would provide total and player.
-
     /**
      * Sql Query para crear la tabla de los equipos
      */
@@ -47,7 +34,6 @@ public class SQLite extends Database {
             "'players' TEXT," +
             "PRIMARY KEY('id')" +
             ");";
-
     /**
      * Sql Query para crear la tabla de los tamaños del mapa
      */
@@ -55,7 +41,6 @@ public class SQLite extends Database {
             "'id' TEXT NOT NULL UNIQUE," +
             "'size' INTEGER NOT NULL," +
             "PRIMARY KEY('id'));";
-
     /**
      * Sql Query para crear la tabla de las cabezas
      */
@@ -67,7 +52,6 @@ public class SQLite extends Database {
             "'placer' TEXT NOT NULL," +
             " 'lore' TEXT NOT NULL UNIQUE," +
             "PRIMARY KEY('owner'));";
-
     /**
      * Sql Query para crear la tabla que almacenará el estado del uhc
      */
@@ -81,6 +65,17 @@ public class SQLite extends Database {
             "'rRest' REAL NOT NULL," +
             "'running' INTEGER NOT NULL," +
             "PRIMARY KEY('round'));";
+    String dbname;
+
+    /**
+     * Clase encargada de todo_ el manejo sobre la base de datos Sql
+     *
+     * @param main: Clase principal del plugin {@link FunkyUHC}
+     */
+    public SQLite(FunkyUHC main) {
+        super(main);
+        dbname = plugin.getName(); // Set the table name here e.g player_kills
+    }
 
     /**
      * Funcion para actualizar el tamaño del mapa en la base de datos con base en el argumento proporcionado

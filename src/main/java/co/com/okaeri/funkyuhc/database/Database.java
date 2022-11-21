@@ -12,10 +12,10 @@ import java.util.logging.Level;
 
 
 public abstract class Database {
-    FunkyUHC plugin;
     public Connection connection;
     // The name of the table we created back in SQLite class.
     public String table = "players";
+    FunkyUHC plugin;
 
     public Database(FunkyUHC instance) {
         plugin = instance;

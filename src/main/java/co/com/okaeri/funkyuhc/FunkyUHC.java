@@ -33,14 +33,6 @@ import java.util.Map;
 
 public final class FunkyUHC extends JavaPlugin {
 
-    //variables
-    PluginDescriptionFile descriptionFile = getDescription();
-
-    public String pluginName = descriptionFile.getName();
-    public String pluginVersion = descriptionFile.getVersion();
-    public String apiVersion = descriptionFile.getAPIVersion();
-    public String creatorWebsite = descriptionFile.getWebsite();
-    public String apiDesc = descriptionFile.getDescription();
     public SQLite db;
     public BossBar timeBar = Bukkit.createBossBar("Tiempo hasta la ronda #", BarColor.BLUE, BarStyle.SEGMENTED_12);
     public WorldBorder wb;
@@ -51,8 +43,6 @@ public final class FunkyUHC extends JavaPlugin {
     public Heads heads = new Heads(this);
     public Tittle tittle;
     public co.com.okaeri.funkyuhc.database.Teams TeamDB = new co.com.okaeri.funkyuhc.database.Teams(this);
-    @SuppressWarnings("FieldMayBeFinal")
-    private PluginManager pm = this.getServer().getPluginManager();
     public boolean UhcTimerStarted;
     public boolean UhcTimerPaused;
     public boolean UhcStarted;
@@ -72,10 +62,17 @@ public final class FunkyUHC extends JavaPlugin {
     public Map<Integer, Boolean> worldBorderReduceStart = new HashMap<>();
     public Map<Integer, Boolean> worldBorderBefore = new HashMap<>();
     public Maths maths = new Maths();
-
     public GetTime timer = new GetTime();
-
     public LocalDateTime startTime;
+    //variables
+    PluginDescriptionFile descriptionFile = getDescription();
+    public String pluginName = descriptionFile.getName();
+    public String pluginVersion = descriptionFile.getVersion();
+    public String apiVersion = descriptionFile.getAPIVersion();
+    public String creatorWebsite = descriptionFile.getWebsite();
+    public String apiDesc = descriptionFile.getDescription();
+    @SuppressWarnings("FieldMayBeFinal")
+    private PluginManager pm = this.getServer().getPluginManager();
 
     @Override
     public void onEnable() {
