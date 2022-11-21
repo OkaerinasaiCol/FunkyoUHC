@@ -46,22 +46,22 @@ public class DeathListener implements Listener {
             p.setGameMode(GameMode.SPECTATOR);
 
             //"PLAYER\tDEATH\tPLAYER"
-            new SendToBot("PLAYER","DEATH",
+            new SendToBot("PLAYER", "DEATH",
                     new String[]{p.getName(),});
 
             List<Player> alive_players = new ArrayList<>();
 
-            for (Player p_: plugin.getServer().getOnlinePlayers()){
+            for (Player p_ : plugin.getServer().getOnlinePlayers()) {
                 if (!p_.isDead() &&
                         !plugin.TeamDB.getTeam(p_.getName()).equals(
-                                plugin.TeamDB.getTeam(e.getEntity().getKiller().getName()))){
+                                plugin.TeamDB.getTeam(e.getEntity().getKiller().getName()))) {
 
                     alive_players.add(p_);
 
                 }
             }
 
-            if (alive_players.size() == 0){
+            if (alive_players.size() == 0) {
                 plugin.tittle.setTittle(plugin.colors.green + "El equipo " + plugin.TeamDB.getTeam(
                         e.getEntity().getKiller().getName()), "Ha ganado el Uhc");
 

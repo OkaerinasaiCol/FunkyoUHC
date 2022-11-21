@@ -11,16 +11,17 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class EntityDamagedListener implements Listener {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public EntityDamagedListener(FunkyUHC plugin){
+    public EntityDamagedListener(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onDamageByEntiyEvent(EntityDamageByEntityEvent event){
+    public void onDamageByEntiyEvent(EntityDamageByEntityEvent event) {
         if (plugin.UhcStarted && event.getDamager().getType().equals(EntityType.PLAYER) &&
-        plugin.round < 3){
+                plugin.round < 3) {
             Player p = (Player) event.getDamager();
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR,
                     new TextComponent(plugin.colors.red + "El PVP está desactivado hasta la ronda 3"));

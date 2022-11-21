@@ -13,7 +13,7 @@ public class UHC {
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public UHC(FunkyUHC plugin){
+    public UHC(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
@@ -24,7 +24,7 @@ public class UHC {
                         Double border,
                         Double new_size,
                         Long timerDuration,
-                        Boolean running){
+                        Boolean running) {
 
         int round = 0;
 
@@ -33,27 +33,27 @@ public class UHC {
 
             ResultSet data = statment.executeQuery("SELECT round FROM uhcRound");
 
-            while (data.next()){
-                round ++;
+            while (data.next()) {
+                round++;
             }
 
-            if (round_ > round){
+            if (round_ > round) {
 
                 statment.executeUpdate("INSERT INTO 'main'.'uhcRound'(" +
                         "'round','rStarted','wbBefore','wbStart','border','newSize','rRest','running') VALUES " +
                         "('" + round_ +
-                        "','" + ( (rStarted) ? 1 : 0 ) +
-                        "','" + ( (wbBefore) ? 1 : 0 ) +
-                        "','" + ( (wbStart) ? 1 : 0 ) +
+                        "','" + ((rStarted) ? 1 : 0) +
+                        "','" + ((wbBefore) ? 1 : 0) +
+                        "','" + ((wbStart) ? 1 : 0) +
                         "','" + border +
                         "','" + new_size +
                         "','" + timerDuration +
-                        "','" + ( (running) ? 1 : 0 ) +
+                        "','" + ((running) ? 1 : 0) +
                         "');");
             } else {
                 String sql = "UPDATE uhcRound SET border = " + border + " , rRest = " + timerDuration + " ," +
-                        " wbBefore = " + ( (wbBefore) ? 1 : 0 ) + " ," +
-                        " wbStart = " + ( (wbStart) ? 1 : 0 ) + " " +
+                        " wbBefore = " + ((wbBefore) ? 1 : 0) + " ," +
+                        " wbStart = " + ((wbStart) ? 1 : 0) + " " +
                         "WHERE round = " + round_ + "";
 
                 //plugin.print(sql);
@@ -66,7 +66,7 @@ public class UHC {
         }
     }
 
-    public Boolean getRoundStarted(int round){
+    public Boolean getRoundStarted(int round) {
         try {
             Statement statment = plugin.db.statement();
 
@@ -79,7 +79,7 @@ public class UHC {
         return false;
     }
 
-    public Boolean getWorldBorderReduceStarted(int round){
+    public Boolean getWorldBorderReduceStarted(int round) {
         try {
             Statement statment = plugin.db.statement();
 
@@ -92,7 +92,7 @@ public class UHC {
         return false;
     }
 
-    public Boolean getWorldBorderBeforeStarted(int round){
+    public Boolean getWorldBorderBeforeStarted(int round) {
         try {
             Statement statment = plugin.db.statement();
 
@@ -105,7 +105,7 @@ public class UHC {
         return false;
     }
 
-    public Boolean getPaused(int round){
+    public Boolean getPaused(int round) {
         try {
             Statement statment = plugin.db.statement();
 
@@ -118,7 +118,7 @@ public class UHC {
         return false;
     }
 
-    public int getRound(){
+    public int getRound() {
         try {
             Statement statment = plugin.db.statement();
 
@@ -132,7 +132,7 @@ public class UHC {
         return 1;
     }
 
-    public long getUhcTimeDuration(int round){
+    public long getUhcTimeDuration(int round) {
         try {
             Statement statment = plugin.db.statement();
 
@@ -145,7 +145,7 @@ public class UHC {
         return Duration.between(plugin.startTime, LocalDateTime.now()).getSeconds();
     }
 
-    public double getNewSize(int round){
+    public double getNewSize(int round) {
         try {
             Statement statment = plugin.db.statement();
 
@@ -158,7 +158,7 @@ public class UHC {
         return 0.0;
     }
 
-    public double getBorder(int round){
+    public double getBorder(int round) {
         try {
             Statement statment = plugin.db.statement();
 
@@ -171,11 +171,11 @@ public class UHC {
         return 0.0;
     }
 
-    public void clear(){
+    public void clear() {
         try {
             String sql = "DELETE FROM uhcRound;";
             plugin.db.statement().executeUpdate(sql);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

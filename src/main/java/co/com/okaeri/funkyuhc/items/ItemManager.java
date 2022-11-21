@@ -16,6 +16,7 @@ public class ItemManager {
 
     /**
      * Clase encargada de manejar los crafteos customizados del plugin
+     *
      * @param plugin: {@link FunkyUHC} Clase principal del plugin
      */
     public ItemManager(FunkyUHC plugin) {

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Maths {
 
-    public List<List<Integer>> polygon_coords(int points, int diameter){
+    public List<List<Integer>> polygon_coords(int points, int diameter) {
 
         double theta = 1 * Math.PI / (points / 2.0);
 

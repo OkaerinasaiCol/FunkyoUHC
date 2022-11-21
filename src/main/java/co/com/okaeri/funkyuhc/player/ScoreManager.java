@@ -25,7 +25,7 @@ public class ScoreManager {
         }
     }
 
-    public void setScoreBoardToPlayer(@NotNull Player player){
+    public void setScoreBoardToPlayer(@NotNull Player player) {
 
         if (plugin.TeamDB.getTeam(player.getName()) != null) {
             Colors colors = plugin.colors;
@@ -77,9 +77,9 @@ public class ScoreManager {
 
             FastBoard board = plugin.boards.get(p);
             try {
-                board.updateLine(0,"");
+                board.updateLine(0, "");
 
-            } catch (NullPointerException e){
+            } catch (NullPointerException e) {
 
                 setScoreBoardToPlayer(p);
                 board = plugin.boards.get(p);
@@ -89,7 +89,7 @@ public class ScoreManager {
             try {
                 board.updateLine(1, "§5§l             " + plugin.timer.toString(plugin.UhcTimerDuration) + "§r          ");
                 board.updateLine(12, team_kills_txt + p.getPing());
-            } catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 setScoreBoardToPlayer(p);
                 board.updateLine(1, "§5§l             " + plugin.timer.toString(plugin.UhcTimerDuration) + "§r          ");
                 board.updateLine(12, team_kills_txt + p.getPing());

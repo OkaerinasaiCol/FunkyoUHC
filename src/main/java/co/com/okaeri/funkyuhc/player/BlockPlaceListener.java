@@ -256,7 +256,7 @@ public class BlockPlaceListener implements Listener {
         assert p != null;
 
         //"PLAYER\tREVIVE\tPLAYER"
-        new SendToBot("PLAYER","REVIVE",
+        new SendToBot("PLAYER", "REVIVE",
                 new String[]{p.getName(),});
         if (Objects.equals(plugin.TeamDB.getTeam(p.getName()), plugin.TeamDB.getTeam(placer.getName()))) {
             plugin.TeamDB.setDeath(p.getName(), false);

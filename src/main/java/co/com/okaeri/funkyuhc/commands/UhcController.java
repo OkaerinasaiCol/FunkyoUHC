@@ -60,9 +60,9 @@ public class UhcController implements CommandExecutor {
 
         } else if (args[0].equals("resume") && plugin.UhcTimerPaused) {
 
-            if (!(sender instanceof Player)){
+            if (!(sender instanceof Player)) {
                 resume();
-            } else if(sender.isOp()){
+            } else if (sender.isOp()) {
                 resume();
             }
 
@@ -73,7 +73,7 @@ public class UhcController implements CommandExecutor {
         }
     }
 
-    public void stop(){
+    public void stop() {
 
         long time = plugin.UhcTimerDuration;
         long restante = (((long) plugin.timePerRound * plugin.round) - plugin.UhcTimerDuration);
@@ -87,7 +87,7 @@ public class UhcController implements CommandExecutor {
         plugin.PostPaused = false;
         plugin.round = 1;
 
-        for (FastBoard board: plugin.boards.values()){
+        for (FastBoard board : plugin.boards.values()) {
             board.delete();
         }
 
@@ -95,7 +95,7 @@ public class UhcController implements CommandExecutor {
         plugin.changeSize(plugin.maxSize, 1);
         plugin.timeBar.removeAll();
 
-        for (String team: plugin.TeamDB.getTeams()){
+        for (String team : plugin.TeamDB.getTeams()) {
             plugin.TeamDB.setTeamKills(0, team);
             try {
                 Statement statment = plugin.db.statement();
@@ -103,12 +103,12 @@ public class UhcController implements CommandExecutor {
                 statment.executeUpdate("UPDATE players SET death = 0");
                 statment.close();
 
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
 
-        for (int i = 1; i <= plugin.roundsStarted.size(); i++){
+        for (int i = 1; i <= plugin.roundsStarted.size(); i++) {
             plugin.roundsStarted.replace(i, false);
             plugin.worldBorderBefore.replace(i, false);
             plugin.worldBorderReduceStart.replace(i, false);
@@ -128,13 +128,13 @@ public class UhcController implements CommandExecutor {
                 plugin.colors.reset + size);
     }
 
-    public void resume(){
+    public void resume() {
         plugin.UhcTimerPaused = false;
         plugin.UhcTimeRestarted = true;
         plugin.UhcTimerStarted = true;
         plugin.manager.SetScoreboard();
 
-        for (Player p: plugin.getServer().getOnlinePlayers()) {
+        for (Player p : plugin.getServer().getOnlinePlayers()) {
             if (plugin.TeamDB.getTeam(p.getName()) != null) {
                 if (!plugin.TeamDB.getDeath(p.getName())) {
                     plugin.timeBar.addPlayer(p);

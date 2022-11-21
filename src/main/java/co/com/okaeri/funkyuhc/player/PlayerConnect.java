@@ -12,15 +12,15 @@ public class PlayerConnect implements Listener {
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public PlayerConnect(FunkyUHC plugin){
+    public PlayerConnect(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onPlayerConnect(@NotNull PlayerJoinEvent event){
-        if (plugin.UhcStarted){
-            if (plugin.TeamDB.getTeam(event.getPlayer().getName()) != null){
-                if (!plugin.TeamDB.getDeath(event.getPlayer().getName())){
+    public void onPlayerConnect(@NotNull PlayerJoinEvent event) {
+        if (plugin.UhcStarted) {
+            if (plugin.TeamDB.getTeam(event.getPlayer().getName()) != null) {
+                if (!plugin.TeamDB.getDeath(event.getPlayer().getName())) {
                     plugin.timeBar.addPlayer(event.getPlayer());
                     event.getPlayer().setGameMode(GameMode.SURVIVAL);
                 }

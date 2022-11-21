@@ -19,7 +19,7 @@ public class SendToBot {
 
         String str_command = "\tFunkyUHC v" + "0.1.2.4" + "\t" + command + "\t" + subcommand;
 
-        for (String arg: args){
+        for (String arg : args) {
             str_command = str_command.concat("\t" + arg);
         }
         System.out.println(str_command);

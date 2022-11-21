@@ -15,6 +15,7 @@ public class StartUHC {
 
     /**
      * Funcion encargada de iniciar los parametros necesarios para el UHC
+     *
      * @param plugin: Clase principal del plugin ({@link FunkyUHC})
      */
     public StartUHC(FunkyUHC plugin) {
@@ -22,12 +23,12 @@ public class StartUHC {
         // TODO: Inhabilitar los comandos que no se puedan ejecutar dentro del uhc
 
 
-        for (String team: plugin.TeamDB.getTeams()){
+        for (String team : plugin.TeamDB.getTeams()) {
             plugin.TeamDB.setTeamKills(0, team);
             plugin.TeamDB.setKills(0, plugin.TeamDB.getTeamCapitan(team));
             plugin.TeamDB.setDeath(plugin.TeamDB.getTeamCapitan(team), false);
 
-            for (String player: plugin.TeamDB.getTeamPlayers(team)){
+            for (String player : plugin.TeamDB.getTeamPlayers(team)) {
                 plugin.TeamDB.setKills(0, player);
                 plugin.TeamDB.setDeath(player, false);
             }
@@ -49,7 +50,7 @@ public class StartUHC {
                 plugin.manager.setScoreBoardToPlayer(p);
             }
 
-            for (World world: plugin.getServer().getWorlds()){
+            for (World world : plugin.getServer().getWorlds()) {
                 world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
             }
             plugin.manager.SetScoreboard();
@@ -58,13 +59,14 @@ public class StartUHC {
             plugin.UhcTimerStarted = true;
 
             // "UHC START"
-            new SendToBot("UHC START"," ",
+            new SendToBot("UHC START", " ",
                     new String[]{" ",});
         }
     }
 
     /**
      * Funcion encargada de verificar que todos los parametros esten correctos para ejecutar el UHC
+     *
      * @return true: si todo_ se encuentra bien <p>false: si se encuentra algún error
      */
     private boolean Verify() {

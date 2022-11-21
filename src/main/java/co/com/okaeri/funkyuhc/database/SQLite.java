@@ -15,6 +15,7 @@ public class SQLite extends Database {
 
     /**
      * Clase encargada de todo_ el manejo sobre la base de datos Sql
+     *
      * @param main: Clase principal del plugin {@link FunkyUHC}
      */
     public SQLite(FunkyUHC main) {
@@ -83,6 +84,7 @@ public class SQLite extends Database {
 
     /**
      * Funcion para actualizar el tamaño del mapa en la base de datos con base en el argumento proporcionado
+     *
      * @param size: Valor a establecer
      */
     @SuppressWarnings("unused")
@@ -100,6 +102,7 @@ public class SQLite extends Database {
 
     /**
      * Función para obtener la conexion a la base de datos
+     *
      * @return Conexión de tipo {@link Connection}
      */
     public Connection getSQLConnection() {
@@ -151,8 +154,9 @@ public class SQLite extends Database {
 
     /**
      * Obtener el statment para hacer operaciones sobre la base de datos
+     *
      * @return - {@link Statement} object si la conexión fue un exito <p>
-     *     - {@code null} en caso de que haya algún error
+     * - {@code null} en caso de que haya algún error
      */
     public Statement statement() {
 
@@ -167,15 +171,14 @@ public class SQLite extends Database {
     }
 
     /**
-     * @deprecated
-     * Obtener una lista de los equipos creados con el siguiente formato:
+     * @return {@link List}[{@link List}[{@link String}]]
+     * @deprecated Obtener una lista de los equipos creados con el siguiente formato:
      * {@link List} que contiene una {@link List} de {@link String} <p>
      * List< List < String > >
      * donde la última lista hace referencia a los ids de equipos ya usados.
      * <p></p>
      * Esta función ya está desactualizada y se recomienda el uso de la función getTeams de la clase
      * {@link Teams} mientras sea posible.
-     * @return {@link List}[{@link List}[{@link String}]]
      */
     @SuppressWarnings("DeprecatedIsStillUsed")
     public List<List<String>> getTeams() {

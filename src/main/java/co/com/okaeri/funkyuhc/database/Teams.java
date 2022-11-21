@@ -27,10 +27,10 @@ public class Teams {
     /**
      * Crear equipo para el UHc
      *
-     * @param name: {@link String} Nombre del equipo a crear, este nombre debe de no existir ya, en caso de que exista la función
+     * @param name:    {@link String} Nombre del equipo a crear, este nombre debe de no existir ya, en caso de que exista la función
      *                 retornará false
      * @param capitan: {@link String} El nombre del capitan del equipo
-     * @param color: {@link String} Color a usar por el equipo, este debe de no estar ya en uso o el equipo no podrá crearse
+     * @param color:   {@link String} Color a usar por el equipo, este debe de no estar ya en uso o el equipo no podrá crearse
      */
     public void Create(String name, String capitan, String color) {
         // TODO: verificar que el color no esté en uso ya
@@ -84,8 +84,8 @@ public class Teams {
 
             //"TEAMS\tCREATE\tNAME\tCapitan\tPLAYERS\tCOLOR"
             new SendToBot("TEAMS",
-                          "CREATE",
-                          new String[] {name, capitan, "", plugin.colors.colors.get(color)});
+                    "CREATE",
+                    new String[]{name, capitan, "", plugin.colors.colors.get(color)});
 
             statment.close();
 
@@ -101,6 +101,7 @@ public class Teams {
 
     /**
      * Eliminar un equipo del UHC
+     *
      * @param name: {@link String} nombre del equipo a crear
      */
     public void Delete(String name) {
@@ -126,7 +127,7 @@ public class Teams {
                                 replace("]", "");
 
                         //"TEAMS\tDELETE\tNAME\tCAPITAN\tPLAYERS"
-                        new SendToBot("TEAMS","DELETE",
+                        new SendToBot("TEAMS", "DELETE",
                                 new String[]{name, this.getTeamCapitan(name), players});
 
                         //regenerar la lista de equipos
@@ -145,7 +146,8 @@ public class Teams {
 
     /**
      * Añadir un jugador a un equipo
-     * @param team {@link String} Equipo en el cual se desea agregar al jugador
+     *
+     * @param team   {@link String} Equipo en el cual se desea agregar al jugador
      * @param player {@link String} Jugador que se desea agregar al equipo, este debe de estar conectado
      * @param sender {@link CommandSender} Entidad que genera el comando
      */
@@ -232,7 +234,8 @@ public class Teams {
     /**
      * Remover un jugador de un equipo con dos argumentos, este es para cuando se ejecuta desde la consola
      * TODO: agregar que este se pueda correr por jugador mientras tenga los permisos (Opcional)
-     * @param team {@link String} Equipo del que se quiere substraer al jugador
+     *
+     * @param team   {@link String} Equipo del que se quiere substraer al jugador
      * @param player {@link String} Jugador a eliminar del equipo
      */
     public void removePlayer(String team, String player) {
@@ -274,7 +277,7 @@ public class Teams {
             pstmt_player.close();
 
             //"TEAMS\tREMOVE_PLAYER\tTEAM\tPLAYER"
-            new SendToBot("TEAMS","REMOVE_PLAYER",
+            new SendToBot("TEAMS", "REMOVE_PLAYER",
                     new String[]{team, player});
 
             //noinspection deprecation
@@ -289,6 +292,7 @@ public class Teams {
     /**
      * Remover un jugador de un equipo con dos argumentos, este es para cuando se ejecuta desde un comando en
      * el juego
+     *
      * @param player {@link String} Jugador al que se desea agregar al equipo de la persona que envía el comando
      * @param sender {@link String} Entidad que ejecuta el comando
      */
@@ -298,6 +302,7 @@ public class Teams {
 
     /**
      * Obtener el equipo del usuario proporcionado como argumento
+     *
      * @param user: {@link String} Nombre del jugador
      * @return {@link String} Nombre del equipo al que pertenece el jugador
      */
@@ -321,6 +326,7 @@ public class Teams {
 
     /**
      * Obtener el equipo del usuario proporcionado como argumento
+     *
      * @param id_: {@link int} Id del equipo
      * @return {@link String} Nombre del equipo al que pertenece el jugador
      */
@@ -347,6 +353,7 @@ public class Teams {
 
     /**
      * Obtener color del team del jugador
+     *
      * @param team: {@link String} Nombre del jugador
      * @return String Color del equipo
      */
@@ -368,6 +375,7 @@ public class Teams {
 
     /**
      * Obtener capitan del team del jugador
+     *
      * @param team: {@link String} Nombre del equipo
      * @return String capitan del equipo del jugador
      */
@@ -389,6 +397,7 @@ public class Teams {
 
     /**
      * Obtener jugadores del equipo
+     *
      * @param team: {@link String} Nombre del equipo
      * @return {@link ArrayList}[{@link String}] Arraylist de nombres de los integrantes del equipo
      */
@@ -412,6 +421,7 @@ public class Teams {
 
     /**
      * Obtener lista de todos los capitanes de equipos
+     *
      * @return {@link ArrayList}[{@link String}] Arraylist de nombres de los capitanes de equipos
      */
     @SuppressWarnings("unused")
@@ -435,6 +445,7 @@ public class Teams {
 
     /**
      * Obtener cantidad de kills del jugador dado como parametro
+     *
      * @param player: {@link String} Nombre del jugador
      * @return int Número de kills del jugador
      */
@@ -458,6 +469,7 @@ public class Teams {
 
     /**
      * Obtener cantidad de kills del equipo dado como parametro
+     *
      * @param team: {@link String} Nombre del equipo
      * @return int Número de kills del equipo
      */
@@ -476,7 +488,8 @@ public class Teams {
 
     /**
      * Establecer cantidad de kills a un jugador
-     * @param kills: int Cantidad de kills a establecer
+     *
+     * @param kills:  int Cantidad de kills a establecer
      * @param player: {@link String} Jugador al que se debe establecer las kills
      */
     public void setKills(int kills, String player) {
@@ -495,6 +508,7 @@ public class Teams {
 
     /**
      * Obtener de la base de datos si el jugador está muerto o no
+     *
      * @param player: {@link String} Nombre del jugador
      * @return boolean Estado del jugador
      */
@@ -516,8 +530,9 @@ public class Teams {
 
     /**
      * Establecer estado de muerte del jugador
+     *
      * @param player: {@link String} Nombre del jugador
-     * @param death: boolean Estado del jugador
+     * @param death:  boolean Estado del jugador
      */
     public void setDeath(String player, @NotNull Boolean death) {
         try {
@@ -541,8 +556,9 @@ public class Teams {
 
     /**
      * Establecer cantidad de kills a un equipo
+     *
      * @param kills: int Cantidad de kills a establecer
-     * @param team: {@link String} Equipo al que se debe establecer las kills
+     * @param team:  {@link String} Equipo al que se debe establecer las kills
      */
     public void setTeamKills(int kills, String team) {
         try {
@@ -560,6 +576,7 @@ public class Teams {
 
     /**
      * Agregar kill al jugador
+     *
      * @param killer: {@link String} Nombre del jugador que hizo la kill
      */
     public void addKill(String killer) {
@@ -593,6 +610,7 @@ public class Teams {
 
     /**
      * Obtener listado de las kills
+     *
      * @return {@link List}[{@link String}] Listado de nombres de los equipos
      */
     public List<String> getTeams() {
@@ -611,6 +629,7 @@ public class Teams {
 
     /**
      * Obtener listado de los colores en uso
+     *
      * @return {@link List}[{@link String}] Listado los colores en uso
      */
     public List<String> getColors() {
@@ -629,7 +648,8 @@ public class Teams {
 
     /**
      * Renombrar equipo desde la consola
-     * @param old: {@link String} Nombre del equipo
+     *
+     * @param old:  {@link String} Nombre del equipo
      * @param new_: {@link String} Nuevo nombre del equipo
      */
     public void renameTeam(String old, String new_) {
@@ -654,7 +674,7 @@ public class Teams {
                 statement.close();
 
                 //"TEAMS\tRENAME\tTEAM\tNEW_NAME"
-                new SendToBot("TEAMS","RENAME",
+                new SendToBot("TEAMS", "RENAME",
                         new String[]{old, new_});
 
                 //noinspection deprecation
@@ -670,7 +690,8 @@ public class Teams {
 
     /**
      * Renombrar equipo desde comando in-game
-     * @param new_: {@link String} Nombre del equipo
+     *
+     * @param new_:   {@link String} Nombre del equipo
      * @param sender: {@link Player} Jugador que ejecuta el comando
      */
     public void renameTeam(String new_, Player sender) {
@@ -696,7 +717,7 @@ public class Teams {
                     statement.close();
 
                     //"TEAMS\tRENAME\tTEAM\tNEW_NAME"
-                    new SendToBot("TEAMS","RENAME",
+                    new SendToBot("TEAMS", "RENAME",
                             new String[]{getTeam(sender.getName()), new_});
 
                     //noinspection deprecation
@@ -715,7 +736,8 @@ public class Teams {
 
     /**
      * Cambiar color del equipo desde la consola
-     * @param team: {@link String} Nombre del equipo
+     *
+     * @param team:  {@link String} Nombre del equipo
      * @param color: {@link String} Color del equipo que se desea colocar
      */
     public void changeColor(String team, String color) {
@@ -729,7 +751,7 @@ public class Teams {
                 pstmt.setString(2, team);
 
                 //"TEAMS\tCOLOR\tTEAM\tCOLOR"
-                new SendToBot("TEAMS","COLOR",
+                new SendToBot("TEAMS", "COLOR",
                         new String[]{team, color});
 
                 pstmt.executeUpdate();
@@ -743,7 +765,8 @@ public class Teams {
 
     /**
      * Cambiar color del equipo desde comando in-game
-     * @param color: {@link String} Color del equipo que se desea colocar
+     *
+     * @param color:  {@link String} Color del equipo que se desea colocar
      * @param sender: {@link Player} Jugador que ejecuta el comando
      */
     public void changeColor(String color, Player sender) {
@@ -759,7 +782,7 @@ public class Teams {
                 pstmt.executeUpdate();
 
                 //"TEAMS\tCOLOR\tTEAM\tCOLOR"
-                new SendToBot("TEAMS","COLOR",
+                new SendToBot("TEAMS", "COLOR",
                         new String[]{getTeam(sender.getName()), color});
 
                 //noinspection deprecation

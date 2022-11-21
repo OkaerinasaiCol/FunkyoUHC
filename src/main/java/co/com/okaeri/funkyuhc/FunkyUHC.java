@@ -130,7 +130,7 @@ public final class FunkyUHC extends JavaPlugin {
 
         round = UhcDatabaseManager.getRound();
 
-        if (UhcTimerPaused){
+        if (UhcTimerPaused) {
             wb.setSize(UhcDatabaseManager.getBorder(round));
             wb_n.setSize(UhcDatabaseManager.getBorder(round));
         }
@@ -233,7 +233,7 @@ public final class FunkyUHC extends JavaPlugin {
                                 List<List<Integer>> coordinates = maths.polygon_coords(teams_list.size(),
                                         (maxSize * 2) - 100);
 
-                                for (List<Integer> coordinate: coordinates){
+                                for (List<Integer> coordinate : coordinates) {
 
                                     //noinspection ConstantConditions
                                     Block b1 = getServer().getWorld("world").getBlockAt(coordinate.get(0), 64,
@@ -241,7 +241,7 @@ public final class FunkyUHC extends JavaPlugin {
 
                                     int summer = 1;
 
-                                    while (!b1.getType().equals(Material.AIR)){
+                                    while (!b1.getType().equals(Material.AIR)) {
 
                                         //noinspection ConstantConditions
                                         b1 = getServer().getWorld("world").getBlockAt(coordinate.get(0),
@@ -250,19 +250,21 @@ public final class FunkyUHC extends JavaPlugin {
                                         summer++;
                                     }
 
-                                    for (String player: TeamDB.getTeamPlayers(teams_list.get(coordinates.
-                                            indexOf(coordinate)))){
+                                    for (String player : TeamDB.getTeamPlayers(teams_list.get(coordinates.
+                                            indexOf(coordinate)))) {
 
                                         try {
                                             //noinspection ConstantConditions
                                             getServer().getPlayer(player).teleport(b1.getLocation());
-                                        } catch (NullPointerException ignored){}
+                                        } catch (NullPointerException ignored) {
+                                        }
                                     }
                                     try {
                                         //noinspection ConstantConditions
                                         getServer().getPlayer(TeamDB.getTeamCapitan(teams_list.
                                                 get(coordinates.indexOf(coordinate)))).teleport(b1.getLocation());
-                                    } catch (NullPointerException ignored){}
+                                    } catch (NullPointerException ignored) {
+                                    }
 
                                 }
                                 print("Se inicia ronda 1");
@@ -272,7 +274,7 @@ public final class FunkyUHC extends JavaPlugin {
                                 roundsStarted.put(round, true); // guardar que ya se ejecutó esto
                             }
 
-                            if (restanteRonda <= ((timePerRound / 2.0) + 180) && !worldBorderBefore.get(round)){
+                            if (restanteRonda <= ((timePerRound / 2.0) + 180) && !worldBorderBefore.get(round)) {
                                 tittle.setTittle(colors.red + "Reduciendo tamaño del mapa" + colors.reset,
                                         colors.green + "El mapa iniciara a reducirse en 3 minutos");
                                 worldBorderBefore.put(round, true);
@@ -312,12 +314,12 @@ public final class FunkyUHC extends JavaPlugin {
 
                             if (!roundsStarted.get(round)) {
                                 // este codigo Solo se va a ejecutar al inciar la ronda
-                                tittle.setTittle(colors.green + "Iniciando ronda 2","");
+                                tittle.setTittle(colors.green + "Iniciando ronda 2", "");
 
                                 roundsStarted.put(round, true); // guardar que ya se ejecutó esto
                             }
 
-                            if (restanteRonda_2 <= ((timePerRound / 2.0) + 180) && !worldBorderBefore.get(round)){
+                            if (restanteRonda_2 <= ((timePerRound / 2.0) + 180) && !worldBorderBefore.get(round)) {
                                 tittle.setTittle(colors.red + "Reduciendo tamaño del mapa" + colors.reset,
                                         colors.green + "El mapa iniciara a reducirse en 3 minutos");
                                 worldBorderBefore.put(round, true);
@@ -363,7 +365,7 @@ public final class FunkyUHC extends JavaPlugin {
                                 roundsStarted.put(round, true); // guardar que ya se ejecutó esto
                             }
 
-                            if (restanteRonda_3 <= ((timePerRound / 2.0) + 180) && !worldBorderBefore.get(round)){
+                            if (restanteRonda_3 <= ((timePerRound / 2.0) + 180) && !worldBorderBefore.get(round)) {
                                 tittle.setTittle(colors.red + "Reduciendo tamaño del mapa" + colors.reset,
                                         colors.green + "El mapa iniciara a reducirse en 3 minutos");
                                 worldBorderBefore.put(round, true);
@@ -408,7 +410,7 @@ public final class FunkyUHC extends JavaPlugin {
                                 roundsStarted.put(round, true); // guardar que ya se ejecutó esto
                             }
 
-                            if (restanteRonda_4 <= ((timePerRound / 2.0) + 180) && !worldBorderBefore.get(round)){
+                            if (restanteRonda_4 <= ((timePerRound / 2.0) + 180) && !worldBorderBefore.get(round)) {
                                 tittle.setTittle(colors.red + "Reduciendo tamaño del mapa" + colors.reset,
                                         colors.green + "El mapa iniciara a reducirse en 3 minutos");
                                 worldBorderBefore.put(round, true);
@@ -456,7 +458,7 @@ public final class FunkyUHC extends JavaPlugin {
                                 break;
                             }
 
-                            if (restanteRonda_5 <= ((timePerRound / 2.0) + 180) && !worldBorderBefore.get(round)){
+                            if (restanteRonda_5 <= ((timePerRound / 2.0) + 180) && !worldBorderBefore.get(round)) {
                                 tittle.setTittle(colors.red + "Reduciendo tamaño del mapa" + colors.reset,
                                         colors.green + "El mapa iniciara a reducirse en 3 minutos");
                                 worldBorderBefore.put(round, true);
