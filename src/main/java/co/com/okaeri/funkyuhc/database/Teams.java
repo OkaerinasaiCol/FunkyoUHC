@@ -1,10 +1,10 @@
 package co.com.okaeri.funkyuhc.database;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
+import co.com.okaeri.funkyuhc.util.SendToBot;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import co.com.okaeri.funkyuhc.util.SendToBot;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
