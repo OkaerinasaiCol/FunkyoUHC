@@ -2,6 +2,7 @@ package co.com.okaeri.funkyuhc.player;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
 import co.com.okaeri.funkyuhc.database.Heads;
+import co.com.okaeri.funkyuhc.util.SendToBot;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.GameMode;
@@ -253,6 +254,10 @@ public class BlockPlaceListener implements Listener {
         Player p = plugin.getServer().getPlayer(player);
 
         assert p != null;
+
+        //"PLAYER\tREVIVE\tPLAYER"
+        new SendToBot("PLAYER","REVIVE",
+                new String[]{p.getName(),});
         if (Objects.equals(plugin.TeamDB.getTeam(p.getName()), plugin.TeamDB.getTeam(placer.getName()))) {
             plugin.TeamDB.setDeath(p.getName(), false);
             p.teleport(head.getLocation());

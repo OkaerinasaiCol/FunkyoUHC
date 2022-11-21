@@ -4,6 +4,7 @@ import co.com.okaeri.funkyuhc.FunkyUHC;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import co.com.okaeri.funkyuhc.util.SendToBot;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,15 +73,6 @@ public class Teams {
                     "(" + row + ",'" + name + "','" + plugin.colors.colors.get(color) + "','" + capitan + "','" + 0 +
                     "','');");
 
-            /* "CREATE TABLE IF NOT EXIST players(" +
-             *        "'player' TEXT NOT NULL UNIQUE," +
-             *        "'uuid' TEXT NOT NULL UNIQUE," +
-             *        "'kills' INTEGER NOT NULL," +
-             *        "'death' INTEGER NOT NULL," +
-             *        "'team' TEXT NOT NULL," +
-             *        "PRIMARY KEY('player'));"
-             */
-
             //noinspection ConstantConditions
             statment.executeUpdate("INSERT INTO 'main'.'players'(" +
                     "'player','uuid','kills','death','team') VALUES " +
@@ -90,7 +82,13 @@ public class Teams {
                     0 + "','" +
                     name + "');");
 
+            //"TEAMS\tCREATE\tNAME\tCapitan\tPLAYERS\tCOLOR"
+            new SendToBot("TEAMS",
+                          "CREATE",
+                          new String[] {name, capitan, "", plugin.colors.colors.get(color)});
+
             statment.close();
+
             //regenerar la lista de equipos
             //noinspection deprecation
             plugin.teams = plugin.db.getTeams();
@@ -123,6 +121,13 @@ public class Teams {
                         plugin.print("Equipo borrado con exito" + name);
 
                         statment.close();
+
+                        String players = this.getTeamPlayers(name).toString().replace("[", "").
+                                replace("]", "");
+
+                        //"TEAMS\tDELETE\tNAME\tCAPITAN\tPLAYERS"
+                        new SendToBot("TEAMS","DELETE",
+                                new String[]{name, this.getTeamCapitan(name), players});
 
                         //regenerar la lista de equipos
                         //noinspection deprecation
@@ -215,6 +220,10 @@ public class Teams {
                 statment.close();
                 // statment.executeUpdate("UPDATE 'main'.'equips' SET 'players'='"+ players_new.toString() + "' WHERE name = '" + team + "'");
             }
+
+            //"TEAMS\tADD_PLAYER\tTEAM\tPLAYER"
+            new SendToBot("TEAMS", "ADD_PLAYER", new String[]{team, player});
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -263,6 +272,10 @@ public class Teams {
             pstmt.executeUpdate();
             pstmt.close();
             pstmt_player.close();
+
+            //"TEAMS\tREMOVE_PLAYER\tTEAM\tPLAYER"
+            new SendToBot("TEAMS","REMOVE_PLAYER",
+                    new String[]{team, player});
 
             //noinspection deprecation
             plugin.teams = plugin.db.getTeams();
@@ -640,6 +653,10 @@ public class Teams {
                 statement.executeUpdate();
                 statement.close();
 
+                //"TEAMS\tRENAME\tTEAM\tNEW_NAME"
+                new SendToBot("TEAMS","RENAME",
+                        new String[]{old, new_});
+
                 //noinspection deprecation
                 plugin.teams = plugin.db.getTeams();
 
@@ -678,6 +695,10 @@ public class Teams {
                     statement.executeUpdate();
                     statement.close();
 
+                    //"TEAMS\tRENAME\tTEAM\tNEW_NAME"
+                    new SendToBot("TEAMS","RENAME",
+                            new String[]{getTeam(sender.getName()), new_});
+
                     //noinspection deprecation
                     plugin.teams = plugin.db.getTeams();
 
@@ -707,6 +728,10 @@ public class Teams {
                 pstmt.setString(1, color);
                 pstmt.setString(2, team);
 
+                //"TEAMS\tCOLOR\tTEAM\tCOLOR"
+                new SendToBot("TEAMS","COLOR",
+                        new String[]{team, color});
+
                 pstmt.executeUpdate();
             } else {
                 plugin.print("El color seleccionado no está disponible");
@@ -733,6 +758,10 @@ public class Teams {
 
                 pstmt.executeUpdate();
 
+                //"TEAMS\tCOLOR\tTEAM\tCOLOR"
+                new SendToBot("TEAMS","COLOR",
+                        new String[]{getTeam(sender.getName()), color});
+
                 //noinspection deprecation
                 plugin.teams = plugin.db.getTeams();
             } else {
@@ -742,5 +771,5 @@ public class Teams {
             e.printStackTrace();
         }
     }
-
 }
+

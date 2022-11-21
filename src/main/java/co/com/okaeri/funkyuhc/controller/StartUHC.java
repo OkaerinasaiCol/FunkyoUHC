@@ -1,6 +1,7 @@
 package co.com.okaeri.funkyuhc.controller;
 
 import co.com.okaeri.funkyuhc.FunkyUHC;
+import co.com.okaeri.funkyuhc.util.SendToBot;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -55,6 +56,10 @@ public class StartUHC {
             plugin.startTime = LocalDateTime.now();
             plugin.UhcStarted = true;
             plugin.UhcTimerStarted = true;
+
+            // "UHC START"
+            new SendToBot("UHC START"," ",
+                    new String[]{" ",});
         }
     }
 

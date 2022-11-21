@@ -68,27 +68,18 @@ public class UhcController implements CommandExecutor {
 
         } else if (args[0].equals("stop") && plugin.UhcTimerStarted) {
 
-            long time = plugin.UhcTimerDuration;
-            long restante = (((long) plugin.timePerRound * plugin.round) - plugin.UhcTimerDuration);
-            int round = plugin.round;
-            double size = plugin.wb.getSize();
-
             stop();
-
-            plugin.print(plugin.colors.red + "Juego detenido ");
-            plugin.print(plugin.colors.green + "Tiempo transcurrido: " +
-                    plugin.colors.reset + time);
-            plugin.print(plugin.colors.green + "Tiempo restante: " +
-                    plugin.colors.reset + restante);
-            plugin.print(plugin.colors.green + "Ronda: " +
-                    plugin.colors.reset + round);
-            plugin.print(plugin.colors.green + "Tamaño borde: " +
-                    plugin.colors.reset + size);
 
         }
     }
 
     public void stop(){
+
+        long time = plugin.UhcTimerDuration;
+        long restante = (((long) plugin.timePerRound * plugin.round) - plugin.UhcTimerDuration);
+        int round = plugin.round;
+        double size = plugin.wb.getSize();
+
         plugin.UhcStarted = false;
         plugin.UhcTimerStarted = false;
         plugin.UhcTimerPaused = false;
@@ -125,6 +116,16 @@ public class UhcController implements CommandExecutor {
 
         plugin.heads.clearHeads();
         plugin.UhcDatabaseManager.clear();
+
+        plugin.print(plugin.colors.red + "Juego detenido ");
+        plugin.print(plugin.colors.green + "Tiempo transcurrido: " +
+                plugin.colors.reset + time);
+        plugin.print(plugin.colors.green + "Tiempo restante: " +
+                plugin.colors.reset + restante);
+        plugin.print(plugin.colors.green + "Ronda: " +
+                plugin.colors.reset + round);
+        plugin.print(plugin.colors.green + "Tamaño borde: " +
+                plugin.colors.reset + size);
     }
 
     public void resume(){
