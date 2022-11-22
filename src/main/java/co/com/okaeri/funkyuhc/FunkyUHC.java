@@ -25,8 +25,13 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -494,6 +499,26 @@ public final class FunkyUHC extends JavaPlugin {
                                     UhcStarted);
 
                             break;
+                    }
+                }
+                else {
+                    List<String> lines = new ArrayList<>();
+
+                    File file = new File(System.getProperty("user.dir") + "/whitelist_queue");
+
+                    if (file.exists()){
+                        try {
+                            lines = Files.readAllLines(file.toPath(), Charset.defaultCharset());
+                        } catch (IOException e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (!lines.isEmpty()){
+                        print(lines.toString());
+                        for (String line: lines){
+                            print(line);
+                        }
                     }
                 }
             }
