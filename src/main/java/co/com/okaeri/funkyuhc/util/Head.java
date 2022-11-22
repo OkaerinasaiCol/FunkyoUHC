@@ -18,7 +18,6 @@ public class Head {
 
         //noinspection unused
         PlayerProfile profile = p.getPlayerProfile();
-        // TODO: colocar la skin desde el skin restorer si es posible
 
         PlayerProfile p_profile = p.getPlayerProfile();
         //noinspection unused
@@ -41,8 +40,6 @@ public class Head {
 
     public ItemStack getPlayerHead(PlayerProfile profile) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
-
-        // TODO: colocar la skin desde el skin restorer si es posible
 
         SkullMeta meta = (SkullMeta) item.getItemMeta();
 

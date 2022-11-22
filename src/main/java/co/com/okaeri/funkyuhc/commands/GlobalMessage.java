@@ -14,6 +14,7 @@ public class GlobalMessage implements CommandExecutor {
     /**
      * Command executor que se encarga de enviar los mensajes globales en cuanto se utilize el comando establecido
      * en la clase {@link FunkyUHC}
+     *
      * @param plugin: clase main del plugin
      */
     public GlobalMessage(FunkyUHC plugin) {

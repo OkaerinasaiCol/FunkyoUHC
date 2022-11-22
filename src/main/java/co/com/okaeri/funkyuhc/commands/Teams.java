@@ -58,6 +58,7 @@ public class Teams implements CommandExecutor {
                 }
                 return false;
             case "color":
+                // FIXME: guarda los colores como el nombre en vez del código
                 if ((args.length == 3) && !(sender instanceof Player)) {
                     db.changeColor(args[1], args[2]);
                     return true;

@@ -12,9 +12,11 @@ public class GetTime {
      * |&#160&#160&#160&#160/---------Minutos <p>
      * |&#160&#160&#160&#160|&#160&#160&#160&#160/-----Segundos <p>
      * 00:00:00
+     *
      * @param duration: Tiempo en formato {@link Duration}
      * @return Timpo en formato {@link String}
      */
+    @SuppressWarnings("unused")
     public String toString(@NotNull Duration duration) {
 
         long totalSecs = duration.getSeconds();
@@ -28,6 +30,7 @@ public class GetTime {
      * |&#160&#160&#160&#160/---------Minutos <p>
      * |&#160&#160&#160&#160|&#160&#160&#160&#160/-----Segundos <p>
      * 00:00:00
+     *
      * @param totalSecs: Tiempo en formato {@link Long}
      * @return Timpo en formato {@link String}
      */
