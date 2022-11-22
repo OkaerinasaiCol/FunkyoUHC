@@ -24,7 +24,7 @@ public class SendToBot {
         }
         System.out.println(str_command);
 
-        try (Socket socket = new Socket("192.168.88.38", 4028)) {
+        try (Socket socket = new Socket("192.168.88.26", 4028)) {
             DataOutputStream dOut = new DataOutputStream(socket.getOutputStream());
             dOut.writeUTF(str_command);
             dOut.flush();
