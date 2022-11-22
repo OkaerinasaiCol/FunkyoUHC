@@ -36,6 +36,7 @@ public class DeathListener implements Listener {
 
             plugin.print(e.getEntity() + " death " + e.getEntity().getLastDamageCause() + e.getEntity().getKiller());
             plugin.print("death id" + e.getEntity().getUniqueId());
+            plugin.print("location: " + e.getEntity().getLocation());
 
             if (e.getEntity().getKiller() != null) {
                 plugin.TeamDB.addKill(e.getEntity().getKiller().getName());
@@ -49,22 +50,21 @@ public class DeathListener implements Listener {
             new SendToBot("PLAYER", "DEATH",
                     new String[]{p.getName(),});
 
-            List<Player> alive_players = new ArrayList<>();
+            List<String> alive_teams = new ArrayList<>();
 
             for (Player p_ : plugin.getServer().getOnlinePlayers()) {
-                if (!p_.isDead() &&
-                        !plugin.TeamDB.getTeam(p_.getName()).equals(
-                                plugin.TeamDB.getTeam(e.getEntity().getKiller().getName()))) {
+                if (!p_.isDead() && !alive_teams.contains(plugin.TeamDB.getTeam(p_.getName()))) {
 
-                    alive_players.add(p_);
-
+                    alive_teams.add(plugin.TeamDB.getTeam(p_.getName()));
+                    System.out.println();
                 }
             }
 
-            if (alive_players.size() == 0) {
-                plugin.tittle.setTittle(plugin.colors.green + "El equipo " + plugin.TeamDB.getTeam(
-                        e.getEntity().getKiller().getName()), "Ha ganado el Uhc");
+            if (alive_teams.size() == 1) {
 
+
+                plugin.tittle.setTittle(plugin.colors.green + "El equipo " + alive_teams.get(0), "Ha ganado el Uhc");
+                // TODO: solucionar error que falla cuando no es una pesona quien hace la kill
                 // TODO: hacer todos los avisos y celebraciones
                 UhcController controller = new UhcController(plugin);
                 controller.stop();
