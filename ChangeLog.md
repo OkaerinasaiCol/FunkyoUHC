@@ -2,7 +2,7 @@
 
 - Hacer que al iniciar el uhc se deshabiliten los logros
 
-- Se configura WorldBorder en el end
+- Se configura WorldBorder en el nether
 
 - Se deshabilita el P.V.P. hasta el inicio de la ronda 3
 
