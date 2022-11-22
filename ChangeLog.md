@@ -1,3 +1,34 @@
+# **[0.1.2.4]**
+
+- Hacer que al iniciar el uhc se deshabiliten los logros
+
+- Se configura WorldBorder en el end
+
+- Se deshabilita el P.V.P. hasta el inicio de la ronda 3
+
+- Se configura que se guarde información del estado actual de la partida por si se llega a crashear o pausar
+el uhc
+
+- Se configuran comandos para detener el uhc, pausarlo o reanudarlo
+
+> `uhc pause` Pausa la ejecucion del uhc\
+> `uhc reanude` Continuar con la ejecucion del evento, bien porque haya sido pausado o porque se halla crasheado\
+> `uhc stop` Detener la ejecucion del evento y reiniciar contadores a 0
+
+- Se crea comunicación con el bot de discord
+
+> ### **Referente a equipos:**
+> - **Al crear un equipo** Se crea en el discord un canal y un rol para dicho equipo
+> - **Al renombrar un equipo** Se renombra el canal de discord del equipo y su rol
+> - **Al agregar un jugador al equipo** Se le agrega el rol del equipo
+> - **Al eliminar un jugador del equipo** Se elimina el rol del equipo
+> - **Al eliminar un equipo** Se elimina el rol y el rango de dicho equipo
+> 
+> ### **Referente al evento como tal**
+> - **Al iniciar el evento:** Se mueve a todos los jugadores a sus chats de equipos correspondientes
+> - **Al morir** Se mueve automáticamente al canal _**"Tiesos"**_ y se le elimina temporalmente el rol del equipo
+> - **Al ser revivido** Se mueve automáticamente al canal del equipo y se le elimina el rol "Tieso"
+
 # **[0.1.2.3]**
 
 - Se agregan comandos para remover jugadores, renombrar equipos, cambiar color y eliminar equipos (verificar error #8 )
