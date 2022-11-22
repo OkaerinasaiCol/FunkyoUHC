@@ -15,10 +15,7 @@ import co.com.okaeri.funkyuhc.util.Maths;
 import co.com.okaeri.funkyuhc.util.Tittle;
 import fr.mrmicky.fastboard.FastBoard;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.WorldBorder;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -59,7 +56,7 @@ public final class FunkyUHC extends JavaPlugin {
     public ScoreManager manager;
     public ItemManager itemsManager;
     public int maxRounds = 5;
-    public int timePerRound = 370; // 60 * 30 = 30 minutos
+    public int timePerRound = 60 * 30; // 60 * 30 = 30 minutos
     public int round;
     public Map<Integer, Boolean> roundsStarted = new HashMap<>();
     public Map<Integer, Boolean> worldBorderReduceStart = new HashMap<>();
@@ -231,7 +228,7 @@ public final class FunkyUHC extends JavaPlugin {
                                 List<String> teams_list = TeamDB.getTeams();
 
                                 List<List<Integer>> coordinates = maths.polygon_coords(teams_list.size(),
-                                        (maxSize * 2) - 100);
+                                        (maxSize) - 100);
 
                                 for (List<Integer> coordinate : coordinates) {
 
@@ -239,12 +236,20 @@ public final class FunkyUHC extends JavaPlugin {
                                     Block b1 = getServer().getWorld("world").getBlockAt(coordinate.get(0), 64,
                                             coordinate.get(1));
 
+                                    //noinspection ConstantConditions
+                                    Block b2 = getServer().getWorld("world").getBlockAt(coordinate.get(0), 63,
+                                            coordinate.get(1));
+
                                     int summer = 1;
 
-                                    while (!b1.getType().equals(Material.AIR)) {
+                                    while (!b1.getType().equals(Material.AIR) && !b2.getType().equals(Material.AIR)) {
 
                                         //noinspection ConstantConditions
                                         b1 = getServer().getWorld("world").getBlockAt(coordinate.get(0),
+                                                64 + summer + 1, coordinate.get(1));
+
+                                        //noinspection ConstantConditions
+                                        b2 = getServer().getWorld("world").getBlockAt(coordinate.get(0),
                                                 64 + summer, coordinate.get(1));
 
                                         summer++;
@@ -255,7 +260,9 @@ public final class FunkyUHC extends JavaPlugin {
 
                                         try {
                                             //noinspection ConstantConditions
-                                            getServer().getPlayer(player).teleport(b1.getLocation());
+                                            getServer().getPlayer(player).teleport(
+                                                    new Location(getServer().getWorld("world"), coordinate.get(0),
+                                                    64 + summer + 1, coordinate.get(1)));
                                         } catch (NullPointerException ignored) {
                                         }
                                     }
@@ -490,6 +497,7 @@ public final class FunkyUHC extends JavaPlugin {
                     }
                 }
             }
+            // TODO: agregar validación de whitelist
         }, 10, 20L);
 
         consoleInfo(colors.green + "Plugin inicializado con exito");
