@@ -57,7 +57,6 @@ public class Heads {
             String owner = data.getString("owner");
             plugin.print(uuid);
 
-            //FIXME: error al boorar // DELETE FROM "main"."heads" WHERE owner IN ('adasda');
             statment.executeUpdate("DELETE FROM 'main'.'heads' WHERE owner IN ('" + owner + "');");
 
             List<String> player = new ArrayList<>();
@@ -73,4 +72,12 @@ public class Heads {
         }
     }
 
+    public void clearHeads() {
+        try {
+            String sql = "DELETE FROM heads;";
+            plugin.db.statement().executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

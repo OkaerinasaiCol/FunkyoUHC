@@ -10,14 +10,14 @@ public class ExhaustionListener implements Listener {
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
 
-    public ExhaustionListener (FunkyUHC plugin){
+    public ExhaustionListener(FunkyUHC plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onHeal(EntityExhaustionEvent event){
+    public void onHeal(EntityExhaustionEvent event) {
 
-        if (plugin.UhcStarted && event.getExhaustionReason().equals(EntityExhaustionEvent.ExhaustionReason.REGEN)){
+        if (plugin.UhcStarted && event.getExhaustionReason().equals(EntityExhaustionEvent.ExhaustionReason.REGEN)) {
             event.setCancelled(true);
         }
     }
