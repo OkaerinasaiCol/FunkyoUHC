@@ -6,7 +6,9 @@ import co.com.okaeri.funkyuhc.util.SendToBot;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +16,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -25,6 +29,7 @@ public class BlockPlaceListener implements Listener {
 
     @SuppressWarnings("FieldMayBeFinal")
     private FunkyUHC plugin;
+    private BukkitTask task;
 
     public BlockPlaceListener(FunkyUHC plugin) {
         this.plugin = plugin;
@@ -260,8 +265,33 @@ public class BlockPlaceListener implements Listener {
                 new String[]{p.getName(),});
         if (Objects.equals(plugin.TeamDB.getTeam(p.getName()), plugin.TeamDB.getTeam(placer.getName()))) {
             plugin.TeamDB.setDeath(p.getName(), false);
+
+            for(Block block: structure){
+
+                //noinspection EqualsBetweenInconvertibleTypes
+                if (!block.equals(Material.PLAYER_HEAD)) {
+                    block.setType(Material.NETHERRACK);
+                }
+                placer.playSound(block.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1.0f, 1.0f);
+
+                task = new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        task.cancel();
+                        return;
+                    }
+                }.runTaskTimer(plugin, 20, 20);
+
+            }
+
+            for(Player player_: plugin.getServer().getOnlinePlayers()){
+                player_.playSound(player_.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1.0f, 1.0f);
+            }
+
+            plugin.tittle.setTittle(plugin.colors.green + p.getName() + " Ha sido revivido" + plugin.colors.reset,
+                    plugin.colors.aqua + "Revivid@ por: " + plugin.colors.reset + placer.getName());
+
             p.teleport(head.getLocation());
-            // TODO: generar aviso de que se ha revivido a unjugador a todos los jugadores y animación de revivido
 
             for (Block block : structure) {
                 block.setType(Material.AIR);
